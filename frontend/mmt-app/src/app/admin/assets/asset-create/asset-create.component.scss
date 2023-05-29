@@ -1,0 +1,21 @@
+.form-container
+{
+    display: flex;
+
+    .primary
+    {
+        width: 500px;
+
+        .form-field
+        {
+            width: 100%;
+        }
+
+        .action-panel
+        {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+        }
+    }
+}
