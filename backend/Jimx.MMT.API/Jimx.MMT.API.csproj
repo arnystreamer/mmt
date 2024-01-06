@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Jimx.MMX.API-4dcc7e8e-8dfe-4e2d-9e86-08ee9732494e</UserSecretsId>
+    <UserSecretsId>aspnet-Jimx.MMT.API-4dcc7e8e-8dfe-4e2d-9e86-08ee9732494e</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
