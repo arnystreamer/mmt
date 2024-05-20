@@ -1,6 +1,6 @@
 ﻿namespace Jimx.MMT.API.Models.Health
 {
-	public record CheckResult(string EnvironmentName)
+	public record CheckResult(string EnvironmentName, string DatabaseCreatedResultMessage)
 	{
 	}
 }
