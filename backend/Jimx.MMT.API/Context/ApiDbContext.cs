@@ -8,5 +8,7 @@ namespace Jimx.MMT.API.Context
 		{
 
 		}
+
+		public DbSet<Category> Categories { get; set; }
 	}
 }

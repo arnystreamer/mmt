@@ -25,12 +25,13 @@ namespace Jimx.MMT.API.Controllers
 			string databaseCreatedResultMessage;
 			try
 			{
-				var isDatabaseCreated = _context.Database.EnsureCreated();
-				databaseCreatedResultMessage = isDatabaseCreated ? "Database OK" : "Error: database not exists";
+				_ = _context.Categories.Count();
+				databaseCreatedResultMessage = "Database OK";
 			}
 			catch(Exception ex)
 			{
 				databaseCreatedResultMessage = $"Fatal error {ex.GetType().Name}: {ex.Message}";
+				_logger.LogWarning(ex, "GET Health");
 			}
 
 			return new CheckResult(_hostEnvironment.EnvironmentName, databaseCreatedResultMessage);

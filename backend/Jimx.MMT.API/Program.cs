@@ -1,3 +1,4 @@
+using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +15,14 @@ options.UseNpgsql(conn));
 
 var app = builder.Build();
 
+app.UseMiddleware<StatusCodeExceptionHandler>();
+
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
 
 app.UseAuthorization();
 
