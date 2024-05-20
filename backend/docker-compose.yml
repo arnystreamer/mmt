@@ -1,0 +1,32 @@
+version: '3.4'
+networks:
+  dev:
+    driver: bridge
+services:
+  jimx.mmt.api:
+    image: ${DOCKER_REGISTRY-}jimxmmtapi
+    depends_on:
+     - "app_db"
+    build:
+      context: .
+      dockerfile: Jimx.MMT.API/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=User ID=root;Password=secret;Server=app_db;Port=5432;Database=MMT;Integrated Security=true;Pooling=true;
+    networks:
+      - dev
+  app_db:
+    image: postgres:14-alpine
+    container_name: app_db
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=MMT
+    ports:
+      - "5433:5432"
+    volumes:
+     - db:/var/lib/postgresql/data
+    networks:
+      - dev
+volumes:
+  db:
