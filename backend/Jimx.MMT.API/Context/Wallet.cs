@@ -1,13 +1,13 @@
 ﻿namespace Jimx.MMT.API.Context
 {
-	public class Category
+	public class Wallet
 	{
 		public int Id { get; set; }
-		public int SectionId { get; set; }
+		public Guid UserId { get; set; }
 
 		public string Name { get; set; }
 		public string Description { get; set; }
 
-		public virtual Section Section { get; set; }
+		public virtual ICollection<Section> Sections { get; set; }
 	}
 }
