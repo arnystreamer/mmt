@@ -2,12 +2,14 @@
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 namespace Jimx.MMT.API.Controllers
 {
 	[ApiController]
 	[Route("global-category")]
+	[Authorize]
 	public class GlobalCategoryController : ControllerBase
 	{
 		private readonly ApiDbContext _context;

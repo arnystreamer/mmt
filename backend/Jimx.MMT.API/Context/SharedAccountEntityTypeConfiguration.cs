@@ -9,6 +9,9 @@ namespace Jimx.MMT.API.Context
 		{
 			builder.HasMany(s => s.SharedAccountToUsers).WithOne(su => su.SharedAccount)
 				.HasForeignKey(s => s.SharedAccountId);
+
+			builder.HasMany(s => s.Sections).WithOne(s => s.SharedAccount)
+				.HasForeignKey(s => s.SharedAccountId);
 		}
 	}
 }

@@ -12,6 +12,9 @@ namespace Jimx.MMT.API.Context
 
 			builder.HasOne(c => c.SharedAccount).WithMany(c => c.Sections)
 				.HasForeignKey(c => c.SharedAccountId);
+
+			builder.HasOne(c => c.User).WithMany(u => u.Sections)
+				.HasForeignKey(c => c.UserId);
 		}
 	}
 }

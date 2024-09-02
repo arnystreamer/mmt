@@ -20,7 +20,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=secret
+      - POSTGRES_PASSWORD=qcQBW3JhVGLkrU87s2
       - POSTGRES_DB=MMT
     ports:
       - "5433:5432"

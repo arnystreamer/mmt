@@ -1,5 +1,6 @@
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Health;
+using Jimx.MMT.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jimx.MMT.API.Controllers
@@ -11,12 +12,14 @@ namespace Jimx.MMT.API.Controllers
 		private readonly ILogger<HealthController> _logger;
 		private readonly IHostEnvironment _hostEnvironment;
 		private readonly ApiDbContext _context;
+		private readonly SettingsProvider _settingsProvider;
 
-		public HealthController(ILogger<HealthController> logger, IHostEnvironment hostEnvironment, ApiDbContext context)
+		public HealthController(ILogger<HealthController> logger, IHostEnvironment hostEnvironment, ApiDbContext context, SettingsProvider settingsProvider)
 		{
 			_logger = logger;
 			_hostEnvironment = hostEnvironment;
 			_context = context;
+			_settingsProvider = settingsProvider;
 		}
 
 		[HttpGet]
@@ -34,7 +37,7 @@ namespace Jimx.MMT.API.Controllers
 				_logger.LogWarning(ex, "GET Health");
 			}
 
-			return new CheckResult(_hostEnvironment.EnvironmentName, databaseCreatedResultMessage);
+			return new CheckResult(_hostEnvironment.EnvironmentName, databaseCreatedResultMessage, _settingsProvider.BaseUrl);
 		}
 	}
 }
