@@ -24,7 +24,10 @@ namespace Jimx.MMT.API.Controllers
 		[HttpGet("{id}")]
 		public CategoryApi Get(int id)
 		{
-			var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+			var category = _context.Categories
+				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
+				.FirstOrDefault(c => c.Id == id);
+
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
@@ -36,11 +39,15 @@ namespace Jimx.MMT.API.Controllers
 		[HttpGet]
 		public CollectionApi<CategoryApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
-			var count = _context.Categories.Count();
+			var count = _context.Categories
+				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
+				.Count();
 
 			int skip = requestApi.Skip ?? 0;
 			int take = requestApi.Take ?? 10;
-			var categories = _context.Categories.Skip(skip).Take(take).ToList();
+			var categories = _context.Categories
+				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
+				.Skip(skip).Take(take).ToList();
 
 			IList<CategoryApi> result = new List<CategoryApi>();
 			foreach (var category in categories)
@@ -54,6 +61,15 @@ namespace Jimx.MMT.API.Controllers
 		[HttpPost]
 		public CategoryApi Post(CategoryApi categoryApi)
 		{
+			var section = _context.Sections
+				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
+				.FirstOrDefault(s => s.Id == categoryApi.SectionId);
+
+			if (section == null)
+			{
+				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(categoryApi.SectionId), typeof(IdItem));
+			}
+
 			var entry = _context.Categories.Add(new Category()
 			{
 				Name = categoryApi.Name,
@@ -73,6 +89,15 @@ namespace Jimx.MMT.API.Controllers
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(categoryApi.Id), typeof(IdItem));
+			}
+
+			var section = _context.Sections
+				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
+				.FirstOrDefault(s => s.Id == categoryApi.SectionId);
+
+			if (section == null)
+			{
+				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(categoryApi.SectionId), typeof(IdItem));
 			}
 
 			category.Name = categoryApi.Name;

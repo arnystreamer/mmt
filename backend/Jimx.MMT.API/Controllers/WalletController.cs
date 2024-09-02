@@ -2,6 +2,7 @@
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
+using Jimx.MMT.API.Services.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -25,23 +26,27 @@ namespace Jimx.MMT.API.Controllers
 		[HttpGet("{id}")]
 		public WalletApi Get(int id)
 		{
-			var wallet = _context.Wallets.FirstOrDefault(c => c.Id == id);
+			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+
+			var wallet = _context.Wallets.Where(w => w.UserId == currentUser.Id).FirstOrDefault(c => c.Id == id);
 			if (wallet == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			return new WalletApi(wallet.Id, wallet.UserId, wallet.Name, wallet.Description);
+			return new WalletApi(wallet.Id, currentUser.Id, wallet.Name, wallet.Description);
 		}
 
 		[HttpGet]
 		public CollectionApi<WalletApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
-			var count = _context.Wallets.Count();
+			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+
+			var count = _context.Wallets.Where(w => w.UserId == currentUser.Id).Count();
 
 			int skip = requestApi.Skip ?? 0;
 			int take = requestApi.Take ?? 10;
-			var wallets = _context.Wallets.Skip(skip).Take(take).ToList();
+			var wallets = _context.Wallets.Where(w => w.UserId == currentUser.Id).Skip(skip).Take(take).ToList();
 
 			IList<WalletApi> result = new List<WalletApi>();
 			foreach (var wallet in wallets)
@@ -55,11 +60,11 @@ namespace Jimx.MMT.API.Controllers
 		[HttpPost]
 		public WalletApi Post(WalletApi walletApi)
 		{
-			var currentUserId = Guid.Empty;
+			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
 			var entry = _context.Wallets.Add(new Wallet()
 			{
-				UserId = currentUserId,
+				UserId = currentUser.Id,
 				Name = walletApi.Name,
 				Description = walletApi.Description
 			});
@@ -73,7 +78,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpPut]
 		public WalletApi Put(WalletApi walletApi)
 		{
-			var currentUserId = Guid.Empty;
+			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
 			var wallet = _context.Wallets.FirstOrDefault(c => c.Id == walletApi.Id);
 			if (wallet == null)
@@ -81,7 +86,7 @@ namespace Jimx.MMT.API.Controllers
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(walletApi.Id), typeof(IdItem));
 			}
 
-			if (wallet.UserId != currentUserId)
+			if (wallet.UserId != currentUser.Id)
 			{
 				throw new StatusCodeException(HttpStatusCode.Forbidden, new IdItem(walletApi.Id), typeof(IdItem));
 			}
@@ -96,7 +101,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
-			var currentUserId = Guid.Empty;
+			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
 			var wallet = _context.Wallets.FirstOrDefault(c => c.Id == id);
 			if (wallet == null)
@@ -104,7 +109,7 @@ namespace Jimx.MMT.API.Controllers
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			if (wallet.UserId != currentUserId)
+			if (wallet.UserId != currentUser.Id)
 			{
 				throw new StatusCodeException(HttpStatusCode.Forbidden, new IdItem(id), typeof(IdItem));
 			}

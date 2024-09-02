@@ -1,6 +1,7 @@
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Health;
 using Jimx.MMT.API.Services;
+using Jimx.MMT.API.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jimx.MMT.API.Controllers
@@ -37,7 +38,9 @@ namespace Jimx.MMT.API.Controllers
 				_logger.LogWarning(ex, "GET Health");
 			}
 
-			return new CheckResult(_hostEnvironment.EnvironmentName, databaseCreatedResultMessage, _settingsProvider.BaseUrl);
+			string? userInfo = User.GetInfo(true);
+
+			return new CheckResult(_hostEnvironment.EnvironmentName, databaseCreatedResultMessage, _settingsProvider.BaseUrl, userInfo);
 		}
 	}
 }
