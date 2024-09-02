@@ -12,6 +12,7 @@
 		public string Description { get; set; }
 
 		public virtual Wallet? Wallet { get; set; }
+		public virtual User? User { get; set; }
 		public virtual SharedAccount? SharedAccount { get; set; }
 		public virtual ICollection<Category> Categories { get; set; }
 	}

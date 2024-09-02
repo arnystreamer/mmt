@@ -10,10 +10,22 @@
 
 ## Transferring
 
+Save:
 `docker save -o alpha.tar jimx.mmt.api:alpha`
 `docker save -o alpha.ui.tar jimx.mmt.frontend:alpha`
-Transfer to remote server
+
+Transfer:
+`scp alpha.tar alpha.ui.tar user@server:/folder`
+
+Cleanup:
+`docker rm Jimx.MMT.API`
+`docker rm Jimx.MMT.Frontend`
+`docker rmi jimx.mmt.frontend:alpha`
+`docker rmi --force jimx.mmt.frontend:alpha`
+
+Load:
 `docker load -i alpha.tar`
+`docker load -i alpha.ui.tar`
 
 ## Running
 

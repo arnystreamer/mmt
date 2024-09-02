@@ -2,14 +2,15 @@
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace Jimx.MMT.API.Controllers
 {
 	[ApiController]
 	[Route("wallet")]
+	[Authorize]
 	public class WalletController : ControllerBase
 	{
 		private readonly ApiDbContext _context;

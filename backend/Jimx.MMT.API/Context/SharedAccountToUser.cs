@@ -7,5 +7,6 @@
 		public Guid UserId { get; set; }
 
 		public virtual SharedAccount SharedAccount { get; set; }
+		public virtual User User { get; set; }
 	}
 }

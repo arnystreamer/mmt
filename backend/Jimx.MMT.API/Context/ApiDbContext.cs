@@ -13,6 +13,7 @@ namespace Jimx.MMT.API.Context
 		public DbSet<Section> Sections { get; set; }
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<SharedAccount> SharedAccounts { get; set; }
+		public DbSet<User> Users { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
