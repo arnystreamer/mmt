@@ -10,14 +10,14 @@ using System.Net;
 namespace Jimx.MMT.API.Controllers
 {
 	[ApiController]
-	[Route("wallet")]
+	[Route("wallets")]
 	[Authorize]
-	public class WalletController : ControllerBase
+	public class WalletsController : ControllerBase
 	{
 		private readonly ApiDbContext _context;
-		private readonly ILogger<WalletController> _logger;
+		private readonly ILogger<WalletsController> _logger;
 
-		public WalletController(ILogger<WalletController> logger, ApiDbContext context)
+		public WalletsController(ILogger<WalletsController> logger, ApiDbContext context)
 		{
 			_logger = logger;
 			_context = context;
@@ -118,12 +118,6 @@ namespace Jimx.MMT.API.Controllers
 			_context.SaveChanges();
 
 			return;
-		}
-
-		[HttpGet("{id}/sections")]
-		public WalletSectionsApi GetSections(int id)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

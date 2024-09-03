@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +8,7 @@ using Jimx.MMT.API.Services;
 
 namespace Jimx.MMT.API.Controllers
 {
-	[Route("[controller]")]
+	[Route("login")]
 	[ApiController]
 	public class LoginController : ControllerBase
 	{

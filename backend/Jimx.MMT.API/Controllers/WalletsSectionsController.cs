@@ -10,14 +10,14 @@ using System.Net;
 namespace Jimx.MMT.API.Controllers
 {
 	[ApiController]
-	[Route("wallet/{walletId}/section/")]
+	[Route("wallets/{walletId}/sections/")]
 	[Authorize]
-	public class SectionForWalletController : ControllerBase
+	public class WalletsSectionsController : ControllerBase
 	{
 		private readonly ApiDbContext _context;
-		private readonly ILogger<SectionForWalletController> _logger;
+		private readonly ILogger<WalletsSectionsController> _logger;
 
-		public SectionForWalletController(ILogger<SectionForWalletController> logger, ApiDbContext context)
+		public WalletsSectionsController(ILogger<WalletsSectionsController> logger, ApiDbContext context)
 		{
 			_logger = logger;
 			_context = context;
@@ -142,31 +142,6 @@ namespace Jimx.MMT.API.Controllers
 			_context.SaveChanges();
 
 			return;
-		}
-
-		[HttpGet("{id}/categories")]
-		public SectionCategoriesApi GetCategories(int walletId, int id)
-		{
-			var currentUserId = Guid.Empty;
-
-			var section = _context.Sections.Include(s => s.Categories).FirstOrDefault(c => c.WalletId == walletId && c.Id == id);
-			if (section == null)
-			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
-			}
-
-			if (section.Wallet.UserId != currentUserId)
-			{
-				throw new StatusCodeException(HttpStatusCode.Forbidden);
-			}
-
-			List<CategoryApi> categoryApis = new List<CategoryApi>();
-			foreach (var category in section.Categories)
-			{
-				categoryApis.Add(new CategoryApi(category.Id, category.SectionId, category.Name, category.Description));
-			}
-
-			return new SectionCategoriesApi(section.Id, section.WalletId.Value, section.Name, section.Description, categoryApis.ToArray());
 		}
 	}
 }

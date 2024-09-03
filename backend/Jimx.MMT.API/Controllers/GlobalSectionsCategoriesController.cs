@@ -8,25 +8,25 @@ using System.Net;
 namespace Jimx.MMT.API.Controllers
 {
 	[ApiController]
-	[Route("global-category")]
+	[Route("global-sections/{sectionId}/categories/")]
 	[Authorize]
-	public class GlobalCategoryController : ControllerBase
+	public class GlobalSectionsCategoriesController : ControllerBase
 	{
 		private readonly ApiDbContext _context;
-		private readonly ILogger<GlobalCategoryController> _logger;
+		private readonly ILogger<GlobalSectionsCategoriesController> _logger;
 
-		public GlobalCategoryController(ILogger<GlobalCategoryController> logger, ApiDbContext context)
+		public GlobalSectionsCategoriesController(ILogger<GlobalSectionsCategoriesController> logger, ApiDbContext context)
 		{
 			_logger = logger;
 			_context = context;
 		}
 
 		[HttpGet("{id}")]
-		public CategoryApi Get(int id)
+		public CategoryApi Get(int sectionId, int id)
 		{
 			var category = _context.Categories
 				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
-				.FirstOrDefault(c => c.Id == id);
+				.FirstOrDefault(c => c.SectionId == sectionId && c.Id == id);
 
 			if (category == null)
 			{
@@ -37,15 +37,17 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpGet]
-		public CollectionApi<CategoryApi> GetAll([FromQuery] CollectionRequestApi requestApi)
+		public CollectionApi<CategoryApi> GetAll(int sectionId, [FromQuery] CollectionRequestApi requestApi)
 		{
 			var count = _context.Categories
+				.Where(c => c.SectionId == sectionId)
 				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
 				.Count();
 
 			int skip = requestApi.Skip ?? 0;
 			int take = requestApi.Take ?? 10;
 			var categories = _context.Categories
+				.Where(c => c.SectionId == sectionId)
 				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
 				.Skip(skip).Take(take).ToList();
 
@@ -59,21 +61,21 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpPost]
-		public CategoryApi Post(CategoryApi categoryApi)
+		public CategoryApi Post(int sectionId, CategoryApi categoryApi)
 		{
 			var section = _context.Sections
 				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
-				.FirstOrDefault(s => s.Id == categoryApi.SectionId);
+				.FirstOrDefault(s => s.Id == sectionId);
 
 			if (section == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(categoryApi.SectionId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(sectionId), typeof(IdItem));
 			}
 
 			var entry = _context.Categories.Add(new Category()
 			{
 				Name = categoryApi.Name,
-				SectionId = categoryApi.SectionId,
+				SectionId = sectionId,
 				Description = categoryApi.Description
 			});
 
@@ -83,9 +85,11 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpPut]
-		public CategoryApi Put(CategoryApi categoryApi)
+		public CategoryApi Put(int sectionId, CategoryApi categoryApi)
 		{
-			var category = _context.Categories.FirstOrDefault(c => c.Id == categoryApi.Id);
+			var category = _context.Categories
+				.Where(c => c.SectionId == sectionId)
+				.FirstOrDefault(c => c.Id == categoryApi.Id);
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(categoryApi.Id), typeof(IdItem));
@@ -93,7 +97,7 @@ namespace Jimx.MMT.API.Controllers
 
 			var section = _context.Sections
 				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
-				.FirstOrDefault(s => s.Id == categoryApi.SectionId);
+				.FirstOrDefault(s => s.Id == sectionId);
 
 			if (section == null)
 			{
@@ -109,9 +113,11 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public void Delete(int id)
+		public void Delete(int sectionId, int id)
 		{
-			var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+			var category = _context.Categories
+				.Where(c => c.SectionId == sectionId)
+				.FirstOrDefault(c => c.Id == id);
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
