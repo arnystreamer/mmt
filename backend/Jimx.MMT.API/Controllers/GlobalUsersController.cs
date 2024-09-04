@@ -1,6 +1,10 @@
-﻿using Jimx.MMT.API.Context;
+﻿using Jimx.MMT.API.App;
+using Jimx.MMT.API.Context;
+using Jimx.MMT.API.Models.Common;
+using Jimx.MMT.API.Models.StaticItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Jimx.MMT.API.Controllers
 {
@@ -19,27 +23,80 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult Get(int id)
+		public UserApi Get(Guid id)
 		{
-			throw new NotImplementedException();
+			var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+			if (user == null)
+			{
+				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(id), typeof(GuidItem));
+			}
+
+			return user.ToUserApi();
+		}
+
+		[HttpGet]
+		public CollectionApi<UserApi> GetAll([FromQuery] CollectionRequestApi requestApi)
+		{
+			var userAll = _context.Users;
+
+			var usersTotalCount = userAll.Count();
+
+			int skip = requestApi.Skip ?? 0;
+			int take = requestApi.Take ?? 10;
+			var result = userAll
+				.Skip(skip).Take(take)
+				.Select(s => s.ToUserApi())
+				.ToArray();
+
+			return new CollectionApi<UserApi>(usersTotalCount, skip, take, result.Length, result);
 		}
 
 		[HttpPost]
-		public IActionResult Post()
+		public UserApi Post(UserApi userApi)
 		{
-			throw new NotImplementedException();
+			var user = new User()
+			{
+				Login = userApi.Login.ToLower(),
+				Name = userApi.Name
+			};
+
+			var entity = _context.Users.Add(user);
+			_context.SaveChanges();
+
+			return entity.Entity.ToUserApi();
 		}
 
 		[HttpPut]
-		public IActionResult Put()
+		public UserApi Put(UserApi userApi)
 		{
-			throw new NotImplementedException();
+			var user = _context.Users.FirstOrDefault(u => u.Id == userApi.Id);
+
+			if (user == null)
+			{
+				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(userApi.Id), typeof(GuidItem));
+			}
+
+			user.Login = userApi.Login.ToLower();
+			user.Name = userApi.Name;
+
+			_context.SaveChanges();
+
+			return user.ToUserApi();
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public IActionResult Delete(Guid id)
 		{
-			throw new NotImplementedException();
+			var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+			if (user == null)
+			{
+				return NotFound(new { Id = id });
+			}
+
+			_context.SaveChanges();
+			return NoContent();
 		}
 	}
 }

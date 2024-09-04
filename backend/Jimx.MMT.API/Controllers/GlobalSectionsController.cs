@@ -4,7 +4,7 @@ using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Net;
 
 namespace Jimx.MMT.API.Controllers
@@ -17,6 +17,9 @@ namespace Jimx.MMT.API.Controllers
 		private readonly ApiDbContext _context;
 		private readonly ILogger<GlobalSectionsController> _logger;
 
+		private readonly Expression<Func<Section, bool>> ExpressionIsSectionCategoryGlobal = 
+			c => c.UserId == null && c.WalletId == null && c.SharedAccountId == null;
+
 		public GlobalSectionsController(ILogger<GlobalSectionsController> logger, ApiDbContext context)
 		{
 			_logger = logger;
@@ -27,7 +30,7 @@ namespace Jimx.MMT.API.Controllers
 		public GlobalSectionApi Get(int id)
 		{
 			var sectionDb = _context.Sections
-				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
+				.Where(ExpressionIsSectionCategoryGlobal)
 				.FirstOrDefault(s => s.Id == id);
 
 			if (sectionDb == null)
@@ -42,22 +45,24 @@ namespace Jimx.MMT.API.Controllers
 		public CollectionApi<GlobalSectionApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
 			var sectionsAll = _context.Sections
-				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null);
+				.Where(ExpressionIsSectionCategoryGlobal);
 
-			var sectionsTotal = sectionsAll.Count();
+			var sectionsTotalCount = sectionsAll.Count();
 
 			int skip = requestApi.Skip ?? 0;
 			int take = requestApi.Take ?? 10;
-			var sectionsDb = sectionsAll.Skip(skip).Take(take).ToArray();
+			var result = sectionsAll
+				.Skip(skip).Take(take)
+				.Select(s => s.ToGlobalSectionApi())
+				.ToArray();
 
-			return new CollectionApi<GlobalSectionApi>(sectionsDb.Length, skip, take, sectionsDb.Length,
-				sectionsDb.Select(s => new GlobalSectionApi(s.Id, s.Name, s.Description)).ToArray());
+			return new CollectionApi<GlobalSectionApi>(sectionsTotalCount, skip, take, result.Length, result);
 		}
 
 		[HttpPost]
-		public GlobalSectionApi Post(GlobalSectionApi sectionApi)
+		public GlobalSectionApi Post(SectionEditApi sectionApi)
 		{
-			var sectionDb = new Section()
+			var section = new Section()
 			{
 				WalletId = null,
 				SharedAccountId = null,
@@ -67,65 +72,49 @@ namespace Jimx.MMT.API.Controllers
 				Description = sectionApi.Description
 			};
 
-			_context.Sections.Add(sectionDb);
+			var entity = _context.Sections.Add(section).Entity;
 
 			_context.SaveChanges();
 
-			return new GlobalSectionApi(sectionDb.Id, sectionDb.Name, sectionDb.Description);
+			return new GlobalSectionApi(section.Id, section.Name, section.Description);
 		}
 
 		[HttpPut]
-		public GlobalSectionApi Put(GlobalSectionApi sectionApi)
+		public GlobalSectionApi Put(SectionEditApi sectionApi)
 		{
-			var sectionDb = _context.Sections
-				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
+			var section = _context.Sections
+				.Where(ExpressionIsSectionCategoryGlobal)
 				.FirstOrDefault(s => s.Id == sectionApi.Id);
 
-			if (sectionDb == null)
+			if (section == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionApi.Id), typeof(IdItem));
 			}
 
-			sectionDb.Name = sectionApi.Name;
-			sectionDb.Description = sectionApi.Description;
+			section.Name = sectionApi.Name;
+			section.Description = sectionApi.Description;
 
 			_context.SaveChanges();
 
-			return new GlobalSectionApi(sectionDb.Id, sectionDb.Name, sectionDb.Description);
+			return new GlobalSectionApi(section.Id, section.Name, section.Description);
 		}
 
 		[HttpDelete("{id}")]
-		public void Delete(int id)
+		public IActionResult Delete(int id)
 		{
-			var sectionDb = _context.Sections
-				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
+			var section = _context.Sections
+				.Where(ExpressionIsSectionCategoryGlobal)
 				.FirstOrDefault(s => s.Id == id);
 
-			if (sectionDb == null)
+			if (section == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				return NotFound(new { Id = id });
 			}
 
-			_context.Sections.Remove(sectionDb);
+			_context.Sections.Remove(section);
 			_context.SaveChanges();
-		}
 
-		[HttpGet("{id}/categories")]
-		[Obsolete]
-		public GlobalSectionCategoriesApi GetCategories(int id)
-		{
-			var sectionDb = _context.Sections
-				.Include(s => s.Categories)
-				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
-				.FirstOrDefault(s => s.Id == id);
-
-			if (sectionDb == null)
-			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
-			}
-
-			return new GlobalSectionCategoriesApi(sectionDb.Id, sectionDb.Name, sectionDb.Description,
-				sectionDb.Categories.Select(c => new CategoryApi(c.Id, sectionDb.Id, c.Name, c.Description)).ToArray());
+			return NoContent();
 		}
 	}
 }

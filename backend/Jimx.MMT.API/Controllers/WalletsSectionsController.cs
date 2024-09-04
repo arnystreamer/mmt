@@ -5,6 +5,7 @@ using Jimx.MMT.API.Models.StaticItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Net;
 
 namespace Jimx.MMT.API.Controllers
@@ -17,6 +18,9 @@ namespace Jimx.MMT.API.Controllers
 		private readonly ApiDbContext _context;
 		private readonly ILogger<WalletsSectionsController> _logger;
 
+		private readonly Func<Guid, Expression<Func<Section, bool>>> ExpressionIsSectionUserLocal = (userId) =>
+			s => s.UserId == userId && s.WalletId == null && s.SharedAccountId == null;
+
 		public WalletsSectionsController(ILogger<WalletsSectionsController> logger, ApiDbContext context)
 		{
 			_logger = logger;
@@ -24,26 +28,26 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public SectionApi Get(int walletId, int id)
+		public WalletSectionApi Get(int walletId, int id)
 		{
 			var currentUserId = Guid.Empty;
 
 			var section = _context.Sections.Include(s => s.Wallet).Where(s => s.WalletId == walletId).FirstOrDefault(c => c.Id == id);
-			if (section == null)
+			if (section == null || section.Wallet == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
 			if (section.Wallet.UserId != currentUserId)
 			{
-				throw new StatusCodeException(HttpStatusCode.Forbidden);
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			return new SectionApi(section.Id, section.WalletId.Value, section.Name, section.Description);
+			return new WalletSectionApi(section.Id, section.WalletId.Value, section.Name, section.Description);
 		}
 
 		[HttpGet]
-		public CollectionApi<SectionApi> GetAll(int walletId, [FromQuery] CollectionRequestApi requestApi)
+		public CollectionApi<WalletSectionApi> GetAll(int walletId, [FromQuery] CollectionRequestApi requestApi)
 		{
 			var count = _context.Sections.Where(s => s.WalletId == walletId).Count();
 
@@ -51,17 +55,17 @@ namespace Jimx.MMT.API.Controllers
 			int take = requestApi.Take ?? 10;
 			var sections = _context.Sections.Skip(skip).Take(take).ToList();
 
-			IList<SectionApi> result = new List<SectionApi>();
+			IList<WalletSectionApi> result = new List<WalletSectionApi>();
 			foreach (var section in sections)
 			{
-				result.Add(new SectionApi(section.Id, section.WalletId.Value, section.Name, section.Description));
+				result.Add(new WalletSectionApi(section.Id, section.WalletId!.Value, section.Name, section.Description));
 			}
 
-			return new CollectionApi<SectionApi>(count, skip, take, result.Count, result.ToArray());
+			return new CollectionApi<WalletSectionApi>(count, skip, take, result.Count, result.ToArray());
 		}
 
 		[HttpPost]
-		public SectionApi Post(int walletId, SectionForWalletEditApi sectionApi)
+		public WalletSectionApi Post(int walletId, SectionEditApi sectionApi)
 		{
 			var currentUserId = Guid.Empty;
 
@@ -87,11 +91,11 @@ namespace Jimx.MMT.API.Controllers
 			_context.SaveChanges();
 
 			Section entity = entry.Entity;
-			return new SectionApi(entity.Id, entity.WalletId.Value, entity.Name, entity.Description);
+			return new WalletSectionApi(entity.Id, entity.WalletId!.Value, entity.Name, entity.Description);
 		}
 
 		[HttpPut]
-		public SectionApi Put(int walletId, SectionForWalletEditApi sectionApi)
+		public WalletSectionApi Put(int walletId, SectionEditApi sectionApi)
 		{
 			var currentUserId = Guid.Empty;
 
@@ -119,29 +123,29 @@ namespace Jimx.MMT.API.Controllers
 
 			_context.SaveChanges();
 
-			return new SectionApi(section.Id, section.WalletId.Value, section.Name, section.Description);
+			return new WalletSectionApi(section.Id, section.WalletId.Value, section.Name, section.Description);
 		}
 
 		[HttpDelete("{id}")]
-		public void Delete(int walletId, int id)
+		public IActionResult Delete(int walletId, int id)
 		{
 			var currentUserId = Guid.Empty;
 
 			var section = _context.Sections.Include(s => s.Wallet).FirstOrDefault(c => c.WalletId == walletId && c.Id == id);
-			if (section == null)
+			if (section == null || section.Wallet == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				return NotFound();
 			}
 
 			if (section.Wallet.UserId != currentUserId)
 			{
-				throw new StatusCodeException(HttpStatusCode.Forbidden);
+				return NotFound();
 			}
 
 			_context.Sections.Remove(section);
 			_context.SaveChanges();
 
-			return;
+			return NoContent();
 		}
 	}
 }

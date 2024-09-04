@@ -4,6 +4,7 @@ using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Net;
 namespace Jimx.MMT.API.Controllers
 {
@@ -15,6 +16,12 @@ namespace Jimx.MMT.API.Controllers
 		private readonly ApiDbContext _context;
 		private readonly ILogger<GlobalSectionsCategoriesController> _logger;
 
+		private readonly Func<int, Expression<Func<Category, bool>>> ExpressionIsSectionCategoryGlobal = sectionId =>
+			c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null && c.Section.Id == sectionId;
+
+		private readonly Expression<Func<Section, bool>> ExpressionIsSectionGlobal =
+			s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null;
+
 		public GlobalSectionsCategoriesController(ILogger<GlobalSectionsCategoriesController> logger, ApiDbContext context)
 		{
 			_logger = logger;
@@ -25,39 +32,31 @@ namespace Jimx.MMT.API.Controllers
 		public CategoryApi Get(int sectionId, int id)
 		{
 			var category = _context.Categories
-				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
-				.FirstOrDefault(c => c.SectionId == sectionId && c.Id == id);
+				.Where(ExpressionIsSectionCategoryGlobal(sectionId))
+				.FirstOrDefault(c => c.Id == id);
 
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			return new CategoryApi(category.Id, category.SectionId, category.Name, category.Description);
+			return category.ToCategoryApi();
 		}
 
 		[HttpGet]
 		public CollectionApi<CategoryApi> GetAll(int sectionId, [FromQuery] CollectionRequestApi requestApi)
 		{
-			var count = _context.Categories
-				.Where(c => c.SectionId == sectionId)
-				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
+			var categoriesTotalCount = _context.Categories
+				.Where(ExpressionIsSectionCategoryGlobal(sectionId))
 				.Count();
 
 			int skip = requestApi.Skip ?? 0;
 			int take = requestApi.Take ?? 10;
-			var categories = _context.Categories
-				.Where(c => c.SectionId == sectionId)
-				.Where(c => c.Section.UserId == null && c.Section.WalletId == null && c.Section.SharedAccountId == null)
-				.Skip(skip).Take(take).ToList();
+			var result = _context.Categories
+				.Where(ExpressionIsSectionCategoryGlobal(sectionId))
+				.Skip(skip).Take(take).Select(c => c.ToCategoryApi()).ToArray();
 
-			IList<CategoryApi> result = new List<CategoryApi>();
-			foreach (var category in categories)
-			{
-				result.Add(new CategoryApi(category.Id, category.SectionId, category.Name, category.Description));
-			}
-
-			return new CollectionApi<CategoryApi>(count, skip, take, result.Count, result.ToArray());
+			return new CollectionApi<CategoryApi>(categoriesTotalCount, skip, take, result.Length, result);
 		}
 
 		[HttpPost]
@@ -81,52 +80,44 @@ namespace Jimx.MMT.API.Controllers
 
 			_context.SaveChanges();
 
-			return new CategoryApi(entry.Entity.Id, entry.Entity.SectionId, entry.Entity.Name, entry.Entity.Description);
+			return entry.Entity.ToCategoryApi();
 		}
 
 		[HttpPut]
-		public CategoryApi Put(int sectionId, CategoryApi categoryApi)
+		public CategoryApi Put(int sectionId, CategoryEditApi categoryApi)
 		{
 			var category = _context.Categories
-				.Where(c => c.SectionId == sectionId)
+				.Where(ExpressionIsSectionCategoryGlobal(sectionId))
 				.FirstOrDefault(c => c.Id == categoryApi.Id);
+
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(categoryApi.Id), typeof(IdItem));
 			}
 
-			var section = _context.Sections
-				.Where(s => s.UserId == null && s.WalletId == null && s.SharedAccountId == null)
-				.FirstOrDefault(s => s.Id == sectionId);
-
-			if (section == null)
-			{
-				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(categoryApi.SectionId), typeof(IdItem));
-			}
-
 			category.Name = categoryApi.Name;
-			category.SectionId = categoryApi.SectionId;
 			category.Description = categoryApi.Description;
 			_context.SaveChanges();
 
-			return categoryApi;
+			return category.ToCategoryApi();
 		}
 
 		[HttpDelete("{id}")]
-		public void Delete(int sectionId, int id)
+		public IActionResult Delete(int sectionId, int id)
 		{
 			var category = _context.Categories
-				.Where(c => c.SectionId == sectionId)
+				.Where(ExpressionIsSectionCategoryGlobal(sectionId))
 				.FirstOrDefault(c => c.Id == id);
+
 			if (category == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				return NotFound(new { Id = id });
 			}
 
 			_context.Categories.Remove(category);
 			_context.SaveChanges();
 
-			return;
+			return NoContent();
 		}
 	}
 }
