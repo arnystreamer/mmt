@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +8,7 @@ using Jimx.MMT.API.Services;
 
 namespace Jimx.MMT.API.Controllers
 {
-	[Route("[controller]")]
+	[Route("login")]
 	[ApiController]
 	public class LoginController : ControllerBase
 	{
@@ -26,9 +25,6 @@ namespace Jimx.MMT.API.Controllers
 		[HttpPost]
 		public IActionResult Auth(LoginModel model)
 		{
-			//#error https://medium.com/@mbektas0506/implementing-a-simple-authentication-mechanism-in-asp-net-core-step-by-step-0d27c9dfc60f
-			//			this.HttpContent.
-
 			if (model.Login == "user" && model.Password == "secret")
 			{
 				var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_keysProvider.CredentialsSigningKey));
