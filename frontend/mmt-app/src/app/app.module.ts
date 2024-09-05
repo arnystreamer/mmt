@@ -8,16 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 
 import {MatCardModule} from '@angular/material/card';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-import { AssetCreateComponent } from './admin/assets/asset-create/asset-create.component';
 import { LayoutComponent } from './layout/layout.component';
 import { StartPageComponent } from './start-page/start-page.component';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -29,8 +25,8 @@ const routes: Routes = [
         component: StartPageComponent
       },
       {
-        path : 'admin/assets/create',
-        component: AssetCreateComponent
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
       }
     ]
   }
@@ -40,7 +36,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     MainMenuComponent,
-    AssetCreateComponent,
     LayoutComponent,
     StartPageComponent
   ],
@@ -50,10 +45,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent],

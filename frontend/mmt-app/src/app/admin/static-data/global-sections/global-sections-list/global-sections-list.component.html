@@ -1,0 +1,8 @@
+<div>
+  <div *ngFor="let section of sections">
+    <mmt-global-sections-list-item
+      [section]="section"
+      (editSectionEvent)="editSectionEvent.emit($event)"
+      (removeSectionEvent)="removeSectionEvent.emit($event)" />
+  </div>
+</div>
