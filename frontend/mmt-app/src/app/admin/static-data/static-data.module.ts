@@ -6,6 +6,7 @@ import { GlobalSectionsListComponent } from './global-sections/global-sections-l
 import { GlobalSectionsAddComponent } from './global-sections/global-sections-add/global-sections-add.component';
 import { GlobalSectionsListItemComponent } from './global-sections/global-sections-list-item/global-sections-list-item.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,6 +43,7 @@ const routes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     RouterModule.forChild(routes)
   ],
   exports: [ RouterModule ]

@@ -4,7 +4,7 @@
   </div>
 
   <div class="actions-panel">
-    <button color="primary" mat-flat-button [routerLink]="['./create']">
+    <button color="primary" mat-flat-button (click)="openCreateDialog()">
       <mat-icon>add</mat-icon>
       New
     </button>
@@ -12,7 +12,6 @@
 
   <mmt-global-sections-list
     [sections]="items"
-    (addSectionEvent)="addSection($event)"
     (editSectionEvent)="editSection($event)"
     (removeSectionEvent)="removeSection($event)"
   />

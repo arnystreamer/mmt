@@ -6,6 +6,10 @@
 
   <form [formGroup]="form" class="form">
 
+    <div class="general-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
     <mat-form-field class="field">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name">
@@ -18,11 +22,11 @@
 
     <div class="field">
       <div class="actions">
-        <button color="primary" mat-flat-button [routerLink]="['./create']">
+        <button color="primary" mat-flat-button (click)="create()">
           Create
         </button>
 
-        <button mat-flat-button [routerLink]="['..']">
+        <button mat-flat-button (click)="cancel()">
           Cancel
         </button>
       </div>

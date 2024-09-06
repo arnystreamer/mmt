@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalSectionsService } from '../services/global-sections.service';
 import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { GlobalSectionsAddComponent } from './global-sections-add/global-sections-add.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-global-sections',
@@ -10,17 +12,48 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 export class GlobalSectionsComponent implements OnInit {
 
   public items: ItemWithDescription[] = [];
+  public dialogResult?: string = undefined;
 
-  constructor(private globalSectionsService : GlobalSectionsService ) {
+  constructor(private globalSectionsService : GlobalSectionsService, private dialog: MatDialog ) {
 
   }
   ngOnInit(): void {
     this.globalSectionsService.getAll(null, null).subscribe(c => this.items.push(...c.items));
   }
 
-  addSection(section: ItemWithDescription)
+  openCreateDialog()
   {
-    this.globalSectionsService.post(section).subscribe(i => this.items.push(section));
+    function getAddSectionFunction(component: GlobalSectionsComponent): (item : ItemWithDescription) => Promise<boolean>
+    {
+      return (item) => component.addSectionAsync(item);
+    }
+
+    let dialogRef = this.dialog.open(GlobalSectionsAddComponent, {
+      height: '400pt',
+      width: '600pt',
+      data: { submitAsync: getAddSectionFunction(this) }
+    });
+
+    dialogRef.afterClosed().subscribe(result => this.dialogResult = JSON.stringify(result))
+  }
+
+  addSectionAsync(section: ItemWithDescription): Promise<boolean>
+  {
+    var service = this.globalSectionsService;
+
+    return new Promise((resolve, reject) =>
+    {
+      service.post(section).subscribe({
+        next: v => {
+            this.items.push(section);
+            return resolve(true);
+          },
+        error: e => {
+          console.log(e);
+          return resolve(false);
+        }
+      });
+    });
   }
 
   editSection(section: ItemWithDescription)
@@ -42,5 +75,4 @@ export class GlobalSectionsComponent implements OnInit {
       this.items.splice(index, 1);
     })
   }
-
 }

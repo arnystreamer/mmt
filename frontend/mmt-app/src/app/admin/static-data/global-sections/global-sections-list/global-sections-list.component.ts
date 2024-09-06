@@ -8,7 +8,6 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 })
 export class GlobalSectionsListComponent {
   @Input() sections!: ItemWithDescription[];
-  @Output() addSectionEvent = new EventEmitter<ItemWithDescription>();
   @Output() editSectionEvent = new EventEmitter<ItemWithDescription>();
   @Output() removeSectionEvent = new EventEmitter<ItemWithDescription>();
 }
