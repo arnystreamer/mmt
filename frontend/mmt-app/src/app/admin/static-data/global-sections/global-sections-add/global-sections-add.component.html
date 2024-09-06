@@ -1,1 +1,32 @@
-<p>global-sections-add works!</p>
+<div>
+
+  <div>
+    <h2>Add global section</h2>
+  </div>
+
+  <form [formGroup]="form" class="form">
+
+    <mat-form-field class="field">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+
+    <div class="field">
+      <div class="actions">
+        <button color="primary" mat-flat-button [routerLink]="['./create']">
+          Create
+        </button>
+
+        <button mat-flat-button [routerLink]="['..']">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -5,6 +5,11 @@ import { GlobalSectionsComponent } from './global-sections/global-sections.compo
 import { GlobalSectionsListComponent } from './global-sections/global-sections-list/global-sections-list.component';
 import { GlobalSectionsAddComponent } from './global-sections/global-sections-add/global-sections-add.component';
 import { GlobalSectionsListItemComponent } from './global-sections/global-sections-list-item/global-sections-list-item.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Routes = [
   {
@@ -14,7 +19,12 @@ const routes: Routes = [
   },
   {
     path: 'global-sections',
-    component: GlobalSectionsComponent
+    pathMatch: 'full',
+    component: GlobalSectionsComponent,
+  },
+  {
+    path: 'global-sections/create',
+    component: GlobalSectionsAddComponent
   }
 ];
 
@@ -27,6 +37,11 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     RouterModule.forChild(routes)
   ],
   exports: [ RouterModule ]
