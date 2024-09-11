@@ -1,7 +1,10 @@
+import { Observable } from "rxjs";
 import { ItemWithDescription } from "src/app/models/item-with-description";
 
+export type ItemWithDescriptionCreator = (x: ItemWithDescription) => Observable<ItemWithDescription>;
+
 export interface GlobalSectionDialogData {
-  submitAsync: (item: ItemWithDescription) => Promise<boolean>;
+  creator: ItemWithDescriptionCreator;
   name: string;
   description?: string;
 }

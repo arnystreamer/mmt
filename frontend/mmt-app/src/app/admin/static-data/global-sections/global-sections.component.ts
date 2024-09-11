@@ -3,6 +3,7 @@ import { GlobalSectionsService } from '../services/global-sections.service';
 import { ItemWithDescription } from 'src/app/models/item-with-description';
 import { GlobalSectionsAddComponent } from './global-sections-add/global-sections-add.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-global-sections',
@@ -12,7 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 export class GlobalSectionsComponent implements OnInit {
 
   public items: ItemWithDescription[] = [];
-  public dialogResult?: string = undefined;
 
   constructor(private globalSectionsService : GlobalSectionsService, private dialog: MatDialog ) {
 
@@ -23,36 +23,21 @@ export class GlobalSectionsComponent implements OnInit {
 
   openCreateDialog()
   {
-    function getAddSectionFunction(component: GlobalSectionsComponent): (item : ItemWithDescription) => Promise<boolean>
-    {
-      return (item) => component.addSectionAsync(item);
-    }
-
     let dialogRef = this.dialog.open(GlobalSectionsAddComponent, {
       height: '400pt',
       width: '600pt',
-      data: { submitAsync: getAddSectionFunction(this) }
+      data: {
+        creator: (item: ItemWithDescription) => this.globalSectionsService.post(item),
+        name: '' }
     });
 
-    dialogRef.afterClosed().subscribe(result => this.dialogResult = JSON.stringify(result))
-  }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
 
-  addSectionAsync(section: ItemWithDescription): Promise<boolean>
-  {
-    var service = this.globalSectionsService;
-
-    return new Promise((resolve, reject) =>
-    {
-      service.post(section).subscribe({
-        next: v => {
-            this.items.push(section);
-            return resolve(true);
-          },
-        error: e => {
-          console.log(e);
-          return resolve(false);
-        }
-      });
+      if (result)
+      {
+        this.items.push(result);
+      }
     });
   }
 

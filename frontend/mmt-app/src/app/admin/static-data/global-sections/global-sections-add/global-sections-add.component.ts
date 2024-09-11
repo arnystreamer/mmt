@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { GlobalSectionDialogData } from '../../models/global-section-dialog-data';
+import { ItemWithDescriptionCreator, GlobalSectionDialogData } from '../../models/global-section-dialog-data';
 import { ItemWithDescription } from 'src/app/models/item-with-description';
 
 @Component({
@@ -13,14 +13,12 @@ export class GlobalSectionsAddComponent implements OnInit {
 
   public form!: FormGroup;
   public errorMessage: string | undefined = undefined;
-
-  private createAsync: (item: ItemWithDescription) => Promise<boolean> = (i) => Promise.resolve(true);
+  private creator: ItemWithDescriptionCreator | undefined = undefined;
 
   constructor(
     public dialogRef: MatDialogRef<GlobalSectionsAddComponent>,
     @Inject(MAT_DIALOG_DATA) public data: GlobalSectionDialogData,
     private fromBuilder: FormBuilder) {
-      this.createAsync = data.submitAsync;
   }
 
   ngOnInit(): void {
@@ -28,24 +26,25 @@ export class GlobalSectionsAddComponent implements OnInit {
       name: [this.data.name || '', Validators.required],
       description: [this.data.description || '']
     });
+
+    this.creator = this.data.creator;
   }
 
   create()
   {
-    this.createAsync({ ...this.form.value }).then((v) =>
+    const itemToCreate: ItemWithDescription = { ...this.form.value };
+
+    if (this.creator)
     {
-      if (v)
-        this.dialogRef.close(this.form.value);
-      else
-        this.errorMessage = "Creation was unsuccessful"
-
-    },
-    (e) =>
+      this.creator(itemToCreate).subscribe({
+        next: v => this.dialogRef.close(v),
+        error: e => console.log(e)
+      });
+    }
+    else
     {
-      this.errorMessage = `Creation was unsuccessful: ${e}`
-    });
-
-
+      throw 'creatorFactory is undefined';
+    }
   }
 
   cancel()

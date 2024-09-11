@@ -39,9 +39,9 @@ export class GlobalSectionsService {
 
   post(item: ItemWithDescription) : Observable<ItemWithDescription>
   {
-    if (this.items.find(i => i.id == item.id))
-      throw '';
+    const currentId = Math.max(...this.items.map(v => v.id)) + 1;
 
+    item.id = currentId;
     this.items.push(item);
 
     return of(item);
@@ -51,7 +51,7 @@ export class GlobalSectionsService {
   {
     let index = this.items.findIndex(i => i.id == item.id)
     if (index === -1)
-      throw '';
+      throw `Item not found with ID = ${item.id}`;
 
     this.items[index].name = item.name;
     this.items[index].description = item.description;

@@ -1,24 +1,30 @@
 @use '@angular/material' as mat;
 
-.form
+.container
 {
-  display: flex;
-  flex-direction: column;
 
-  .general-error
+  margin: 20px 30px;
+
+  .form
   {
-    color: red;
-  }
+    display: flex;
+    flex-direction: column;
 
-  .field
-  {
-    padding: 10px 0;
-
-    .actions
+    .general-error
     {
-      .primary
-      {
+      color: red;
+    }
 
+    .field
+    {
+      padding: 10px 0;
+
+      .actions
+      {
+        .primary
+        {
+
+        }
       }
     }
   }
