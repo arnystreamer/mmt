@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { GlobalSectionDetailsComponent } from './global-sections/global-section-details/global-section-details.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
     component: GlobalSectionsComponent,
   },
   {
+    path: 'global-sections/:id',
+    component: GlobalSectionDetailsComponent
+  },
+  {
     path: 'global-sections/create',
     component: GlobalSectionsAddComponent
   }
@@ -34,7 +39,8 @@ const routes: Routes = [
     GlobalSectionsComponent,
     GlobalSectionsListComponent,
     GlobalSectionsAddComponent,
-    GlobalSectionsListItemComponent
+    GlobalSectionsListItemComponent,
+    GlobalSectionDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -14,6 +14,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { LayoutComponent } from './layout/layout.component';
 import { StartPageComponent } from './start-page/start-page.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,16 @@ const routes: Routes = [
       {
         path: 'admin',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+      },
+      {
+        path: 'error',
+        component: ErrorComponent
+      },
+      {
+        path: '**',
+        redirectTo: '/error'
       }
+
     ]
   }
 ]
@@ -37,7 +47,8 @@ const routes: Routes = [
     AppComponent,
     MainMenuComponent,
     LayoutComponent,
-    StartPageComponent
+    StartPageComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

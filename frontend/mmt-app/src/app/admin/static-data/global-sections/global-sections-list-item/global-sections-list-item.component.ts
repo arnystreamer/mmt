@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { ItemWithDescription } from 'src/app/models/item-with-description';
 
 @Component({
@@ -10,6 +11,16 @@ export class GlobalSectionsListItemComponent {
   @Input() section!: ItemWithDescription;
   @Output() editSectionEvent = new EventEmitter<ItemWithDescription>();
   @Output() removeSectionEvent = new EventEmitter<ItemWithDescription>();
+
+  constructor(private router:Router)
+  {
+
+  }
+
+  detailsClick()
+  {
+    this.router.navigate(['/admin/static-data/global-sections', this.section.id])
+  }
 
   deleteClick()
   {

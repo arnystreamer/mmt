@@ -1,0 +1,29 @@
+.actions-panel
+{
+  padding: 12pt 16pt;
+  margin-bottom: 12pt;
+  border-bottom: 1pt solid #888;
+}
+
+.details-form
+{
+  display: flex;
+  gap: 12pt;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #ddd;
+  padding: 8pt 24pt;
+
+  .field
+  {
+    .field-caption
+    {
+      color: #aaa;
+    }
+
+    .field-value
+    {
+      margin-left: 16pt;
+      min-width: 96pt;
+    }
+  }
+}
