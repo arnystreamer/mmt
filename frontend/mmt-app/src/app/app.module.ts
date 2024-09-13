@@ -16,6 +16,7 @@ import { StartPageComponent } from './start-page/start-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ErrorComponent } from './error/error.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -31,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

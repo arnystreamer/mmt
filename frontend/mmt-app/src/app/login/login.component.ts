@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
 
   login()
   {
-    this.authService.login({login: '', password: ''})
+    this.authService.login({...this.form.value})
     .subscribe(
       {
         next: v => this.router.navigate(['/']),
-        error: e => this.errorMessage = `Error: ${e}`
+        error: e => this.errorMessage = `Error: ${ e.message ? JSON.stringify(e.message) : e }`
       }
     )
   }
