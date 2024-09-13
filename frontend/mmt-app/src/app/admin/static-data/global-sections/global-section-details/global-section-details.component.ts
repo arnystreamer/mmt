@@ -10,23 +10,14 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 })
 export class GlobalSectionDetailsComponent implements OnInit {
 
-  public sectionId: string | null = null;
   public section?: ItemWithDescription;
 
-  constructor(private route: ActivatedRoute, private globalSectionsService : GlobalSectionsService)
+  constructor(private route: ActivatedRoute)
   {
 
   }
 
   ngOnInit(): void {
-     this.sectionId = this.route.snapshot.paramMap.get('id');
-
-     if (this.sectionId)
-     {
-      this.globalSectionsService.get(parseInt(this.sectionId))
-        .subscribe({
-          next: v => this.section = v
-        });
-     }
+     this.route.data.subscribe(({item}) => this.section = item);
   }
 }

@@ -4,6 +4,7 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 import { GlobalSectionsAddComponent } from './global-sections-add/global-sections-add.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-global-sections',
@@ -14,11 +15,11 @@ export class GlobalSectionsComponent implements OnInit {
 
   public items: ItemWithDescription[] = [];
 
-  constructor(private globalSectionsService : GlobalSectionsService, private dialog: MatDialog ) {
+  constructor(private route: ActivatedRoute, private globalSectionsService : GlobalSectionsService, private dialog: MatDialog ) {
 
   }
   ngOnInit(): void {
-    this.globalSectionsService.getAll(null, null).subscribe(c => this.items.push(...c.items));
+    this.route.data.subscribe(({ itemsApi }) => this.items.push(...itemsApi.items));
   }
 
   openCreateDialog()

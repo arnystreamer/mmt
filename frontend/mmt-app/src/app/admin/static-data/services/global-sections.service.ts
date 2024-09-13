@@ -27,7 +27,7 @@ export class GlobalSectionsService {
 
   constructor() { }
 
-  getAll(skip: number | null, take: number | null): Observable<CollectionApi<ItemWithDescription>>
+  getAll(skip?: number, take?: number): Observable<CollectionApi<ItemWithDescription>>
   {
     return of({ total: this.items.length, skip: 0, take: this.items.length, count: this.items.length, items: this.items });
   }
