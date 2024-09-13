@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginData } from '../models/login-data';
 import { Token } from '../models/token';
-import { finalize, firstValueFrom, lastValueFrom, Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,7 +11,11 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   private apiUrl = environment.apiUrl;
-  private token?: Token;
+  #token?: Token;
+  get token()
+  {
+    return this.#token?.token;
+  }
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,7 +24,7 @@ export class AuthService {
     const loginUrl = `${this.apiUrl}/login`;
 
     return this.httpClient.post<Token>(loginUrl, loginData)
-      .pipe(tap(v => this.token = v));
+      .pipe(tap(v => this.#token = v));
   }
 
   isLoggedIn()
@@ -30,6 +34,6 @@ export class AuthService {
 
   logout()
   {
-    this.token = undefined;
+    this.#token = undefined;
   }
 }
