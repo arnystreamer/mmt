@@ -1,9 +1,22 @@
 .menu-items
 {
-    
+  display: flex;
+  flex-wrap: wrap;
+
     .menu-card
     {
+        width: 350px;
         max-width: 350px;
         cursor: pointer;
+        margin: 20px 30px;
+
+        mat-card-title
+        {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          margin-bottom: 12px;
+        }
     }
 }

@@ -1,0 +1,18 @@
+<div>
+  <div>
+    <h2>Global sections</h2>
+  </div>
+
+  <div class="actions-panel">
+    <button color="primary" mat-flat-button (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      New
+    </button>
+  </div>
+
+  <mmt-global-sections-list
+    [sections]="items"
+    (editSectionEvent)="editSection($event)"
+    (removeSectionEvent)="removeSection($event)"
+  />
+</div>

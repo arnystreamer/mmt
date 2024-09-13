@@ -1,0 +1,24 @@
+<div class="form">
+  <div class="field">
+    <div class="field-caption">
+      Name
+    </div>
+    <div class="field-value">
+      {{ section.name }}
+    </div>
+  </div>
+  <div class="field">
+    <div class="field-caption">
+      Description
+    </div>
+    <div class="field-value">
+      {{ section.description }}
+    </div>
+  </div>
+  <div class="field">
+    <div class="actions">
+      <div class="action-item material-symbols-outlined" (click)="detailsClick()">info</div>
+      <div class="action-item material-symbols-outlined" (click)="deleteClick()">delete</div>
+    </div>
+  </div>
+</div>

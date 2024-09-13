@@ -17,6 +17,13 @@ builder.Services.AddAuthentication(opt =>
 .AddJwtBearer();
 builder.Services.ConfigureOptions<ConfigureJwtBearerOptions>();
 
+builder.Services.AddCors(opts => opts.AddPolicy("Frontend",
+	policy => 
+	{
+		policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+	}
+	));
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
@@ -41,6 +48,8 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseCors("Frontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
