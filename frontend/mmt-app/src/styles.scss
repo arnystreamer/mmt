@@ -30,3 +30,30 @@ body
 {
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.form-container
+{
+
+  margin: 20px 30px;
+
+  .form
+  {
+    display: flex;
+    flex-direction: column;
+
+    .general-error
+    {
+      color: red;
+    }
+
+    .field
+    {
+      padding: 10px 0;
+
+      .actions
+      {
+
+      }
+    }
+  }
+}

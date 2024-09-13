@@ -1,7 +1,7 @@
 <div class="form-container">
 
   <div class="caption">
-    <h2>Add global section</h2>
+    <h2>Login</h2>
   </div>
 
   <form [formGroup]="form" class="form">
@@ -11,24 +11,23 @@
     </div>
 
     <mat-form-field class="field">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login">
     </mat-form-field>
 
     <mat-form-field class="field">
-      <mat-label>Description</mat-label>
-      <input matInput formControlName="description">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="'password'" formControlName="password">
     </mat-form-field>
 
     <div class="field">
       <div class="actions">
-        <button color="primary" mat-flat-button (click)="create()">
-          Create
+
+        <button color="primary" mat-flat-button [disabled]="this.form.untouched || this.form.invalid" (click)="login()">
+          <mat-icon>login</mat-icon>
+          Login
         </button>
 
-        <button mat-flat-button (click)="cancel()">
-          Cancel
-        </button>
       </div>
     </div>
 
