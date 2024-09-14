@@ -4,7 +4,7 @@
       Name
     </div>
     <div class="field-value">
-      {{ section.name }}
+      {{ section?.name ?? '' }}
     </div>
   </div>
   <div class="field">
@@ -12,7 +12,7 @@
       Description
     </div>
     <div class="field-value">
-      {{ section.description }}
+      {{ section?.description ?? '' }}
     </div>
   </div>
   <div class="field">

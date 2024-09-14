@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
 
 import { StartPageComponent } from './start-page.component';
+
 
 describe('StartPageComponent', () => {
   let component: StartPageComponent;
@@ -8,7 +10,10 @@ describe('StartPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [StartPageComponent]
+      declarations: [StartPageComponent],
+      imports: [
+        MatCardModule
+      ]
     });
     fixture = TestBed.createComponent(StartPageComponent);
     component = fixture.componentInstance;
