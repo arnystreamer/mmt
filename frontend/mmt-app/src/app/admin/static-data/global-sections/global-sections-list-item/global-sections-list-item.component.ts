@@ -8,7 +8,7 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
   styleUrls: ['./global-sections-list-item.component.scss']
 })
 export class GlobalSectionsListItemComponent {
-  @Input() section!: ItemWithDescription;
+  @Input() section?: ItemWithDescription;
   @Output() editSectionEvent = new EventEmitter<ItemWithDescription>();
   @Output() removeSectionEvent = new EventEmitter<ItemWithDescription>();
 
@@ -19,11 +19,13 @@ export class GlobalSectionsListItemComponent {
 
   detailsClick()
   {
-    this.router.navigate(['/admin/static-data/global-sections', this.section.id])
+    if (this.section)
+      this.router.navigate(['/admin/static-data/global-sections', this.section.id])
   }
 
   deleteClick()
   {
-    this.removeSectionEvent.emit(this.section);
+    if (this.section)
+      this.removeSectionEvent.emit(this.section);
   }
 }

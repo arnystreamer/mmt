@@ -15,7 +15,9 @@ export class GlobalSectionsComponent implements OnInit {
 
   public items: ItemWithDescription[] = [];
 
-  constructor(private route: ActivatedRoute, private globalSectionsService : GlobalSectionsService, private dialog: MatDialog ) {
+  constructor(private route: ActivatedRoute,
+    private globalSectionsService : GlobalSectionsService,
+    private dialog: MatDialog ) {
 
   }
   ngOnInit(): void {

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from "@angular/router/testing";
+import { MatIconModule } from '@angular/material/icon';
 
 import { GlobalSectionDetailsComponent } from './global-section-details.component';
 
@@ -8,7 +10,11 @@ describe('GlobalSectionDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GlobalSectionDetailsComponent]
+      declarations: [GlobalSectionDetailsComponent],
+      imports: [
+        RouterTestingModule,
+        MatIconModule
+      ]
     });
     fixture = TestBed.createComponent(GlobalSectionDetailsComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LoadingOverlayComponent } from './loading-overlay.component';
 
@@ -8,7 +9,8 @@ describe('LoadingOverlayComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoadingOverlayComponent]
+      declarations: [LoadingOverlayComponent],
+      imports: [MatProgressSpinnerModule]
     });
     fixture = TestBed.createComponent(LoadingOverlayComponent);
     component = fixture.componentInstance;
