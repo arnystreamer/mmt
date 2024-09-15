@@ -35,8 +35,6 @@ export class GlobalSectionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-
       if (result)
       {
         this.items.push(result);

@@ -1,36 +1,31 @@
-<div class="menu-items">
+<div>
+  <div>
+    <h2>Start page</h2>
+  </div>
 
-  <mat-card class="menu-card" routerLink="admin/users">
-    <mat-card-header>
-        <mat-card-title><div class="material-symbols-outlined">group</div><div>Users</div></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            You can manage users here
-        </p>
-    </mat-card-content>
-  </mat-card>
+  <div class="menu-items">
 
-  <mat-card class="menu-card" routerLink="admin/static-data">
-    <mat-card-header>
-        <mat-card-title><div class="material-symbols-outlined">abc</div><div>Static Data</div></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            You can manage static data here
-        </p>
-    </mat-card-content>
-  </mat-card>
+    <mat-card class="menu-card" routerLink="admin/users" data-cy="to-users">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">group</div><div>Users</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+              You can manage users here
+          </p>
+      </mat-card-content>
+    </mat-card>
 
-  <mat-card class="menu-card" routerLink="admin/assets/create">
-    <mat-card-header>
-      <mat-card-title><div class="material-symbols-outlined">savings</div><div>Create asset form</div></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>
-            You can create new assets here
-        </p>
-    </mat-card-content>
-  </mat-card>
+    <mat-card class="menu-card" routerLink="admin/static-data" data-cy="to-static-data">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">abc</div><div>Static Data</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+              You can manage static data here
+          </p>
+      </mat-card-content>
+    </mat-card>
 
+  </div>
 </div>
