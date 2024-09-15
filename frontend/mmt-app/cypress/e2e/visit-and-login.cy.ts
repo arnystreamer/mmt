@@ -2,20 +2,17 @@ import { SharedTest } from "./shared-test";
 
 describe('Visit and Login Test', () => {
 
-  let sharedTest: SharedTest;
-
-  before(() =>
-  {
-    sharedTest = new SharedTest('common');
-  })
+  const sharedTest: SharedTest = new SharedTest('common');
 
   it('Visits the initial project page', () => {
-    sharedTest.visit();
-    cy.contains('Login');
-  })
+    sharedTest.visit().then(() =>
+      cy.contains('Login')
+    );
+  });
 
   it('Should login', () => {
-    sharedTest.visitAndLogin();
-    cy.contains('Start page');
-  })
+    sharedTest.visitAndLogin().then(() =>
+      cy.contains('Start page')
+    );
+  });
 })
