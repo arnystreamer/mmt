@@ -5,6 +5,7 @@ import { GlobalSectionDetailsComponent } from './global-sections/global-section-
 import { GlobalSectionsAddComponent } from './global-sections/global-sections-add/global-sections-add.component';
 import { globalSectionsResolver } from './services/global-sections.resolver';
 import { globalSectionItemResolver } from './services/global-section-item.resolver';
+import { globalCategoriesResolver } from './services/global-categories.resolver';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   {
     path: 'global-sections/:id',
     component: GlobalSectionDetailsComponent,
-    resolve: { item: globalSectionItemResolver }
+    resolve: { item: globalSectionItemResolver, itemsApi: globalCategoriesResolver }
   },
   {
     path: 'global-sections/create',

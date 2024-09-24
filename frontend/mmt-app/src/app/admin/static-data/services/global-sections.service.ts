@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
 import { environment } from 'src/environments/environment';
+import { GlobalSection } from '../models/global-section.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class GlobalSectionsService {
   constructor(
     private httpClient: HttpClient) { }
 
-  getAll(skip?: number, take?: number): Observable<CollectionApi<ItemWithDescription>>
+  getAll(skip?: number, take?: number): Observable<CollectionApi<GlobalSection>>
   {
     let params = new HttpParams();
     if (skip)
@@ -25,22 +25,22 @@ export class GlobalSectionsService {
     if (take)
       params = params.set("take", take);
 
-    return this.httpClient.get<CollectionApi<ItemWithDescription>>(this.globalSectionsUrl, { params: params });
+    return this.httpClient.get<CollectionApi<GlobalSection>>(this.globalSectionsUrl, { params: params });
   }
 
-  get(id: number) : Observable<ItemWithDescription>
+  get(id: number) : Observable<GlobalSection>
   {
-    return this.httpClient.get<ItemWithDescription>(`${this.globalSectionsUrl}/${id}`);
+    return this.httpClient.get<GlobalSection>(`${this.globalSectionsUrl}/${id}`);
   }
 
-  post(item: ItemWithDescription) : Observable<ItemWithDescription>
+  post(item: GlobalSection) : Observable<GlobalSection>
   {
-    return this.httpClient.post<ItemWithDescription>(this.globalSectionsUrl, item);
+    return this.httpClient.post<GlobalSection>(this.globalSectionsUrl, item);
   }
 
-  put(item: ItemWithDescription) : Observable<ItemWithDescription>
+  put(item: GlobalSection) : Observable<GlobalSection>
   {
-    return this.httpClient.put<ItemWithDescription>(this.globalSectionsUrl, item);
+    return this.httpClient.put<GlobalSection>(this.globalSectionsUrl, item);
   }
 
   delete(id: number) : Observable<boolean>

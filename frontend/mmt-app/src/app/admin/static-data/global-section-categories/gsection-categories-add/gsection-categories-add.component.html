@@ -1,0 +1,35 @@
+<div class="list-item" *ngIf="isFormView">
+  <div class="field">
+    <div class="field-caption">
+      Name
+    </div>
+    <div class="field-value">
+      <input [type]="'text'" />
+    </div>
+  </div>
+  <div class="field">
+    <div class="field-caption">
+      Description
+    </div>
+    <div class="field-value">
+      <input [type]="'text'" />
+    </div>
+  </div>
+  <div class="field">
+    <div class="actions">
+      <div class="action-item material-symbols-outlined">add</div>
+      <div class="action-item material-symbols-outlined" (click)="cancelClick()">close</div>
+    </div>
+  </div>
+</div>
+
+<div class="list-item" *ngIf="!isFormView">
+  <div class="field">
+    <div class="field-value">
+      <button color="primary" mat-flat-button (click)="addCategoryClick()">
+        <mat-icon>add</mat-icon>
+        Add category
+      </button>
+    </div>
+  </div>
+</div>

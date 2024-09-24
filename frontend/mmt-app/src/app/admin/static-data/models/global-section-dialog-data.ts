@@ -1,10 +1,10 @@
 import { Observable } from "rxjs";
-import { ItemWithDescription } from "src/app/models/item-with-description";
+import { GlobalSection } from "./global-section.model";
 
-export type ItemWithDescriptionCreator = (x: ItemWithDescription) => Observable<ItemWithDescription>;
+export type GlobalSectionCreator = (x: GlobalSection) => Observable<GlobalSection>;
 
 export interface GlobalSectionDialogData {
-  creator: ItemWithDescriptionCreator;
+  creator: GlobalSectionCreator;
   name: string;
   description?: string;
 }
