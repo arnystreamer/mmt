@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalSectionsService } from '../../services/global-sections.service';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { GlobalSection } from '../../models/global-section.model';
 
 @Component({
   selector: 'mmt-global-section-details',
@@ -10,7 +9,7 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 })
 export class GlobalSectionDetailsComponent implements OnInit {
 
-  public section?: ItemWithDescription;
+  public section?: GlobalSection;
 
   constructor(private route: ActivatedRoute)
   {

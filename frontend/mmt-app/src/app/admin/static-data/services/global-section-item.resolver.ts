@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
 import { GlobalSectionsService } from './global-sections.service';
+import { GlobalSection } from '../models/global-section.model';
 
 
-export const globalSectionItemResolver: ResolveFn<ItemWithDescription | undefined> = (route, state) => {
+export const globalSectionItemResolver: ResolveFn<GlobalSection | undefined> = (route, state) => {
   const globalSectionsService = inject(GlobalSectionsService);
 
   var sectionId = route.paramMap.get('id');

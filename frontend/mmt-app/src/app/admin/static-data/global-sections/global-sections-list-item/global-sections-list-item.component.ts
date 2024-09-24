@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { GlobalSection } from '../../models/global-section.model';
 
 @Component({
   selector: 'mmt-global-sections-list-item',
@@ -8,9 +8,9 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
   styleUrls: ['./global-sections-list-item.component.scss']
 })
 export class GlobalSectionsListItemComponent {
-  @Input() section?: ItemWithDescription;
-  @Output() editSectionEvent = new EventEmitter<ItemWithDescription>();
-  @Output() removeSectionEvent = new EventEmitter<ItemWithDescription>();
+  @Input() section?: GlobalSection;
+  @Output() editSectionEvent = new EventEmitter<GlobalSection>();
+  @Output() removeSectionEvent = new EventEmitter<GlobalSection>();
 
   constructor(private router:Router)
   {

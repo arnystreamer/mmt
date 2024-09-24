@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ItemWithDescriptionCreator, GlobalSectionDialogData } from '../../models/global-section-dialog-data';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { GlobalSectionCreator, GlobalSectionDialogData } from '../../models/global-section-dialog-data';
+import { GlobalSection } from '../../models/global-section.model';
 
 @Component({
   selector: 'mmt-global-sections-add',
@@ -13,7 +13,7 @@ export class GlobalSectionsAddComponent implements OnInit {
 
   public form!: FormGroup;
   public errorMessage: string | undefined = undefined;
-  private creator: ItemWithDescriptionCreator | undefined = undefined;
+  private creator: GlobalSectionCreator | undefined = undefined;
 
   constructor(
     public dialogRef: MatDialogRef<GlobalSectionsAddComponent>,
@@ -32,7 +32,7 @@ export class GlobalSectionsAddComponent implements OnInit {
 
   create()
   {
-    const itemToCreate: ItemWithDescription = { ...this.form.value };
+    const itemToCreate: GlobalSection = { ...this.form.value };
 
     if (this.creator)
     {

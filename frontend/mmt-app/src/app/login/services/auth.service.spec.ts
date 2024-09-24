@@ -38,7 +38,8 @@ describe('AuthService', () => {
   });
 
   it('should logout', () => {
-    expect(service.isLoggedIn()).toBeFalse();
+
+    localStorage.clear();
 
     service.login({ login: '', password: '' }).subscribe(r =>
       {

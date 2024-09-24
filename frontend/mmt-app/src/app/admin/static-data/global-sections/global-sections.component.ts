@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalSectionsService } from '../services/global-sections.service';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { GlobalSection } from '../models/global-section.model';
 import { GlobalSectionsAddComponent } from './global-sections-add/global-sections-add.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GlobalSectionsComponent implements OnInit {
 
-  public items: ItemWithDescription[] = [];
+  public items: GlobalSection[] = [];
 
   constructor(private route: ActivatedRoute,
     private globalSectionsService : GlobalSectionsService,
@@ -30,7 +30,7 @@ export class GlobalSectionsComponent implements OnInit {
       height: '400pt',
       width: '600pt',
       data: {
-        creator: (item: ItemWithDescription) => this.globalSectionsService.post(item),
+        creator: (item: GlobalSection) => this.globalSectionsService.post(item),
         name: '' }
     });
 
@@ -42,7 +42,7 @@ export class GlobalSectionsComponent implements OnInit {
     });
   }
 
-  editSection(section: ItemWithDescription)
+  editSection(section: GlobalSection)
   {
     this.globalSectionsService.put(section).subscribe(i => {
       const index = this.items.findIndex(ix => ix.id == i.id);
@@ -51,7 +51,7 @@ export class GlobalSectionsComponent implements OnInit {
     })
   }
 
-  removeSection(section: ItemWithDescription)
+  removeSection(section: GlobalSection)
   {
     this.globalSectionsService.delete(section.id).subscribe(i => {
       if (i === false)

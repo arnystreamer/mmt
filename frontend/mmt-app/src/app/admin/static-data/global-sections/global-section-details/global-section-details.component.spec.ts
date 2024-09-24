@@ -3,6 +3,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { MatIconModule } from '@angular/material/icon';
 
 import { GlobalSectionDetailsComponent } from './global-section-details.component';
+import { GsectionCategoriesListComponent } from '../../global-section-categories/gsection-categories-list/gsection-categories-list.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('GlobalSectionDetailsComponent', () => {
   let component: GlobalSectionDetailsComponent;
@@ -10,9 +12,13 @@ describe('GlobalSectionDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GlobalSectionDetailsComponent],
+      declarations: [
+        GlobalSectionDetailsComponent,
+        GsectionCategoriesListComponent
+      ],
       imports: [
         RouterTestingModule,
+        HttpClientTestingModule,
         MatIconModule
       ]
     });

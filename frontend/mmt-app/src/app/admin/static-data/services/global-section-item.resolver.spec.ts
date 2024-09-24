@@ -2,10 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { globalSectionItemResolver } from './global-section-item.resolver';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { GlobalSection } from '../models/global-section.model';
 
 describe('globalSectionItemResolver', () => {
-  const executeResolver: ResolveFn<ItemWithDescription | undefined> = (...resolverParameters) =>
+  const executeResolver: ResolveFn<GlobalSection | undefined> = (...resolverParameters) =>
       TestBed.runInInjectionContext(() => globalSectionItemResolver(...resolverParameters));
 
   beforeEach(() => {
