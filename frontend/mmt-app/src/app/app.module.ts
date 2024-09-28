@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './login/interceptors/auth.interceptor';
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
 import { LoaderInterceptor } from './loading-overlay/services/loader.interceptor';
+import { ServiceFunctionsComponent } from './start-page/service-functions/service-functions.component';
 
 
 
@@ -31,7 +32,8 @@ import { LoaderInterceptor } from './loading-overlay/services/loader.interceptor
     LayoutComponent,
     StartPageComponent,
     ErrorComponent,
-    LoadingOverlayComponent
+    LoadingOverlayComponent,
+    ServiceFunctionsComponent
   ],
   imports: [
     BrowserModule,

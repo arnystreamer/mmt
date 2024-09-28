@@ -1,0 +1,9 @@
+<div>
+    <h2>Service functions</h2>
+</div>
+<div class="content">
+    <button mat-flat-button color="primary" [disabled]="isLoading" (click)="buttonClick()">Do health check</button>
+</div>
+<div class="result" *ngIf="result !== undefined">
+    <strong>Result:</strong> {{result}}
+</div>
