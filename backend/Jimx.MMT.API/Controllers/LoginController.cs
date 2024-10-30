@@ -20,7 +20,7 @@ namespace Jimx.MMT.API.Controllers
 			_settingsProvider = settingsProvider;
 			_keysProvider = keysProvider;
 		}
-
+		
 
 		[HttpPost]
 		public IActionResult Auth(LoginModel model)

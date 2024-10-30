@@ -1,18 +1,18 @@
 <div class="list-item" *ngIf="isFormView">
   <div class="field">
-    <div class="field-caption">
-      Name
-    </div>
     <div class="field-value">
-      <input [type]="'text'" />
+      <mat-form-field class="field">
+        <mat-label>Name</mat-label>
+        <input matInput name="name" formControlName="name">
+      </mat-form-field>
     </div>
   </div>
   <div class="field">
-    <div class="field-caption">
-      Description
-    </div>
     <div class="field-value">
-      <input [type]="'text'" />
+      <mat-form-field class="field">
+        <mat-label>Description</mat-label>
+        <input matInput name="description" formControlName="description">
+      </mat-form-field>
     </div>
   </div>
   <div class="field">
