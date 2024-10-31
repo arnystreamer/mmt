@@ -5,6 +5,7 @@ import { UsersAddComponent } from './users-add/users-add.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserItemComponent } from './users-list/user-item/user-item.component';
+import { UsersComponent } from './users.component';
 
 const routes: Routes = [
 
@@ -15,7 +16,8 @@ const routes: Routes = [
     UsersAddComponent,
     UsersListComponent,
     UserDetailsComponent,
-    UserItemComponent
+    UserItemComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

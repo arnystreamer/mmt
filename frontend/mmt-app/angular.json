@@ -11,6 +11,12 @@
           "inlineStyle": false,
           "inlineTemplate": false,
           "style": "scss"
+        },
+        "@cypress/schematic:component": {
+          "skipTests": false,
+          "inlineStyle": false,
+          "inlineTemplate": false,
+          "style": "scss"
         }
       },
       "root": "",

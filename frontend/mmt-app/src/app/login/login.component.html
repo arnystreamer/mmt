@@ -1,10 +1,10 @@
-<div class="form-container">
+<div class="forms-concise-container">
 
-  <div class="caption">
+  <caption>
     <h2>Login</h2>
-  </div>
+  </caption>
 
-  <form [formGroup]="form" class="form">
+  <form [formGroup]="form">
 
     <div class="general-error" *ngIf="errorMessage">
       {{ errorMessage }}
@@ -20,15 +20,13 @@
       <input matInput [type]="'password'" name="password" formControlName="password">
     </mat-form-field>
 
-    <div class="field">
-      <div class="actions">
+    <div class="actions">
 
-        <button color="primary" mat-flat-button [disabled]="this.form.untouched || this.form.invalid" (click)="login()">
-          <mat-icon>login</mat-icon>
-          Login
-        </button>
+      <button color="primary" mat-flat-button [disabled]="this.form.untouched || this.form.invalid" (click)="login()">
+        <mat-icon>login</mat-icon>
+        Login
+      </button>
 
-      </div>
     </div>
 
   </form>

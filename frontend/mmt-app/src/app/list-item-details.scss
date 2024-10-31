@@ -1,0 +1,48 @@
+.list-item, .details-form
+{
+  display: flex;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid #ddd;
+
+  padding: 10px 0;
+
+  section
+  {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 0;
+    flex: 1;
+
+    dl
+    {
+      margin: 0;
+      min-width: 200px;
+
+      dt
+      {
+        color: #aaa;
+      }
+
+      dd
+      {
+        margin-inline-start: 10px;
+      }
+    }
+  }
+
+  section.clickable
+  {
+    cursor: pointer;
+  }
+
+  aside
+  {
+
+    text-align: right;
+
+    .action-item
+    {
+      cursor: pointer;
+    }
+  }
+}

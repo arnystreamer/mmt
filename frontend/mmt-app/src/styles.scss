@@ -24,6 +24,7 @@ html, body
     margin: 0;
     padding: 0;
 }
+
 html, body { height: 100%; }
 
 body
@@ -31,29 +32,17 @@ body
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.form-container
+.action-item
 {
+  cursor: pointer;
+}
 
-  margin: 20px 30px;
+.icons.yes, .icons-toggled.yes
+{
+  color: green;
+}
 
-  .form
-  {
-    display: flex;
-    flex-direction: column;
-
-    .general-error
-    {
-      color: red;
-    }
-
-    .field
-    {
-      padding: 10px 0;
-
-      .actions
-      {
-
-      }
-    }
-  }
+.icons.no, .icons-toggled.no
+{
+  color: darkred;
 }
