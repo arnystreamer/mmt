@@ -11,22 +11,17 @@
   </div>
 
   <div class="details-form" *ngIf="section">
-    <div class="field">
-      <div class="field-caption">
-        Name
-      </div>
-      <div class="field-value">
-        {{ section.name }}
-      </div>
-    </div>
-    <div class="field">
-      <div class="field-caption">
-        Description
-      </div>
-      <div class="field-value">
-        {{ section.description }}
-      </div>
-    </div>
+    <section>
+      <dl>
+        <dt>Name</dt>
+        <dd>{{ section.name }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Description</dt>
+        <dd>{{ section.description }}</dd>
+      </dl>
+    </section>
   </div>
 
   <div>
