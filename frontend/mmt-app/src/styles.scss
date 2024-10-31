@@ -32,6 +32,23 @@ body
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+caption
+{
+  text-align: left;
+  display: block;
+  width: 100%;
+}
+
+.actions-panel
+{
+  padding: 12pt 0;
+  margin-bottom: 12pt;
+  border-bottom: 1pt solid #888;
+
+  display: flex;
+  gap: 10px;
+}
+
 .action-item
 {
   cursor: pointer;

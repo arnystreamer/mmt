@@ -32,7 +32,11 @@ namespace Jimx.MMT.API.Controllers
 				var tokenOptions = new JwtSecurityToken(
 					issuer: _settingsProvider.AuthIssuer,
 					audience: _settingsProvider.BaseUrl,
-					claims: new List<Claim>(),
+					claims: new List<Claim>()
+					{
+						new Claim(ClaimTypes.NameIdentifier, model.Login),
+						new Claim(ClaimTypes.Name, model.Login),
+					},
 					expires: DateTime.Now.AddMinutes(30),
 					signingCredentials: loginCredentials
 				);

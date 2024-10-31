@@ -8,17 +8,17 @@ import { HealthCheckService } from 'src/app/services/health-check.service';
 })
 export class ServiceFunctionsComponent {
   isLoading: boolean = false;
-  result: string | undefined = undefined;
-  constructor(private service: HealthCheckService) 
+  result: any | undefined = undefined;
+  constructor(private service: HealthCheckService)
   {
 
   }
-  buttonClick() 
+  buttonClick()
   {
     this.isLoading = true;
     this.service.do().subscribe({
       next: v => {
-        this.result = v;
+        this.result = JSON.parse(v);
         this.isLoading = false;
       }
     });

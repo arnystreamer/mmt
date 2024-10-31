@@ -1,12 +1,5 @@
 .form-container, .forms-concise-container, .form-inline-container
 {
-  caption
-  {
-    text-align: left;
-    display: block;
-    width: 100%;
-  }
-
   form
   {
     display: flex;
@@ -34,7 +27,7 @@
 
 .forms-concise-container
 {
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .form-inline-container
@@ -86,4 +79,9 @@
 .form-inline-container.outlined
 {
   margin: 15px 20px;
+}
+
+.auxiliary-block
+{
+  margin: 72px 0;
 }
