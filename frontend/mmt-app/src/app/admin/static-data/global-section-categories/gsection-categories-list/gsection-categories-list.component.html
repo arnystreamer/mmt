@@ -1,8 +1,10 @@
-<div class="container">
-  <h3>Categories for {{sectionId}}</h3>
-  <div *ngFor="let category of items">
-    <mmt-gsection-categories-list-item [category]="category" />
-  </div>
+<caption>
+  <h3>Categories</h3>
+</caption>
 
-  <mmt-gsection-categories-add />
+<div *ngFor="let category of items">
+  <mmt-gsection-categories-list-item [category]="category" />
 </div>
+
+<mmt-gsection-categories-add (createSectionEvent)="create($event)" />
+

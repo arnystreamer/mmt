@@ -7,7 +7,9 @@ import { GlobalSection } from '../../models/global-section.model';
 @Component({
   selector: 'mmt-global-sections-add',
   templateUrl: './global-sections-add.component.html',
-  styleUrls: ['./global-sections-add.component.scss']
+  styleUrls:
+   ['./global-sections-add.component.scss',
+    '../../../../forms.scss']
 })
 export class GlobalSectionsAddComponent implements OnInit {
 

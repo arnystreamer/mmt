@@ -22,4 +22,15 @@ export class GsectionCategoriesListComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(({ itemsApi }) => this.items.push(...itemsApi.items));
   }
+
+  create(item: GlobalSectionCategory)
+  {
+    if (item && this.sectionId)
+    {
+      this.globalCategoriesService.post(this.sectionId, item)
+        .subscribe({
+          next: v => this.items.push(v)
+        });
+    }
+  }
 }

@@ -1,23 +1,19 @@
 <div class="list-item">
-  <div class="field">
-    <div class="field-caption">
-      Name
-    </div>
-    <div class="field-value">
-      {{ category?.name ?? '' }}
-    </div>
-  </div>
-  <div class="field">
-    <div class="field-caption">
-      Description
-    </div>
-    <div class="field-value">
-      {{ category?.description ?? '' }}
-    </div>
-  </div>
-  <div class="field">
-    <div class="actions">
 
-    </div>
-  </div>
+  <section>
+    <dl>
+      <dt>Name</dt>
+      <dd>{{ category?.name ?? '' }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Description</dt>
+      <dd>{{ category?.description ?? '' }}</dd>
+    </dl>
+  </section>
+
+  <aside>
+    <div class="action-item material-symbols-outlined" (click)="deleteClick()" data-cy="action-delete">delete</div>
+  </aside>
+
 </div>

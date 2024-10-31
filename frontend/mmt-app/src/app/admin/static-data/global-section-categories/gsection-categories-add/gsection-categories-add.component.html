@@ -1,26 +1,32 @@
-<div class="list-item" *ngIf="isFormView">
-  <div class="field">
-    <div class="field-caption">
-      Name
-    </div>
-    <div class="field-value">
-      <input [type]="'text'" />
-    </div>
-  </div>
-  <div class="field">
-    <div class="field-caption">
-      Description
-    </div>
-    <div class="field-value">
-      <input [type]="'text'" />
-    </div>
-  </div>
-  <div class="field">
+<div class="form-inline-container" *ngIf="isFormView">
+  <form [formGroup]="form">
+
+    <mat-form-field class="field">
+      <mat-label>Name</mat-label>
+      <input matInput name="name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Description</mat-label>
+      <input matInput name="description" formControlName="description">
+    </mat-form-field>
+
     <div class="actions">
-      <div class="action-item material-symbols-outlined">add</div>
-      <div class="action-item material-symbols-outlined" (click)="cancelClick()">close</div>
+      <div class="action-item material-symbols-outlined icons-toggled yes" (click)="createClick()">add</div>
+      <div class="action-item material-symbols-outlined icons-toggled no" (click)="cancelClick()">close</div>
+
+      <button class="action-item buttons-toggled yes" color="primary" mat-flat-button (click)="createClick()">
+        <mat-icon>add</mat-icon>
+        Append category
+      </button>
+
+      <button class="action-item buttons-toggled no" color="secondary" mat-flat-button (click)="cancelClick()">
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
     </div>
-  </div>
+
+  </form>
 </div>
 
 <div class="list-item" *ngIf="!isFormView">

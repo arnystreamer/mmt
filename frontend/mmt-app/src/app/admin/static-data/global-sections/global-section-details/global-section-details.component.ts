@@ -5,7 +5,10 @@ import { GlobalSection } from '../../models/global-section.model';
 @Component({
   selector: 'mmt-global-section-details',
   templateUrl: './global-section-details.component.html',
-  styleUrls: ['./global-section-details.component.scss']
+  styleUrls: [
+    './global-section-details.component.scss',
+    '../../../../list-item-details.scss'
+  ]
 })
 export class GlobalSectionDetailsComponent implements OnInit {
 

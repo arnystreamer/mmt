@@ -5,7 +5,10 @@ import { GlobalSection } from '../../models/global-section.model';
 @Component({
   selector: 'mmt-global-sections-list-item',
   templateUrl: './global-sections-list-item.component.html',
-  styleUrls: ['./global-sections-list-item.component.scss']
+  styleUrls: [
+    './global-sections-list-item.component.scss',
+    '../../../../list-item-details.scss'
+  ]
 })
 export class GlobalSectionsListItemComponent {
   @Input() section?: GlobalSection;
@@ -25,7 +28,7 @@ export class GlobalSectionsListItemComponent {
 
   deleteClick()
   {
-    if (this.section)
+    if (this.section && confirm(`Are you sure to delete ${this.section.name}?`))
       this.removeSectionEvent.emit(this.section);
   }
 }

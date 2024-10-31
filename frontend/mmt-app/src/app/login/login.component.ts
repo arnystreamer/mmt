@@ -6,7 +6,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'mmt-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: [
+    './login.component.scss',
+    '../forms.scss'
+  ]
 })
 export class LoginComponent implements OnInit {
 
