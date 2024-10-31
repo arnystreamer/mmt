@@ -33,4 +33,22 @@ export class GsectionCategoriesListComponent implements OnInit {
         });
     }
   }
+
+  remove(category: GlobalSectionCategory)
+  {
+    if (category && this.sectionId)
+    {
+      this.globalCategoriesService.delete(this.sectionId, category.id)
+        .subscribe({
+          next: v =>
+          {
+            if (!v)
+              return;
+
+            const index = this.items.findIndex(ix => ix.id == category.id);
+            this.items.splice(index, 1);
+          }
+        });
+    }
+  }
 }

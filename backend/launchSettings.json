@@ -4,7 +4,8 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "jimx.mmt.api": "StartDebugging"
+        "jimx.mmt.api": "StartWithoutDebugging",
+        "app_db": "StartWithoutDebugging"
       }
     }
   }

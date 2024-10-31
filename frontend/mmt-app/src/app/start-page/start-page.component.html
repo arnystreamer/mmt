@@ -3,32 +3,69 @@
     <h2>Start page</h2>
   </div>
 
+  <p>
+    <i>No items</i>
+  </p>
+
+  <div>
+    <h2>Static data</h2>
+  </div>
+
   <div class="menu-items">
 
-    <mat-card class="menu-card" routerLink="admin/users" data-cy="to-users">
+    <mat-card class="menu-card" routerLink="wallets" data-cy="to-wallets">
       <mat-card-header>
-          <mat-card-title><div class="material-symbols-outlined">group</div><div>Users</div></mat-card-title>
+          <mat-card-title><div class="material-symbols-outlined">wallet</div><div>Wallets</div></mat-card-title>
       </mat-card-header>
       <mat-card-content>
           <p>
-              You can manage users here
+            Wallets is for structuring expenses
           </p>
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="menu-card" routerLink="admin/static-data" data-cy="to-static-data">
+    <mat-card class="menu-card" routerLink="shared-accounts" data-cy="to-shared-accounts">
       <mat-card-header>
-          <mat-card-title><div class="material-symbols-outlined">abc</div><div>Static Data</div></mat-card-title>
+          <mat-card-title><div class="material-symbols-outlined">account_balance</div><div>Shared accounts</div></mat-card-title>
       </mat-card-header>
       <mat-card-content>
           <p>
-              You can manage static data here
+            Shared accounts can be shared between multiple users
+          </p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="menu-card" routerLink="local-sections" data-cy="to-local-sections">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">segment</div><div>Local sections</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+            Local sections
           </p>
       </mat-card-content>
     </mat-card>
 
   </div>
-</div>
-<div>
-  <mmt-service-functions></mmt-service-functions>
+
+  <div>
+    <h2>Settings</h2>
+  </div>
+
+  <div class="menu-items">
+
+    <mat-card class="menu-card" routerLink="admin" data-cy="to-admin">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">group</div><div>Administration</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+              Admin panel
+          </p>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+
 </div>

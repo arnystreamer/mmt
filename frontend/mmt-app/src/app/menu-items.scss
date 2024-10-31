@@ -1,0 +1,28 @@
+.menu-items
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .menu-card
+  {
+      cursor: pointer;
+
+      @media (max-width: 599px) {
+        width: 100%;
+      }
+
+      @media (min-width: 600px) {
+        min-width: 260px;
+      }
+
+      mat-card-title
+      {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        margin-bottom: 12px;
+      }
+  }
+}

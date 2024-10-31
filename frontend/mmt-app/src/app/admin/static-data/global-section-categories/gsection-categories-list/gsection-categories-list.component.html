@@ -3,7 +3,7 @@
 </caption>
 
 <div *ngFor="let category of items">
-  <mmt-gsection-categories-list-item [category]="category" />
+  <mmt-gsection-categories-list-item [category]="category" (removeCategoryEvent)="remove($event)" />
 </div>
 
 <mmt-gsection-categories-add (createSectionEvent)="create($event)" />
