@@ -9,7 +9,6 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { GlobalSectionDetailsComponent } from './global-sections/global-section-details/global-section-details.component';
 import { StaticDataRoutingModule } from './static-data-routing.module';
 import { FormControlsModule } from 'src/app/shared/form-controls.module';
-import { GlobalSectionCategoriesComponent } from './global-section-categories/global-section-categories.component';
 import { GsectionCategoriesListComponent } from './global-section-categories/gsection-categories-list/gsection-categories-list.component';
 import { GsectionCategoriesListItemComponent } from './global-section-categories/gsection-categories-list-item/gsection-categories-list-item.component';
 import { GsectionCategoriesAddComponent } from './global-section-categories/gsection-categories-add/gsection-categories-add.component';
@@ -21,7 +20,6 @@ import { GsectionCategoriesAddComponent } from './global-section-categories/gsec
     GlobalSectionsAddComponent,
     GlobalSectionsListItemComponent,
     GlobalSectionDetailsComponent,
-    GlobalSectionCategoriesComponent,
     GsectionCategoriesListComponent,
     GsectionCategoriesListItemComponent,
     GsectionCategoriesAddComponent
