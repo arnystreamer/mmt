@@ -12,12 +12,12 @@
     </mat-form-field>
 
     <div class="actions">
-      <div class="action-item material-symbols-outlined icons-toggled yes" (click)="submitWallet()">add</div>
+      <div class="action-item material-symbols-outlined icons-toggled yes" (click)="submitEntity()">add</div>
       <div class="action-item material-symbols-outlined icons-toggled no" (click)="hideForm()">close</div>
 
-      <button class="action-item buttons-toggled yes" color="primary" mat-flat-button (click)="submitWallet()">
+      <button class="action-item buttons-toggled yes" color="primary" mat-flat-button (click)="submitEntity()">
         <mat-icon>add</mat-icon>
-        Append wallet
+        Append {{ entityName }}
       </button>
 
       <button class="action-item buttons-toggled no" color="secondary" mat-flat-button (click)="hideForm()">
@@ -34,7 +34,7 @@
     <div class="field-value">
       <button color="primary" mat-flat-button (click)="showForm()">
         <mat-icon>add</mat-icon>
-        Add wallet
+        Add {{ entityName }}
       </button>
     </div>
   </div>

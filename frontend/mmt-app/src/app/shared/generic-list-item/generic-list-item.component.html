@@ -1,14 +1,14 @@
 <div class="list-item">
 
-  <section class="clickable" (click)="detailsClick()" data-cy="to-info">
+  <section [class.clickable]="navigateRoute != undefined" (click)="detailsClick()" data-cy="to-info">
     <dl>
       <dt>Name</dt>
-      <dd>{{ wallet?.name ?? '' }}</dd>
+      <dd>{{ item?.name ?? '' }}</dd>
     </dl>
 
     <dl>
       <dt>Description</dt>
-      <dd>{{ wallet?.description ?? '' }}</dd>
+      <dd>{{ item?.description ?? '' }}</dd>
     </dl>
   </section>
 

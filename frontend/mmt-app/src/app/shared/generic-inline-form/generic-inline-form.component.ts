@@ -1,18 +1,17 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Wallet } from '../models/wallet.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ItemWithDescription } from 'src/app/models/item-with-description';
 
 @Component({
-  selector: 'mmt-wallets-add',
-  templateUrl: './wallets-add.component.html',
-  styleUrls: [
-    './wallets-add.component.scss',
+  selector: 'mmt-generic-inline-form',
+  templateUrl: './generic-inline-form.component.html',
+  styleUrls: ['./generic-inline-form.component.scss',
     '../../list-item-details.scss',
-    '../../forms.scss'
-  ]
+    '../../forms.scss']
 })
-export class WalletsAddComponent {
-  @Output() createEvent = new EventEmitter<Wallet>();
+export class GenericInlineFormComponent {
+  @Input() entityName: string = '';
+  @Output() createEvent = new EventEmitter<ItemWithDescription>();
 
   public form!: FormGroup;
   public isFormView: boolean = false;
@@ -29,7 +28,7 @@ export class WalletsAddComponent {
     });
   }
 
-  submitWallet()
+  submitEntity()
   {
     if (this.form.valid)
     {

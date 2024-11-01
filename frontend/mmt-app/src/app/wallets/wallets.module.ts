@@ -7,8 +7,6 @@ import { FormControlsModule } from 'src/app/shared/form-controls.module';
 import { WalletDetailsComponent } from './wallet-details/wallet-details.component';
 import { WalletSectionDetailsComponent } from './wallet-sections/wallet-section-details/wallet-section-details.component';
 import { WalletsListComponent } from './wallets-list/wallets-list.component';
-import { WalletsListItemComponent } from './wallets-list-item/wallets-list-item.component';
-import { WalletsAddComponent } from './wallets-add/wallets-add.component';
 import { WalletSectionsListComponent } from './wallet-sections/wallet-sections-list/wallet-sections-list.component';
 import { WalletSectionsListItemComponent } from './wallet-sections/wallet-sections-list-item/wallet-sections-list-item.component';
 import { WalletSectionCategoriesListItemComponent } from './wallet-sections/wallet-section-categories-list-item/wallet-section-categories-list-item.component';
@@ -24,8 +22,6 @@ import { WalletSectionAddComponent } from './wallet-sections/wallet-section-add/
     WalletDetailsComponent,
     WalletSectionDetailsComponent,
     WalletsListComponent,
-    WalletsListItemComponent,
-    WalletsAddComponent,
     WalletSectionsListComponent,
     WalletSectionsListItemComponent,
     WalletSectionCategoriesListItemComponent,
