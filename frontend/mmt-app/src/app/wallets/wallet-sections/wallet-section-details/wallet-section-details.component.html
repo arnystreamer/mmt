@@ -1,10 +1,10 @@
 <div>
   <div>
-    <h2>Wallet details {{wallet?.id}}</h2>
+    <h2>Wallet section details {{section?.id}}</h2>
   </div>
 
   <div class="actions-panel">
-    <button color="accent" mat-flat-button [routerLink]="['..']" data-cy="action-back">
+    <button color="accent" mat-flat-button [routerLink]="['../..']" data-cy="action-back">
       <mat-icon>arrow_back</mat-icon>
       Back
     </button>
@@ -24,7 +24,7 @@
     </section>
   </div>
 
-  <mmt-wallet-sections-list [sections]="sections"
-  (createSectionItemEvent)="createWalletSection($event)"
-  (removeSectionItemEvent)="removeWalletSection($event)" />
+  <mmt-wallet-section-categories-list [categories]="categories"
+  (createCategoryItemEvent)="createWalletSectionCategory($event)"
+  (removeCategoryItemEvent)="removeWalletSectionCategory($event)" />
 </div>

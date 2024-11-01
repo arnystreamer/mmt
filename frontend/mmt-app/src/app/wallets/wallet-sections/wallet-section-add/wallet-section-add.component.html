@@ -1,0 +1,41 @@
+<div class="form-inline-container" *ngIf="isFormView">
+  <form [formGroup]="form">
+
+    <mat-form-field class="field">
+      <mat-label>Name</mat-label>
+      <input matInput name="name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Description</mat-label>
+      <input matInput name="description" formControlName="description">
+    </mat-form-field>
+
+    <div class="actions">
+      <div class="action-item material-symbols-outlined icons-toggled yes" (click)="submitSection()">add</div>
+      <div class="action-item material-symbols-outlined icons-toggled no" (click)="hideForm()">close</div>
+
+      <button class="action-item buttons-toggled yes" color="primary" mat-flat-button (click)="submitSection()">
+        <mat-icon>add</mat-icon>
+        Append section
+      </button>
+
+      <button class="action-item buttons-toggled no" color="secondary" mat-flat-button (click)="hideForm()">
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<div class="list-item" *ngIf="!isFormView">
+  <div class="field">
+    <div class="field-value">
+      <button color="primary" mat-flat-button (click)="showForm()">
+        <mat-icon>add</mat-icon>
+        Add section
+      </button>
+    </div>
+  </div>
+</div>

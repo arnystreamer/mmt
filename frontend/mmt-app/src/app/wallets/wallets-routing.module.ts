@@ -7,7 +7,7 @@ import { walletSectionsResolver } from './services/wallet-sections.resolver';
 import { walletSectionItemResolver } from './services/wallet-section-item.resolver';
 import { walletSectionCategoriesResolver } from './services/wallet-section-categories.resolver';
 import { WalletDetailsComponent } from './wallet-details/wallet-details.component';
-import { WalletSectionDetailsComponent } from './wallet-section-details/wallet-section-details.component';
+import { WalletSectionDetailsComponent } from './wallet-sections/wallet-section-details/wallet-section-details.component';
 
 const routes: Routes = [
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: ':id/sections/:sectionId',
     component: WalletSectionDetailsComponent,
-    resolve: { item: walletSectionItemResolver, itemsApi: walletSectionCategoriesResolver }
+    resolve: { parent: walletItemResolver, item: walletSectionItemResolver, itemsApi: walletSectionCategoriesResolver }
   }
 ];
 

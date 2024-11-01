@@ -1,0 +1,14 @@
+<div>
+
+  <caption>
+    <h3>Categories</h3>
+  </caption>
+
+  <div *ngFor="let category of categories">
+    <mmt-wallet-section-categories-list-item [category]="category" (removeEvent)="removeCategoryItemEvent.emit($event)" />
+  </div>
+  <div *ngIf="!categories">
+    <i>No categories</i>
+  </div>
+  <mmt-wallet-section-categories-add (createEvent)="createCategoryItemEvent.emit($event)"/>
+</div>
