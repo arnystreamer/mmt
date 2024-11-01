@@ -1,0 +1,19 @@
+<div class="list-item">
+
+  <section class="clickable" (click)="detailsClick()" data-cy="to-info">
+    <dl>
+      <dt>Name</dt>
+      <dd>{{ wallet?.name ?? '' }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Description</dt>
+      <dd>{{ wallet?.description ?? '' }}</dd>
+    </dl>
+  </section>
+
+  <aside>
+    <div class="action-item material-symbols-outlined" (click)="deleteClick()" data-cy="action-delete">delete</div>
+  </aside>
+
+</div>

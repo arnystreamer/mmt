@@ -17,7 +17,7 @@ namespace Jimx.MMT.API.Services
 
 			BaseUrl = (!string.IsNullOrWhiteSpace(options.Value.BaseUrl) ? options.Value.BaseUrl :
 				Environment.GetEnvironmentVariable("GENERAL_BASEURL"))
-				?? "https://localhost:58147";
+				?? "https://localhost:55562";
 
 			FrontendUrl = (!string.IsNullOrWhiteSpace(options.Value.FrontendUrl) ? options.Value.FrontendUrl :
 				Environment.GetEnvironmentVariable("GENERAL_FRONTENDURL"))

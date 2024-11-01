@@ -1,0 +1,30 @@
+<div>
+  <div>
+    <h2>Wallet section details {{section?.id}}</h2>
+  </div>
+
+  <div class="actions-panel">
+    <button color="accent" mat-flat-button [routerLink]="['../..']" data-cy="action-back">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <div class="details-form" *ngIf="wallet">
+    <section>
+      <dl>
+        <dt>Name</dt>
+        <dd>{{ wallet.name }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Description</dt>
+        <dd>{{ wallet.description }}</dd>
+      </dl>
+    </section>
+  </div>
+
+  <mmt-wallet-section-categories-list [categories]="categories"
+  (createCategoryItemEvent)="createWalletSectionCategory($event)"
+  (removeCategoryItemEvent)="removeWalletSectionCategory($event)" />
+</div>

@@ -6,13 +6,15 @@ using Jimx.MMT.API.Services.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 
 namespace Jimx.MMT.API.Controllers
 {
 	[ApiController]
-	[Route("wallets/{walletId}/sections/{sectionId}/categories/")]
+	[Route("wallets/{walletId}/sections/{sectionId}/categories")]
 	[Authorize]
 	public class WalletsSectionsCategoriesController : ControllerBase
 	{
@@ -24,6 +26,9 @@ namespace Jimx.MMT.API.Controllers
 
 		private readonly Func<int, Expression<Func<Section, bool>>> ExpressionIsSectionBelongsToWallet = walletId =>
 			s => s.UserId == null && s.WalletId == walletId && s.SharedAccount == null;
+
+		private readonly Func<Guid, Expression<Func<Wallet, bool>>> ExpressionIsWalletBelongsToUser = userId =>
+			w => w.UserId == userId;
 
 		public WalletsSectionsCategoriesController(ILogger<WalletsSectionsCategoriesController> logger, ApiDbContext context)
 		{
@@ -53,28 +58,35 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
-			var section = _context.Sections.Include(s => s.Categories).FirstOrDefault(c => c.WalletId == walletId && c.Id == sectionId);
-			if (section == null || section.Wallet == null)
+			if (!_context.Sections.Where(ExpressionIsSectionBelongsToWallet(walletId))
+				.Any(c => c.Id == sectionId))
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
 			}
 
-			if (section.Wallet.UserId != currentUser.Id)
+			if (!_context.Wallets.Where(ExpressionIsWalletBelongsToUser(currentUser.Id))
+				.Any(w => w.Id == walletId))
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(walletId), typeof(IdItem));
 			}
 
-			List<CategoryApi> categoryApis = new List<CategoryApi>();
-			foreach (var category in section.Categories)
-			{
-				categoryApis.Add(new CategoryApi(category.Id, category.SectionId, category.Name, category.Description));
-			}
+			var categoriesCount = _context.Categories
+				.Where(ExpressionIsSectionCategoryBelongsWallet(sectionId, walletId))
+				.Count();
 
-			throw new NotImplementedException();
+			int skip = requestApi.Skip ?? 0;
+			int take = requestApi.Take ?? 10;
+			var categories = _context.Categories
+				.Where(ExpressionIsSectionCategoryBelongsWallet(sectionId, walletId))
+				.Skip(skip).Take(take).ToList();
+
+			var result = categories.Select(c => c.ToCategoryApi()).ToArray();
+
+			return new CollectionApi<CategoryApi>(categoriesCount, skip, take, result.Length, result.ToArray());
 		}
 
 		[HttpPost]
-		public CategoryApi Post(int walletId, int sectionId, CategoryEditApi categoryApi)
+		public CategoryApi Post(int walletId, int sectionId, [FromBody] CategoryEditApi categoryApi)
 		{
 			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
@@ -98,7 +110,7 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpPut]
-		public CategoryApi Put(int walletId, int sectionId, CategoryEditApi categoryApi)
+		public CategoryApi Put(int walletId, int sectionId, [FromBody] CategoryEditApi categoryApi)
 		{
 			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 

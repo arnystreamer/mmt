@@ -1,0 +1,9 @@
+<div>
+  <div *ngFor="let wallet of wallets">
+    <mmt-wallets-list-item [wallet]="wallet" (removeEvent)="removeWalletItemEvent.emit($event)" />
+  </div>
+  <div *ngIf="!wallets">
+    <i>No wallets</i>
+  </div>
+  <mmt-wallets-add (createEvent)="createWalletItemEvent.emit($event)"></mmt-wallets-add>
+</div>

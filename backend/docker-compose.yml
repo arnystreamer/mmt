@@ -12,6 +12,9 @@ services:
       dockerfile: Jimx.MMT.API/Dockerfile
     environment:
       - ConnectionStrings__DefaultConnection=User ID=root;Password=secret;Server=app_db;Port=5432;Database=MMT;Integrated Security=true;Pooling=true;
+    ports:
+     - "55561:80"
+     - "55562:443"
     networks:
       - dev
   app_db:
@@ -20,7 +23,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=qcQBW3JhVGLkrU87s2
+      - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=MMT
     ports:
       - "5433:5432"

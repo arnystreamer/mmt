@@ -6,34 +6,34 @@
 `docker build -t jimx.mmt.api:1.0 -f Dockerfile ..`
 
 `cd frontend\mmt-app`
-`docker build -t jimx.mmt.frontend:alpha -f .\Dockerfile .`
+`npm run build`
 
 ## Transferring
 
 Save:
-`docker save -o api_1.0.tar jimx.mmt.api:1.0`
-`docker save -o alpha.ui.tar jimx.mmt.frontend:alpha`
+`docker save -o mmt-api.1_0.tar jimx.mmt.api:1.0`
+`tar -czf mmt-ui.1_0.tar -C .\frontend\mmt-app\dist\mmt-app .` 
 
 Transfer:
-`scp api_1.0.tar alpha.ui.tar root@server:/root`
+`scp mmt-api.1_0.tar mmt-ui.1_0.tar root@server:/root`
 
 Cleanup:
 `docker stop Jimx.MMT.API`
-`docker stop Jimx.MMT.Frontend`
 `docker rm Jimx.MMT.API`
-`docker rm Jimx.MMT.Frontend`
 `docker rmi jimx.mmt.api:1.0`
-`docker rmi --force jimx.mmt.frontend:alpha`
+
+`cd /var/www/mmt-ui`
+`rm -ri *`
 
 Load:
-`docker load -i api_1.0.tar`
-`docker load -i alpha.ui.tar`
+`docker load -i mmt-api.1_0.tar`
+`tar -xf mmt-ui.1_0.tar -C /var/www/mmt-ui`
 
 ## Running
 
 `docker run --name Jimx.MMT.API -p 15401:80 -e "ASPNETCORE_ENVIRONMENT=Development" -e "GENERAL_BASEURL=(PLACEHOLDER1)" -e "GENERAL_FRONTENDURL=(PLACEHOLDER2)" -e "ASPNETCORE_URLS=http://+:80" -e "ConnectionStrings__DefaultConnection=(PLACEHOLDER3)"  --network=mylocalnet -dt jimx.mmt.api:1.0`
 
-`docker run -dt -p 15402:80 --name Jimx.MMT.Frontend jimx.mmt.frontend:alpha`
+`sudo service nginx restart` or `sudo service nginx start`
 
 ## Testing
 

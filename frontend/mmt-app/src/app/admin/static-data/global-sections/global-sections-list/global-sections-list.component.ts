@@ -8,6 +8,5 @@ import { GlobalSection } from '../../models/global-section.model';
 })
 export class GlobalSectionsListComponent {
   @Input() sections!: GlobalSection[];
-  @Output() editSectionEvent = new EventEmitter<GlobalSection>();
   @Output() removeSectionEvent = new EventEmitter<GlobalSection>();
 }

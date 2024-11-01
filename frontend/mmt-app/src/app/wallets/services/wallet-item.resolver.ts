@@ -1,5 +1,5 @@
 import { ResolveFn } from '@angular/router';
-import { Wallet } from '../wallet.model';
+import { Wallet } from '../models/wallet.model';
 import { inject } from '@angular/core';
 import { WalletsService } from './wallets.service';
 

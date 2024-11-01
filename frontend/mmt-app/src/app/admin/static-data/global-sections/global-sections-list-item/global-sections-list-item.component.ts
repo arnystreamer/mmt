@@ -12,7 +12,6 @@ import { GlobalSection } from '../../models/global-section.model';
 })
 export class GlobalSectionsListItemComponent {
   @Input() section?: GlobalSection;
-  @Output() editSectionEvent = new EventEmitter<GlobalSection>();
   @Output() removeSectionEvent = new EventEmitter<GlobalSection>();
 
   constructor(private router:Router)

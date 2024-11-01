@@ -10,4 +10,9 @@
     </button>
   </div>
 
+  <mmt-wallets-list [wallets]="items"
+    (createWalletItemEvent)="createWallet($event)"
+    (removeWalletItemEvent)="removeWallet($event)">
+  </mmt-wallets-list>
+
 </div>

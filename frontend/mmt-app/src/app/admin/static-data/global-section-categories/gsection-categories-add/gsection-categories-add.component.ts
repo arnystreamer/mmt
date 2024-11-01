@@ -13,7 +13,7 @@ import { GlobalSectionCategory } from '../../models/global-section-category.mode
 })
 export class GsectionCategoriesAddComponent implements OnInit {
 
-  @Output() createSectionEvent = new EventEmitter<GlobalSectionCategory>();
+  @Output() createEvent = new EventEmitter<GlobalSectionCategory>();
 
   public form!: FormGroup;
   public isFormView: boolean = false;
@@ -34,7 +34,7 @@ export class GsectionCategoriesAddComponent implements OnInit {
   {
     if (this.form.valid)
     {
-      this.createSectionEvent.emit({...this.form.value});
+      this.createEvent.emit({...this.form.value});
     }
   }
 

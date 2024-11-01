@@ -58,7 +58,7 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpPost]
-		public WalletApi Post(WalletApi walletApi)
+		public WalletApi Post([FromBody] WalletApi walletApi)
 		{
 			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
@@ -76,7 +76,7 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpPut]
-		public WalletApi Put(WalletApi walletApi)
+		public WalletApi Put([FromBody] WalletApi walletApi)
 		{
 			var currentUser = _context.Users.GetCurrentUserFromContext(User);
 
