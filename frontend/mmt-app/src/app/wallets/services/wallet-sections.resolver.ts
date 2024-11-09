@@ -1,6 +1,6 @@
 import { ResolveFn } from '@angular/router';
 import { CollectionApi } from 'src/app/models/collection-api';
-import { WalletSection } from '../wallet-section.model';
+import { WalletSection } from '../models/wallet-section.model';
 import { WalletSectionsService } from './wallet-sections.service';
 import { inject } from '@angular/core';
 

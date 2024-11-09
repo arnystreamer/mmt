@@ -5,11 +5,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { GenericListItemComponent } from './generic-list-item/generic-list-item.component';
+import { GenericInlineFormComponent } from './generic-inline-form/generic-inline-form.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    GenericListItemComponent,
+    GenericInlineFormComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -25,6 +30,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    GenericListItemComponent,
+    GenericInlineFormComponent
   ]
 })
 export class FormControlsModule { }

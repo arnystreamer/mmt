@@ -1,17 +1,17 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { WalletSectionCategory } from '../../wallet-section-category.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ItemWithDescription } from 'src/app/models/item-with-description';
 
 @Component({
-  selector: 'mmt-wallet-section-categories-add',
-  templateUrl: './wallet-section-categories-add.component.html',
-  styleUrls: [
-    './wallet-section-categories-add.component.scss',
-    '../../../list-item-details.scss',
-    '../../../forms.scss']
+  selector: 'mmt-generic-inline-form',
+  templateUrl: './generic-inline-form.component.html',
+  styleUrls: ['./generic-inline-form.component.scss',
+    '../../list-item-details.scss',
+    '../../forms.scss']
 })
-export class WalletSectionCategoriesAddComponent {
-  @Output() createEvent = new EventEmitter<WalletSectionCategory>();
+export class GenericInlineFormComponent {
+  @Input() entityName: string = '';
+  @Output() createEvent = new EventEmitter<ItemWithDescription>();
 
   public form!: FormGroup;
   public isFormView: boolean = false;
@@ -28,7 +28,7 @@ export class WalletSectionCategoriesAddComponent {
     });
   }
 
-  submitCategory()
+  submitEntity()
   {
     if (this.form.valid)
     {

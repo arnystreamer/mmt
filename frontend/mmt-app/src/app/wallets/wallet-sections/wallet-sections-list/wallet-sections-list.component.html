@@ -3,12 +3,12 @@
   <caption>
     <h3>Sections</h3>
   </caption>
-
   <div *ngFor="let section of sections">
-    <mmt-wallet-sections-list-item [section]="section" (removeEvent)="removeSectionItemEvent.emit($event)" />
+    <mmt-generic-list-item [item]="section" [navigateRoute]="['sections/', this.section.id]" [entityName]="'wallet section'"
+      (removeEvent)="removeWalletSection($event)" />
   </div>
-  <div *ngIf="!sections">
-    <i>No categories</i>
+  <div *ngIf="!sections || sections.length === 0">
+    <i>No wallet sections </i>
   </div>
-  <mmt-wallet-section-add (createEvent)="createSectionItemEvent.emit($event)"/>
+  <mmt-generic-inline-form [entityName]="'wallet section'" (createEvent)="submitWalletSection($event)" />
 </div>

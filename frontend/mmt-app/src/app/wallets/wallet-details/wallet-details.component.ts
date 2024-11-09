@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Wallet } from '../models/wallet.model';
 import { ActivatedRoute } from '@angular/router';
-import { WalletSection } from '../wallet-section.model';
+import { WalletSection } from '../models/wallet-section.model';
 import { WalletSectionsService } from '../services/wallet-sections.service';
 
 @Component({

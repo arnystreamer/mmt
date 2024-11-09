@@ -1,0 +1,15 @@
+<div>
+
+  <caption>
+    <h3>Categories</h3>
+  </caption>
+
+  <div *ngFor="let category of categories">
+    <mmt-generic-list-item [item]="category" [entityName]="'local section category'"
+      (removeEvent)="removeLocalSectionCategory($event)" />
+  </div>
+  <div *ngIf="!categories || categories.length === 0">
+    <i>No local section categories</i>
+  </div>
+  <mmt-generic-inline-form [entityName]="'local section category'" (createEvent)="submitLocalSectionCategory($event)" />
+</div>
