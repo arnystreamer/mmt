@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { WalletSection } from '../../wallet-section.model';
+import { WalletSection } from '../../models/wallet-section.model';
 import { ActivatedRoute } from '@angular/router';
 import { WalletSectionCategoriesService } from '../../services/wallet-section-categories.service';
-import { WalletSectionCategory } from '../../wallet-section-category.model';
+import { SectionCategory } from '../../../models/sections/section-category.model';
 
 @Component({
   selector: 'mmt-wallet-section-details',
@@ -15,7 +15,7 @@ import { WalletSectionCategory } from '../../wallet-section-category.model';
 export class WalletSectionDetailsComponent {
   public wallet?: WalletSection;
   public section?: WalletSection;
-  public categories: WalletSectionCategory[] = [];
+  public categories: SectionCategory[] = [];
 
   constructor(private route: ActivatedRoute, private walletSectionCategoriesService: WalletSectionCategoriesService)
   {
@@ -28,7 +28,7 @@ export class WalletSectionDetailsComponent {
     this.route.data.subscribe(({ itemsApi }) => this.categories.push(...itemsApi.items));
   }
 
-  createWalletSectionCategory(item: WalletSectionCategory)
+  createWalletSectionCategory(item: SectionCategory)
   {
     if (!this.wallet || !this.section || !item)
       return;
@@ -36,7 +36,7 @@ export class WalletSectionDetailsComponent {
     this.walletSectionCategoriesService.post(this.wallet.id, this.section.id, item).subscribe({next: v => this.categories.push(v) });
   }
 
-  removeWalletSectionCategory(item: WalletSectionCategory)
+  removeWalletSectionCategory(item: SectionCategory)
   {
     if (!this.wallet || !this.section || !item)
       return;

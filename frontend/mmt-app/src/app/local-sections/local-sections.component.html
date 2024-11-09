@@ -10,4 +10,7 @@
     </button>
   </div>
 
+  <mmt-local-sections-list [sections]="items" (createSectionItemEvent)="createSection($event)" (removeSectionItemEvent)="removeSection($event)">
+  </mmt-local-sections-list>
+
 </div>

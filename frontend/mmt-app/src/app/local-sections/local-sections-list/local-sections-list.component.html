@@ -1,0 +1,7 @@
+<div>
+  <div *ngFor="let section of sections">
+    <mmt-generic-list-item [item]="section" [navigateRoute]="['/local-sections', this.section.id]" [entityName]="'section'"
+      (removeEvent)="removeLocalSection($event)" />
+  </div>
+  <mmt-generic-inline-form [entityName]="'section'" (createEvent)="submitLocalSection($event)" />
+</div>

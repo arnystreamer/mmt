@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
 import { environment } from 'src/environments/environment';
-import { WalletSectionCategory } from '../wallet-section-category.model';
+import { SectionCategory } from '../../models/sections/section-category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class WalletSectionCategoriesService {
   constructor(
     private httpClient: HttpClient) { }
 
-  getAll(walletId: number, sectionId: number, skip?: number, take?: number): Observable<CollectionApi<WalletSectionCategory>>
+  getAll(walletId: number, sectionId: number, skip?: number, take?: number): Observable<CollectionApi<SectionCategory>>
   {
     let params = new HttpParams();
     if (skip)
@@ -24,22 +24,22 @@ export class WalletSectionCategoriesService {
     if (take)
       params = params.set("take", take);
 
-    return this.httpClient.get<CollectionApi<WalletSectionCategory>>(this.walletSectionCategoryUrlResolver(walletId, sectionId), { params: params });
+    return this.httpClient.get<CollectionApi<SectionCategory>>(this.walletSectionCategoryUrlResolver(walletId, sectionId), { params: params });
   }
 
-  get(walletId: number, sectionId: number, id: number) : Observable<WalletSectionCategory>
+  get(walletId: number, sectionId: number, id: number) : Observable<SectionCategory>
   {
-    return this.httpClient.get<WalletSectionCategory>(`${this.walletSectionCategoryUrlResolver(walletId, sectionId)}/${id}`);
+    return this.httpClient.get<SectionCategory>(`${this.walletSectionCategoryUrlResolver(walletId, sectionId)}/${id}`);
   }
 
-  post(walletId: number, sectionId: number, item: WalletSectionCategory) : Observable<WalletSectionCategory>
+  post(walletId: number, sectionId: number, item: SectionCategory) : Observable<SectionCategory>
   {
-    return this.httpClient.post<WalletSectionCategory>(this.walletSectionCategoryUrlResolver(walletId, sectionId), item);
+    return this.httpClient.post<SectionCategory>(this.walletSectionCategoryUrlResolver(walletId, sectionId), item);
   }
 
-  put(walletId: number, sectionId: number, item: WalletSectionCategory) : Observable<WalletSectionCategory>
+  put(walletId: number, sectionId: number, item: SectionCategory) : Observable<SectionCategory>
   {
-    return this.httpClient.put<WalletSectionCategory>(this.walletSectionCategoryUrlResolver(walletId, sectionId), item);
+    return this.httpClient.put<SectionCategory>(this.walletSectionCategoryUrlResolver(walletId, sectionId), item);
   }
 
   delete(walletId: number, sectionId: number, id: number) : Observable<boolean>

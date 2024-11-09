@@ -5,10 +5,11 @@
   </caption>
 
   <div *ngFor="let category of categories">
-    <mmt-wallet-section-categories-list-item [category]="category" (removeEvent)="removeCategoryItemEvent.emit($event)" />
+    <mmt-generic-list-item [item]="category" [entityName]="'wallet section category'"
+      (removeEvent)="removeWalletSectionCategories($event)" />
   </div>
-  <div *ngIf="!categories">
-    <i>No categories</i>
+  <div *ngIf="!categories || categories.length === 0">
+    <i>No wallet section categories</i>
   </div>
-  <mmt-wallet-section-categories-add (createEvent)="createCategoryItemEvent.emit($event)"/>
+  <mmt-generic-inline-form [entityName]="'wallet section category'" (createEvent)="submitWalletSectionCategories($event)" />
 </div>

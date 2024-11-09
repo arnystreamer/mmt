@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
 import { environment } from 'src/environments/environment';
-import { WalletSection } from '../wallet-section.model';
+import { WalletSection } from '../models/wallet-section.model';
 
 @Injectable({
   providedIn: 'root'
