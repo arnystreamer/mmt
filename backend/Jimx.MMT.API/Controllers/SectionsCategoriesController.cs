@@ -3,9 +3,9 @@ using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
+using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Net;
 
@@ -16,69 +16,45 @@ namespace Jimx.MMT.API.Controllers
 	[Authorize]
 	public class SectionsCategoriesController : ControllerBase
 	{
-		private readonly ApiDbContext _context;
 		private readonly ILogger<SectionsCategoriesController> _logger;
+		private readonly DbActionsWrapper<CategoryApi, CategoryEditApi, Category> _wrapper;
+		private readonly UserActionsWrapper _usersWrapper;
 
-		private Expression<Func<Section, bool>> GetExpressionIsSectionAvailableToUser(Guid userId) => s =>
-			(s.UserId == null || s.UserId == userId) &&
-			(s.WalletId == null || s.Wallet!.UserId == userId) &&
-			(s.SharedAccountId == null || s.SharedAccount!.SharedAccountToUsers.Any(satu => satu.UserId == userId));
+		private Expression<Func<Category, bool>> GetExpressionIsSectionCategoryBelongsToUser(Guid userId) => c =>
+			(c.Section.UserId == null || c.Section.UserId == userId) &&
+			(c.Section.WalletId == null || c.Section.Wallet!.UserId == userId) &&
+			(c.Section.SharedAccountId == null || c.Section.SharedAccount!.SharedAccountToUsers.Any(satu => satu.UserId == userId));
 
-		public SectionsCategoriesController(ILogger<SectionsCategoriesController> logger, ApiDbContext context)
+		public SectionsCategoriesController(ILogger<SectionsCategoriesController> logger, 
+			DbActionsWrapper<CategoryApi, CategoryEditApi, Category> wrapper,
+			UserActionsWrapper usersWrapper)
 		{
 			_logger = logger;
-			_context = context;
+			_wrapper = wrapper;
+			_usersWrapper = usersWrapper;
 		}
 
 		[HttpGet("{id}")]
 		public CategoryApi Get(int sectionId, int id)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+			var category = _wrapper.Get(c => c.Id == id && c.SectionId == sectionId, GetExpressionIsSectionCategoryBelongsToUser(currentUser.Id));
 
-			if (category == null || category.SectionId != sectionId)
+			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			var section = _context.Sections
-				.Where(GetExpressionIsSectionAvailableToUser(currentUser.Id))
-				.FirstOrDefault(s => s.Id == sectionId);
-
-			if (section == null)
-			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
-			}
-
-			return category.ToCategoryApi();
+			return category;
 		}
 
 		[HttpGet]
 		public CollectionApi<CategoryApi> GetAll(int sectionId, [FromQuery] CollectionRequestApi requestApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var section = _context.Sections
-				.Include(s => s.Categories)
-				.Where(GetExpressionIsSectionAvailableToUser(currentUser.Id))
-				.FirstOrDefault(s => s.Id == sectionId);
-
-			if (section == null)
-			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
-			}
-
-			var categoriesTotalCount = section.Categories.Count();
-
-			int skip = requestApi.Skip ?? 0;
-			int take = requestApi.Take ?? 10;
-			var result = section.Categories
-				.Skip(skip).Take(take)
-				.Select(s => s.ToCategoryApi())
-				.ToArray();
-
-			return new CollectionApi<CategoryApi>(categoriesTotalCount, skip, take, result.Length, result);
+			return _wrapper.GetAll(requestApi, GetExpressionIsSectionCategoryBelongsToUser(currentUser.Id));
 		}
 	}
-	}
+}

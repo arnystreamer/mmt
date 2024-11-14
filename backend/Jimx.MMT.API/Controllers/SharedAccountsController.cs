@@ -3,6 +3,7 @@ using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
+using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -15,120 +16,85 @@ namespace Jimx.MMT.API.Controllers
 	[Authorize]
 	public class SharedAccountsController : ControllerBase
 	{
-		private readonly ApiDbContext _context;
 		private readonly ILogger<SharedAccountsController> _logger;
+		private readonly DbActionsWrapper<SharedAccountApi, SharedAccountEditApi, SharedAccount> _wrapper;
+		private readonly UserActionsWrapper _usersWrapper;
 
 		private readonly Func<Guid, Expression<Func<SharedAccount, bool>>> ExpressionIsSharedAccountBelongsUser = userId =>
 			sa => sa.SharedAccountToUsers.Any(sau => sau.UserId == userId);
 
-		public SharedAccountsController(ILogger<SharedAccountsController> logger, ApiDbContext context)
+		public SharedAccountsController(ILogger<SharedAccountsController> logger, 
+			DbActionsWrapper<SharedAccountApi, SharedAccountEditApi, SharedAccount> wrapper,
+			UserActionsWrapper usersWrapper)
 		{
 			_logger = logger;
-			_context = context;
+			_wrapper = wrapper;
+			_usersWrapper = usersWrapper;
 		}
 
 		[HttpGet("{id}")]
 		public SharedAccountApi Get(int id)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var sharedAccount = _context.SharedAccounts
-				.Where(ExpressionIsSharedAccountBelongsUser(currentUser.Id))
-				.FirstOrDefault(c => c.Id == id);
-
+			var sharedAccount = _wrapper.Get(c => c.Id == id, ExpressionIsSharedAccountBelongsUser(currentUser.Id));
 			if (sharedAccount == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			return sharedAccount.ToSharedAccountApi();
+			return sharedAccount;
 		}
 
 		[HttpGet]
 		public CollectionApi<SharedAccountApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var count = _context.SharedAccounts.Where(sa => sa.SharedAccountToUsers.Any(sau => sau.UserId == currentUser.Id)).Count();
-
-			int skip = requestApi.Skip ?? 0;
-			int take = requestApi.Take ?? 10;
-			var sharedAccounts = _context.SharedAccounts.Where(sa => sa.SharedAccountToUsers.Any(sau => sau.UserId == currentUser.Id))
-				.Skip(skip).Take(take).ToList();
-
-			IList<SharedAccountApi> result = new List<SharedAccountApi>();
-			foreach (var sharedAccount in sharedAccounts)
-			{
-				result.Add(sharedAccount.ToSharedAccountApi());
-			}
-
-			return new CollectionApi<SharedAccountApi>(count, skip, take, result.Count, result.ToArray());
+			return _wrapper.GetAll(requestApi, ExpressionIsSharedAccountBelongsUser(currentUser.Id));
 		}
 
 		[HttpPost]
-		public SharedAccountApi Post(SharedAccountApi sharedAccountApi)
+		public SharedAccountApi Post(SharedAccountEditApi sharedAccountApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var sharedAccount = new SharedAccount()
+			return _wrapper.Add(sharedAccountApi, (ref SharedAccount sa) =>
 			{
-				Name = sharedAccountApi.Name,
-				Description = sharedAccountApi.Description
-			};
-
-			_context.SharedAccounts.Add(sharedAccount);
-
-			var sharedAccountToUser = new SharedAccountToUser()
-			{
-				SharedAccount = sharedAccount,
-				User = currentUser
-			};
-
-			sharedAccount.SharedAccountToUsers.Add(sharedAccountToUser);
-			_context.SaveChanges();
-
-			return sharedAccount.ToSharedAccountApi();
+				sa.SharedAccountToUsers.Add(new SharedAccountToUser()
+				{
+					User = currentUser
+				});
+			});
 		}
 
-		[HttpPut]
-		public SharedAccountApi Put(SharedAccountApi sharedAccountApi)
+		[HttpPut("{id}")]
+		public SharedAccountApi Put(int id, SharedAccountEditApi sharedAccountApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var sharedAccount = _context.SharedAccounts
-				.Where(ExpressionIsSharedAccountBelongsUser(currentUser.Id))
-				.FirstOrDefault(c => c.Id == sharedAccountApi.Id);
-
+			var sharedAccount = _wrapper.Edit(c => c.Id == id, sharedAccountApi, ExpressionIsSharedAccountBelongsUser(currentUser.Id));
 			if (sharedAccount == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sharedAccountApi.Id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			sharedAccount.Name = sharedAccountApi.Name;
-			sharedAccount.Description = sharedAccountApi.Description;
-			_context.SaveChanges();
-
-			return sharedAccount.ToSharedAccountApi();
+			return sharedAccount;
 		}
 
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var sharedAccount = _context.SharedAccounts
-				.Where(ExpressionIsSharedAccountBelongsUser(currentUser.Id))
-				.FirstOrDefault(c => c.Id == id);
+			var result = _wrapper.Delete(c => c.Id == id, ExpressionIsSharedAccountBelongsUser(currentUser.Id));
 
-			if (sharedAccount == null)
+			if (!result)
 			{
-				return NotFound();
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			_context.SharedAccounts.Remove(sharedAccount);
-			_context.SaveChanges();
-
-			return Ok();
+			return NoContent();
 		}
 	}
 }

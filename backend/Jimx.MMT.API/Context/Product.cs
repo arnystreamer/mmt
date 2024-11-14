@@ -1,6 +1,8 @@
-﻿namespace Jimx.MMT.API.Context
+﻿using Jimx.MMT.API.Models.Common;
+
+namespace Jimx.MMT.API.Context
 {
-	public class Product
+	public class Product : IDictionaryItemWithDescriptionEdit
 	{
 		public Guid Id { get; set; }
 		public Guid? ParentId { get; set; }
@@ -17,10 +19,10 @@
 		public DateTime CreateTime { get; set; }
 		public Guid CreateUserId { get; set; }
 
-		public virtual ICollection<Product> ChildProducts { get; set; }
-		public virtual Product ParentProduct { get; set; }
+		public virtual ICollection<Product> ChildProducts { get; set; } = new List<Product>();
+		public virtual Product? ParentProduct { get; set; }
 
-		public virtual User User { get; set; }
+		public virtual User? User { get; set; }
 
 		public virtual Category? Category { get; set; }
 		public virtual Section? Section { get; set; }

@@ -57,7 +57,7 @@ namespace Jimx.MMT.API.Migrations
 				});
 
 			migrationBuilder.CreateTable(
-				name: "Location",
+				name: "Locations",
 				columns: table => new
 				{
 					Id = table.Column<int>(type: "integer", nullable: false)
@@ -67,7 +67,7 @@ namespace Jimx.MMT.API.Migrations
 				},
 				constraints: table =>
 				{
-					table.PrimaryKey("PK_Location", x => x.Id);
+					table.PrimaryKey("PK_Locations", x => x.Id);
 				});
 
 			migrationBuilder.CreateTable(
@@ -140,9 +140,9 @@ namespace Jimx.MMT.API.Migrations
 						principalColumn: "Id",
 						onDelete: ReferentialAction.Cascade);
 					table.ForeignKey(
-						name: "FK_Receipts_Location_LocationId",
+						name: "FK_Receipts_Locations_LocationId",
 						column: x => x.LocationId,
-						principalTable: "Location",
+						principalTable: "Locations",
 						principalColumn: "Id",
 						onDelete: ReferentialAction.Cascade);
 					table.ForeignKey(
@@ -295,7 +295,7 @@ namespace Jimx.MMT.API.Migrations
 				name: "Currencies");
 
 			migrationBuilder.DropTable(
-				name: "Location");
+				name: "Locations");
 
 			migrationBuilder.DropPrimaryKey(
 				name: "PK_SharedAccountToUsers",

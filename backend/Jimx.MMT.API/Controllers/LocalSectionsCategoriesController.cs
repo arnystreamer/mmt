@@ -3,6 +3,7 @@ using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
+using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -15,124 +16,93 @@ namespace Jimx.MMT.API.Controllers
 	[Authorize]
 	public class LocalSectionsCategoriesController : ControllerBase
 	{
-		private readonly ApiDbContext _context;
 		private readonly ILogger<LocalSectionsCategoriesController> _logger;
+		private readonly DbActionsWrapper<CategoryApi, CategoryEditApi, Category> _wrapper;
+		private readonly DbActionsWrapper<LocalSectionApi, SectionEditApi, Section> _sectionsWrapper;
+		private readonly UserActionsWrapper _usersWrapper;
 
 		private readonly Func<int, Guid, Expression<Func<Category, bool>>> ExpressionIsSectionCategoryUserLocal = (sectionId, userId) =>
 			c => c.Section.UserId == userId && c.Section.WalletId == null && c.Section.SharedAccountId == null && c.Section.Id == sectionId;
 
-		private readonly Func<Guid, Expression<Func<Section, bool>>> ExpressionIsSectionBelongsToUser = userId =>
-			s => s.UserId == userId && s.WalletId == null && s.SharedAccount == null;
+		private readonly Func<int, Guid, Expression<Func<Section, bool>>> ExpressionIsSectionBelongsToUser = (id, userId) =>
+			s => s.UserId == userId && s.WalletId == null && s.SharedAccount == null && s.Id == id;
 
-		public LocalSectionsCategoriesController(ILogger<LocalSectionsCategoriesController> logger, ApiDbContext context)
+		public LocalSectionsCategoriesController(ILogger<LocalSectionsCategoriesController> logger, 
+			DbActionsWrapper<CategoryApi, CategoryEditApi, Category> wrapper,
+			DbActionsWrapper<LocalSectionApi, SectionEditApi, Section> sectionsWrapper,
+			UserActionsWrapper usersWrapper)
 		{
 			_logger = logger;
-			_context = context;
+			_wrapper = wrapper;
+			_sectionsWrapper = sectionsWrapper;
+			_usersWrapper = usersWrapper;
 		}
 
 		[HttpGet("{id}")]
 		public CategoryApi Get(int sectionId, int id)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var category = _context.Categories
-				.Where(ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id))
-				.FirstOrDefault(c => c.Id == id);
+			var category = _wrapper.Get(c => c.Id == id, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
 
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			return category.ToCategoryApi();
+			return category;
 		}
 
 		[HttpGet]
 		public CollectionApi<CategoryApi> GetAll(int sectionId, [FromQuery] CollectionRequestApi requestApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			if (!_context.Sections.Where(ExpressionIsSectionBelongsToUser(currentUser.Id))
-				.Any(c => c.Id == sectionId))
-			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
-			}
-
-			var categoriesCount = _context.Categories
-				.Where(ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id))
-				.Count();
-
-			int skip = requestApi.Skip ?? 0;
-			int take = requestApi.Take ?? 10;
-			var result = _context.Categories
-				.Where(ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id))
-				.Skip(skip).Take(take)
-				.Select(c => c.ToCategoryApi())
-				.ToArray();
-
-			return new CollectionApi<CategoryApi>(categoriesCount, skip, take, result.Length, result);
+			return _wrapper.GetAll(requestApi, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
 		}
 
 		[HttpPost]
 		public CategoryApi Post(int sectionId, CategoryEditApi categoryApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			if (!_context.Sections.Where(ExpressionIsSectionBelongsToUser(currentUser.Id))
-				.Any(c => c.Id == sectionId))
+			if (_sectionsWrapper.Count(ExpressionIsSectionBelongsToUser(sectionId, currentUser.Id)) == 0)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
 			}
 
-			var category = new Category()
-			{
-				SectionId = sectionId,
-				Name = categoryApi.Name,
-				Description = categoryApi.Description
-			};
-
-			_context.Categories.Add(category);
-			_context.SaveChanges();
-
-			return category.ToCategoryApi();
+			return _wrapper.Add(categoryApi, (ref Category c) => { c.SectionId = sectionId; });
 		}
 
-		[HttpPut]
-		public CategoryApi Put(int sectionId, CategoryEditApi categoryApi)
+		[HttpPut("{id}")]
+		public CategoryApi Put(int sectionId, int id, CategoryEditApi categoryApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var category = _context.Categories
-				.Where(ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id))
-				.FirstOrDefault(c => c.Id == categoryApi.Id);
-
-			if (category == null)
+			if (_sectionsWrapper.Count(ExpressionIsSectionBelongsToUser(sectionId, currentUser.Id)) == 0)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(categoryApi.Id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
 			}
 
-			category.Name = categoryApi.Name;
-			category.Description = categoryApi.Description;
-			_context.SaveChanges();
+			var category = _wrapper.Edit(c => c.Id == id, categoryApi, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
+			if (category == null)
+			{
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+			}
 
-			return category.ToCategoryApi();
+			return category;
 		}
 
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int sectionId, int id)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var category = _context.Categories
-				.Where(ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id))
-				.FirstOrDefault(c => c.Id == id);
-
-			if (category == null)
+			var result = _wrapper.Delete(c => c.Id == id, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
+			if (!result)
 			{
-				return NotFound(new { Id = id, SectionId = sectionId, UserId = currentUser.Id });
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
-
-			_context.Categories.Remove(category);
 
 			return NoContent();
 		}

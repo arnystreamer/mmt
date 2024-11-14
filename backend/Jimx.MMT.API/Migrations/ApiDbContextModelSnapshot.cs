@@ -87,7 +87,7 @@ namespace Jimx.MMT.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Jimx.MMT.API.Context.Product", b =>

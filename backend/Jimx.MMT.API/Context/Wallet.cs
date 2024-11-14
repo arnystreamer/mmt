@@ -1,6 +1,8 @@
-﻿namespace Jimx.MMT.API.Context
+﻿using Jimx.MMT.API.Models.Common;
+
+namespace Jimx.MMT.API.Context
 {
-	public class Wallet
+	public class Wallet : IDictionaryItemWithDescriptionEdit
 	{
 		public int Id { get; set; }
 		public Guid UserId { get; set; }

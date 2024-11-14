@@ -3,6 +3,7 @@ using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
+using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -15,22 +16,26 @@ namespace Jimx.MMT.API.Controllers
 	[Authorize]
 	public class SharedAccountsUsersController : ControllerBase
 	{
-		private readonly ApiDbContext _context;
 		private readonly ILogger<SharedAccountsUsersController> _logger;
+		private readonly ApiDbContext _context;
+		private readonly UserActionsWrapper _usersWrapper;
 
 		private readonly Func<Guid, Expression<Func<SharedAccount, bool>>> ExpressionIsSharedAccountBelongsUser = userId =>
 			sa => sa.SharedAccountToUsers.Any(sau => sau.UserId == userId);
 
-		public SharedAccountsUsersController(ILogger<SharedAccountsUsersController> logger, ApiDbContext context)
+		public SharedAccountsUsersController(ILogger<SharedAccountsUsersController> logger,
+			ApiDbContext apiDbContext,
+			UserActionsWrapper usersWrapper)
 		{
 			_logger = logger;
-			_context = context;
+			_context = apiDbContext;
+			_usersWrapper = usersWrapper;
 		}
 
 		[HttpGet]
 		public SharedAccountUsersApi GetAll(int accountId)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
 			var sharedAccountsWithUsers =
 				_context.SharedAccounts
@@ -50,13 +55,13 @@ namespace Jimx.MMT.API.Controllers
 			var saUsers = sharedAccountsWithUsers.Single();
 
 			return new SharedAccountUsersApi(saUsers.Key.Id, saUsers.Key.Name, saUsers.Key.Description,
-				saUsers.Select(u => u.User.ToUserApi()).ToArray());
+				saUsers.Select(u => new UserApi(u.User.Id, u.User.Login, u.User.Name)).ToArray());
 		}
 
 		[HttpPost]
-		public SharedAccountToUserApi Post(int accountId, SharedAccountToUserCreateApi userCreateApi)
+		public SharedAccountToUserApi Post(int accountId, SharedAccountToUserEditApi userCreateApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
 			var sharedAccount = _context.SharedAccounts
 				.Where(ExpressionIsSharedAccountBelongsUser(currentUser.Id))
@@ -84,7 +89,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpDelete("{userId}")]
 		public IActionResult Delete(int accountId, Guid userId)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
 			var sharedAccount = _context.SharedAccounts
 					.Where(ExpressionIsSharedAccountBelongsUser(currentUser.Id))
