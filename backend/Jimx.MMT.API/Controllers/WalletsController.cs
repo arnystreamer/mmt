@@ -3,8 +3,10 @@ using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
+using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Net;
 
 namespace Jimx.MMT.API.Controllers
@@ -14,21 +16,28 @@ namespace Jimx.MMT.API.Controllers
 	[Authorize]
 	public class WalletsController : ControllerBase
 	{
-		private readonly ApiDbContext _context;
 		private readonly ILogger<WalletsController> _logger;
+		private readonly DbActionsWrapper<WalletApi, WalletEditApi, Wallet> _wrapper;
+		private readonly UserActionsWrapper _usersWrapper;
 
-		public WalletsController(ILogger<WalletsController> logger, ApiDbContext context)
+		private readonly Func<Guid, Expression<Func<Wallet, bool>>> ExpressionIsWalletBelongsUser = userId =>
+			w => w.UserId == userId;
+
+		public WalletsController(ILogger<WalletsController> logger, 
+			DbActionsWrapper<WalletApi, WalletEditApi, Wallet> wrapper,
+			UserActionsWrapper usersWrapper)
 		{
 			_logger = logger;
-			_context = context;
+			_wrapper = wrapper;
+			_usersWrapper = usersWrapper;
 		}
 
 		[HttpGet("{id}")]
 		public WalletApi Get(int id)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var wallet = _context.Wallets.Where(w => w.UserId == currentUser.Id).FirstOrDefault(c => c.Id == id);
+			var wallet = _wrapper.Get(c => c.Id == id, ExpressionIsWalletBelongsUser(currentUser.Id));
 			if (wallet == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
@@ -40,84 +49,45 @@ namespace Jimx.MMT.API.Controllers
 		[HttpGet]
 		public CollectionApi<WalletApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var count = _context.Wallets.Where(w => w.UserId == currentUser.Id).Count();
-
-			int skip = requestApi.Skip ?? 0;
-			int take = requestApi.Take ?? 10;
-			var wallets = _context.Wallets.Where(w => w.UserId == currentUser.Id).Skip(skip).Take(take).ToList();
-
-			IList<WalletApi> result = new List<WalletApi>();
-			foreach (var wallet in wallets)
-			{
-				result.Add(new WalletApi(wallet.Id, wallet.UserId, wallet.Name, wallet.Description));
-			}
-
-			return new CollectionApi<WalletApi>(count, skip, take, result.Count, result.ToArray());
+			return _wrapper.GetAll(requestApi, ExpressionIsWalletBelongsUser(currentUser.Id));
 		}
 
 		[HttpPost]
-		public WalletApi Post([FromBody] WalletApi walletApi)
+		public WalletApi Post([FromBody] WalletEditApi walletApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var entry = _context.Wallets.Add(new Wallet()
-			{
-				UserId = currentUser.Id,
-				Name = walletApi.Name,
-				Description = walletApi.Description
-			});
-
-			_context.SaveChanges();
-
-			Wallet entity = entry.Entity;
-			return new WalletApi(entry.Entity.Id, entity.UserId, entry.Entity.Name, entry.Entity.Description);
+			return _wrapper.Add(walletApi, (ref Wallet w) => { w.UserId = currentUser.Id; });
 		}
 
-		[HttpPut]
-		public WalletApi Put([FromBody] WalletApi walletApi)
+		[HttpPut("{id}")]
+		public WalletApi Put(int id, [FromBody] WalletEditApi walletApi)
 		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var wallet = _context.Wallets.FirstOrDefault(c => c.Id == walletApi.Id);
-			if (wallet == null)
-			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(walletApi.Id), typeof(IdItem));
-			}
-
-			if (wallet.UserId != currentUser.Id)
-			{
-				throw new StatusCodeException(HttpStatusCode.Forbidden, new IdItem(walletApi.Id), typeof(IdItem));
-			}
-
-			wallet.Name = walletApi.Name;
-			wallet.Description = walletApi.Description;
-			_context.SaveChanges();
-
-			return walletApi;
-		}
-
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-			var currentUser = _context.Users.GetCurrentUserFromContext(User);
-
-			var wallet = _context.Wallets.FirstOrDefault(c => c.Id == id);
+			var wallet = _wrapper.Edit(c => c.Id == id, walletApi, ExpressionIsWalletBelongsUser(currentUser.Id));
 			if (wallet == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			if (wallet.UserId != currentUser.Id)
+			return wallet;
+		}
+
+		[HttpDelete("{id}")]
+		public IActionResult Delete(int id)
+		{
+			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
+
+			var result = _wrapper.Delete(c => c.Id == id, ExpressionIsWalletBelongsUser(currentUser.Id));
+			if (!result)
 			{
-				throw new StatusCodeException(HttpStatusCode.Forbidden, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
 			}
 
-			_context.Wallets.Remove(wallet);
-			_context.SaveChanges();
-
-			return;
+			return NoContent();
 		}
 	}
 }

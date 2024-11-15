@@ -1,4 +1,3 @@
-﻿namespace Jimx.MMT.API.Models.Common
-{
-	public record GuidItem(Guid Id);
-}
+﻿namespace Jimx.MMT.API.Models.Common;
+
+public record GuidItem(Guid Id);

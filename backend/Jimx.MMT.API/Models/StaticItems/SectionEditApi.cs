@@ -2,4 +2,4 @@
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record SectionEditApi(int Id, string Name, string Description) : DictionaryItemWithDescription(Id, Name, Description);
+public record SectionEditApi(string Name, string? Description) : DictionaryItemWithDescriptionEdit(Name, Description);

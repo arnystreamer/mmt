@@ -1,4 +1,5 @@
 ﻿using Jimx.MMT.API.Context;
+using Jimx.MMT.API.Services.DbWrapper;
 using System.Security.Claims;
 using System.Text;
 
@@ -51,10 +52,10 @@ namespace Jimx.MMT.API.Services.Auth
 			return principal.Identity.Name.ToLower();
 		}
 
-		public static User GetCurrentUserFromContext(this IQueryable<User> users, ClaimsPrincipal principal)
+		public static User GetCurrentUserFromContext(this UserActionsWrapper userWrapper, ClaimsPrincipal principal)
 		{
 			var currentLogin = GetRequiredUserLoginLowered(principal);
-			var currentUser = users.FirstOrDefault(u => u.Login.ToLower() == currentLogin);
+			var currentUser = userWrapper.GetByLogin(currentLogin);
 
 			if (currentUser == null)
 			{

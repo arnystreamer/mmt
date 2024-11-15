@@ -1,3 +1,4 @@
+using Jimx.MMT.API;
 using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Options;
@@ -31,6 +32,8 @@ options.UseNpgsql(conn));
 
 builder.Services.Configure<GeneralOptions>(
 	builder.Configuration.GetSection(GeneralOptions.OptionName));
+
+builder.Services.RegisterAllDbActionsWrappers();
 
 builder.Services.AddSingleton<SettingsProvider>();
 builder.Services.AddSingleton<KeysProvider>();

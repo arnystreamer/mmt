@@ -2,4 +2,4 @@
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record SharedAccountUsersApi(int Id, string Name, string Description, UserApi[] Users) : DictionaryItemWithDescription(Id, Name, Description);
+public record SharedAccountUsersApi(int Id, string Name, string? Description, UserApi[] Users) : DictionaryItemWithDescription(Id, Name, Description);

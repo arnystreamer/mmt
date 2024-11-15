@@ -2,4 +2,4 @@
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record WalletApi(int Id, Guid UserId, string Name, string Description) : DictionaryItemWithDescription(Id, Name, Description);
+public record WalletApi(int Id, Guid UserId, string Name, string? Description) : DictionaryItemWithDescription(Id, Name, Description);

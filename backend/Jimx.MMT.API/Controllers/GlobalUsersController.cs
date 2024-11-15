@@ -1,7 +1,7 @@
 ﻿using Jimx.MMT.API.App;
-using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
+using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -13,89 +13,61 @@ namespace Jimx.MMT.API.Controllers
 	[Authorize]
 	public class GlobalUsersController : ControllerBase
 	{
-		private readonly ApiDbContext _context;
 		private readonly ILogger<GlobalUsersController> _logger;
+		private readonly UserActionsWrapper _wrapper;
 
-		public GlobalUsersController(ILogger<GlobalUsersController> logger, ApiDbContext context)
+		public GlobalUsersController(ILogger<GlobalUsersController> logger,
+			UserActionsWrapper wrapper)
 		{
 			_logger = logger;
-			_context = context;
+			_wrapper = wrapper;
 		}
 
 		[HttpGet("{id}")]
 		public UserApi Get(Guid id)
 		{
-			var user = _context.Users.FirstOrDefault(u => u.Id == id);
-
+			var user = _wrapper.Get(u => u.Id == id);
 			if (user == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(id), typeof(GuidItem));
 			}
 
-			return user.ToUserApi();
+			return user;
 		}
 
 		[HttpGet]
 		public CollectionApi<UserApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
-			var userAll = _context.Users;
-
-			var usersTotalCount = userAll.Count();
-
-			int skip = requestApi.Skip ?? 0;
-			int take = requestApi.Take ?? 10;
-			var result = userAll
-				.Skip(skip).Take(take)
-				.Select(s => s.ToUserApi())
-				.ToArray();
-
-			return new CollectionApi<UserApi>(usersTotalCount, skip, take, result.Length, result);
+			return _wrapper.GetAll(requestApi);
 		}
 
 		[HttpPost]
-		public UserApi Post(UserApi userApi)
+		public UserApi Post(UserEditApi userApi)
 		{
-			var user = new User()
-			{
-				Login = userApi.Login.ToLower(),
-				Name = userApi.Name
-			};
-
-			var entity = _context.Users.Add(user);
-			_context.SaveChanges();
-
-			return entity.Entity.ToUserApi();
+			return _wrapper.Add(new UserEditApi(userApi.Login.ToLowerInvariant(), userApi.Name));
 		}
 
-		[HttpPut]
-		public UserApi Put(UserApi userApi)
+		[HttpPut("{id}")]
+		public UserApi Put(Guid id, UserEditApi userApi)
 		{
-			var user = _context.Users.FirstOrDefault(u => u.Id == userApi.Id);
-
+			var user = _wrapper.Edit(u => u.Id == id, new UserEditApi(userApi.Login.ToLowerInvariant(), userApi.Name));
 			if (user == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(userApi.Id), typeof(GuidItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(id), typeof(GuidItem));
 			}
 
-			user.Login = userApi.Login.ToLower();
-			user.Name = userApi.Name;
-
-			_context.SaveChanges();
-
-			return user.ToUserApi();
+			return user;
 		}
 
 		[HttpDelete("{id}")]
 		public IActionResult Delete(Guid id)
 		{
-			var user = _context.Users.FirstOrDefault(u => u.Id == id);
-
-			if (user == null)
+			var result = _wrapper.Delete(u => u.Id == id);
+			if (!result)
 			{
-				return NotFound(new { Id = id });
+				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(id), typeof(GuidItem));
 			}
-
-			_context.SaveChanges();
+			
 			return NoContent();
 		}
 	}

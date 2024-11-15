@@ -2,4 +2,4 @@
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record SharedAccountSectionApi(int Id, int SharedAccountId, string Name, string Description) : DictionaryItemWithDescription(Id, Name, Description);
+public record SharedAccountSectionApi(int Id, int SharedAccountId, string Name, string? Description) : DictionaryItemWithDescription(Id, Name, Description);

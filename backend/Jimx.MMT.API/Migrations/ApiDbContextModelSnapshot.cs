@@ -31,7 +31,6 @@ namespace Jimx.MMT.API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -48,6 +47,185 @@ namespace Jimx.MMT.API.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Jimx.MMT.API.Context.Currency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LocationCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("SectionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.Receipt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SharedAccountId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("WalletId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("SharedAccountId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("Receipts");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.ReceiptEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ReceiptId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ReceiptId");
+
+                    b.ToTable("ReceiptEntries");
+                });
+
             modelBuilder.Entity("Jimx.MMT.API.Context.Section", b =>
                 {
                     b.Property<int>("Id")
@@ -57,7 +235,6 @@ namespace Jimx.MMT.API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -93,7 +270,6 @@ namespace Jimx.MMT.API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -125,7 +301,7 @@ namespace Jimx.MMT.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SharedAccountToUser");
+                    b.ToTable("SharedAccountToUsers");
                 });
 
             modelBuilder.Entity("Jimx.MMT.API.Context.User", b =>
@@ -156,7 +332,6 @@ namespace Jimx.MMT.API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -182,6 +357,117 @@ namespace Jimx.MMT.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.Product", b =>
+                {
+                    b.HasOne("Jimx.MMT.API.Context.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Jimx.MMT.API.Context.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.Product", "ParentProduct")
+                        .WithMany("ChildProducts")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("Jimx.MMT.API.Context.Section", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CreateUser");
+
+                    b.Navigation("ParentProduct");
+
+                    b.Navigation("Section");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.Receipt", b =>
+                {
+                    b.HasOne("Jimx.MMT.API.Context.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.SharedAccount", "SharedAccount")
+                        .WithMany("Receipts")
+                        .HasForeignKey("SharedAccountId");
+
+                    b.HasOne("Jimx.MMT.API.Context.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.Wallet", "Wallet")
+                        .WithMany("Receipts")
+                        .HasForeignKey("WalletId");
+
+                    b.Navigation("CreateUser");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("SharedAccount");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.ReceiptEntry", b =>
+                {
+                    b.HasOne("Jimx.MMT.API.Context.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jimx.MMT.API.Context.Receipt", "Receipt")
+                        .WithMany("ReceiptEntries")
+                        .HasForeignKey("ReceiptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreateUser");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Receipt");
                 });
 
             modelBuilder.Entity("Jimx.MMT.API.Context.Section", b =>
@@ -235,6 +521,16 @@ namespace Jimx.MMT.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Jimx.MMT.API.Context.Product", b =>
+                {
+                    b.Navigation("ChildProducts");
+                });
+
+            modelBuilder.Entity("Jimx.MMT.API.Context.Receipt", b =>
+                {
+                    b.Navigation("ReceiptEntries");
+                });
+
             modelBuilder.Entity("Jimx.MMT.API.Context.Section", b =>
                 {
                     b.Navigation("Categories");
@@ -242,6 +538,8 @@ namespace Jimx.MMT.API.Migrations
 
             modelBuilder.Entity("Jimx.MMT.API.Context.SharedAccount", b =>
                 {
+                    b.Navigation("Receipts");
+
                     b.Navigation("Sections");
 
                     b.Navigation("SharedAccountToUsers");
@@ -258,6 +556,8 @@ namespace Jimx.MMT.API.Migrations
 
             modelBuilder.Entity("Jimx.MMT.API.Context.Wallet", b =>
                 {
+                    b.Navigation("Receipts");
+
                     b.Navigation("Sections");
                 });
 #pragma warning restore 612, 618
