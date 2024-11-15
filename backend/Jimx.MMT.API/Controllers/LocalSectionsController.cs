@@ -19,6 +19,7 @@ namespace Jimx.MMT.API.Controllers
 		private readonly ILogger<LocalSectionsController> _logger;
 		private readonly DbActionsWrapper<LocalSectionApi, SectionEditApi, Section> _wrapper;
 		private readonly UserActionsWrapper _usersWrapper;
+
 		private readonly Func<Guid, Expression<Func<Section, bool>>> ExpressionIsSectionUserLocal = (userId) =>
 			s => s.UserId == userId && s.WalletId == null && s.SharedAccountId == null;
 

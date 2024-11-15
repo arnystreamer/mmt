@@ -20,6 +20,11 @@ public class GlobalSectionModelMapper : IModelMapper<GlobalSectionApi, SectionEd
 		entity.Description = editApi.Description;
 
 		additionalAssignments?.Invoke(ref entity);
+
+		if (entity.WalletId != null || entity.UserId != null || entity.SharedAccountId != null)
+		{
+			throw new InvalidOperationException("entity.WalletId, entity.SharedAccountId and entity.UserId must be null for global section");
+		}
 	}
 }
 

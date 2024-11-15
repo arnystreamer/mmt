@@ -24,5 +24,15 @@ public class WalletSectionModelMapper : IModelMapper<WalletSectionApi, SectionEd
 		entity.Description = editApi.Description;
 
 		additionalAssignments?.Invoke(ref entity);
+
+		if (!entity.WalletId.HasValue)
+		{
+			throw new InvalidOperationException("entity.WalletId must be assigned for wallet section");
+		}
+
+		if (entity.UserId != null || entity.SharedAccountId != null)
+		{
+			throw new InvalidOperationException("entity.UserId and entity.SharedAccountId must be null for wallet section");
+		}
 	}
 }

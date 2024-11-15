@@ -12,7 +12,7 @@ namespace Jimx.MMT.API.Controllers
 		protected readonly IRepository<TEntity> Repository;
 		protected readonly IGetModelMapper<TEntity, TApi> GetModelMapper;
 		protected readonly IEditEntityMapper<TEntity, TEditApi> EditEntityMapper;
-		private Expression<Func<TEntity, bool>> _globalSelector = x => true;
+		protected Expression<Func<TEntity, bool>> GlobalSelector { get; private set; } = x => true;
 
 		public DbActionsWrapper(IRepository<TEntity> repository, 
 			IGetModelMapper<TEntity, TApi> getModelMapper,
@@ -25,20 +25,20 @@ namespace Jimx.MMT.API.Controllers
 
 		public void SetGlobalCondition(Expression<Func<TEntity, bool>> selector)
 		{
-			_globalSelector = selector;
+			GlobalSelector = selector;
 		}
 
-		public int Count(Expression<Func<TEntity, bool>>? selector = null)
+		public virtual int Count(Expression<Func<TEntity, bool>>? selector = null)
 		{
-			using (var request = Repository.StartRequest(true, _globalSelector, selector))
+			using (var request = Repository.StartRequest(true, GlobalSelector, selector))
 			{
 				return request.GetAll().Count();
 			}
 		}
 
-		public CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, Expression<Func<TEntity, bool>>? selector = null)
+		public virtual CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, Expression<Func<TEntity, bool>>? selector = null)
 		{
-			using (var request = Repository.StartRequest(true, _globalSelector, selector))
+			using (var request = Repository.StartRequest(true, GlobalSelector, selector))
 			{
 				var count = request.GetAll().Count();
 
@@ -56,9 +56,9 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public TApi? Get(Expression<Func<TEntity, bool>> itemSelector, Expression<Func<TEntity, bool>>? selector = null)
+		public virtual TApi? Get(Expression<Func<TEntity, bool>> itemSelector, Expression<Func<TEntity, bool>>? selector = null)
 		{
-			using (var request = Repository.StartRequest(true, _globalSelector, selector))
+			using (var request = Repository.StartRequest(true, GlobalSelector, selector))
 			{
 				var entity = request.Get(itemSelector);
 
@@ -71,9 +71,9 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public TApi Add(TEditApi apiModel, AdditionalAssignmentsAction<TEntity>? additionalAssignments = null)
+		public virtual TApi Add(TEditApi apiModel, AdditionalAssignmentsAction<TEntity>? additionalAssignments = null)
 		{
-			using (var request = Repository.StartRequest(false, _globalSelector))
+			using (var request = Repository.StartRequest(false, GlobalSelector))
 			{
 				var entity = new TEntity();
 				EditEntityMapper.MapToEntity(apiModel, ref entity, additionalAssignments);
@@ -83,9 +83,9 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public TApi? Edit(Expression<Func<TEntity, bool>> itemSelector, TEditApi apiModel, Expression<Func<TEntity, bool>>? selector = null, AdditionalAssignmentsAction<TEntity>? additionalAssignments = null)
+		public virtual TApi? Edit(Expression<Func<TEntity, bool>> itemSelector, TEditApi apiModel, Expression<Func<TEntity, bool>>? selector = null, AdditionalAssignmentsAction<TEntity>? additionalAssignments = null)
 		{
-			using (var request = Repository.StartRequest(false, _globalSelector))
+			using (var request = Repository.StartRequest(false, GlobalSelector))
 			{
 				var entity = request.Get(itemSelector);
 
@@ -100,9 +100,9 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public bool Delete(Expression<Func<TEntity, bool>> itemSelector, Expression<Func<TEntity, bool>>? selector = null)
+		public virtual bool Delete(Expression<Func<TEntity, bool>> itemSelector, Expression<Func<TEntity, bool>>? selector = null)
 		{
-			using (var request = Repository.StartRequest(false, _globalSelector, selector))
+			using (var request = Repository.StartRequest(false, GlobalSelector, selector))
 			{
 				var entity = request.Get(itemSelector);
 

@@ -25,12 +25,13 @@ namespace Jimx.MMT.API.Controllers
 		{
 			_logger = logger;
 			_wrapper = wrapper;
+			wrapper.SetGlobalCondition(ExpressionIsSectionCategoryGlobal);
 		}
 
 		[HttpGet("{id}")]
 		public GlobalSectionApi Get(int id)
 		{
-			var section = _wrapper.Get(s => s.Id == id, ExpressionIsSectionCategoryGlobal);
+			var section = _wrapper.Get(s => s.Id == id);
 			if (section == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
@@ -42,7 +43,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpGet]
 		public CollectionApi<GlobalSectionApi> GetAll([FromQuery] CollectionRequestApi requestApi)
 		{
-			return _wrapper.GetAll(requestApi, ExpressionIsSectionCategoryGlobal);
+			return _wrapper.GetAll(requestApi);
 		}
 
 		[HttpPost]
@@ -70,7 +71,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id)
 		{
-			var result = _wrapper.Delete(s => s.Id == id, ExpressionIsSectionCategoryGlobal);
+			var result = _wrapper.Delete(s => s.Id == id);
 
 			if (!result)
 			{

@@ -5,13 +5,12 @@ using Jimx.MMT.API.Models.Receipt;
 using Jimx.MMT.API.Services.Auth;
 using Jimx.MMT.API.Services.DbWrapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Net;
 
 namespace Jimx.MMT.API.Controllers
 {
-    [Route("receipts")]
+	[Route("receipts")]
 	[ApiController]
 	public class ReceiptsController : ControllerBase
 	{
@@ -20,7 +19,7 @@ namespace Jimx.MMT.API.Controllers
 		private readonly UserActionsWrapper _usersWrapper;
 
 		private readonly Func<Guid, Expression<Func<Receipt, bool>>> ExpressionIsReceiptBelongsUser = userId =>
-			r => r.UserId == userId;
+			r => r.UserId == userId || (r.SharedAccount != null && r.SharedAccount.SharedAccountToUsers.Any(satu => satu.UserId == userId));
 
 		public ReceiptsController(ILogger<ReceiptsController> logger, 
 			DbActionsWrapper<ReceiptApi, ReceiptEditApi, Receipt> wrapper,

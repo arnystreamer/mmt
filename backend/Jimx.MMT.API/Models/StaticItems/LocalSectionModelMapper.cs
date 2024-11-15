@@ -24,5 +24,15 @@ public class LocalSectionModelMapper : IModelMapper<LocalSectionApi, SectionEdit
 		entity.Description = editApi.Description;
 
 		additionalAssignments?.Invoke(ref entity);
+
+		if (!entity.UserId.HasValue)
+		{
+			throw new InvalidOperationException("entity.UserId must be assigned for local section");
+		}
+
+		if (entity.WalletId != null || entity.SharedAccountId != null)
+		{
+			throw new InvalidOperationException("entity.WalletId and entity.SharedAccountId must be null for local section");
+		}
 	}
 }

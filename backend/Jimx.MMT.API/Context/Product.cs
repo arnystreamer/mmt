@@ -9,10 +9,10 @@ namespace Jimx.MMT.API.Context
 		public Guid? UserId { get; set; }
 
 		public string Name { get; set; }
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		public int? CategoryId { get; set; }
-		public int? SectionId { get; set; }
+		public int SectionId { get; set; }
 
 		public bool IsDeleted { get; set; }
 
@@ -25,7 +25,7 @@ namespace Jimx.MMT.API.Context
 		public virtual User? User { get; set; }
 
 		public virtual Category? Category { get; set; }
-		public virtual Section? Section { get; set; }
+		public virtual Section Section { get; set; }
 
 		public virtual User CreateUser { get; set; }
 	}

@@ -9,7 +9,7 @@ public class ReceiptEntryModelMapper : IModelMapper<ReceiptEntryApi, ReceiptEntr
 	public ReceiptEntryApi MapToApi(ReceiptEntry entity)
 	{
 		return new ReceiptEntryApi(entity.Id, entity.ProductId, entity.Quantity, entity.Price, entity.CreateTime, entity.CreateUserId,
-			new UserApi(entity.CreateUser.Id, entity.CreateUser.Login, entity.CreateUser.Name));
+			entity.CreateUser != null ? new UserApi(entity.CreateUser.Id, entity.CreateUser.Login, entity.CreateUser.Name) : null);
 	}
 
 	public void MapToEntity(ReceiptEntryEditApi editApi, ref ReceiptEntry entity, AdditionalAssignmentsAction<ReceiptEntry>? additionalAssignments = null)

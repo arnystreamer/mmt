@@ -24,5 +24,15 @@ public class SharedAccountSectionModelMapper : IModelMapper<SharedAccountSection
 		entity.Description = editApi.Description;
 
 		additionalAssignments?.Invoke(ref entity);
+
+		if (!entity.SharedAccountId.HasValue)
+		{
+			throw new InvalidOperationException("entity.SharedAccountId must be assigned for wallet section");
+		}
+
+		if (entity.WalletId != null || entity.UserId != null)
+		{
+			throw new InvalidOperationException("entity.WalletId and entity.UserId must be null for shared account section");
+		}
 	}
 }

@@ -6,14 +6,17 @@ namespace Jimx.MMT.API.Services.DbWrapper
 {
 	public class UserActionsWrapper : DbActionsWrapper<UserApi, UserEditApi, User>
 	{
-		public UserActionsWrapper(IRepository<User> dbSetDriver, IGetModelMapper<User, UserApi> getModelMapper, IEditEntityMapper<User, UserEditApi> editEntityMapper) 
+		public UserActionsWrapper(
+			IRepository<User> dbSetDriver,
+			IGetModelMapper<User, UserApi> getModelMapper,
+			IEditEntityMapper<User, UserEditApi> editEntityMapper)
 			: base(dbSetDriver, getModelMapper, editEntityMapper)
 		{
 
 		}
 
 		public User? GetByLogin(string login)
-		{ 
+		{
 			return Repository.StartRequest(true).Get(u => u.Login.ToLower() == login);
 		}
 	}

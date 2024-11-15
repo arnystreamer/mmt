@@ -2,7 +2,10 @@
 
 namespace Jimx.MMT.API.Models.Receipt;
 
-public record ProductApi(Guid Id, Guid? ParentId, string Name, string Description,
-    int? CategoryId, CategoryApi? Category, int? SectionId, SectionApi? Section, DateTime CreateTime, Guid CreateUserId, UserApi CreateUser) :
-    ProductEditApi(ParentId, Name, Description, CategoryId, SectionId);
+public record ProductApi(Guid Id, Guid? ParentId, bool IsExclusiveForUser, string Name, string? Description,
+	int SectionId, SectionApi? Section,
+	int? CategoryId, CategoryApi? Category, 
+	DateTime CreateTime, 
+	Guid CreateUserId, UserApi? CreateUser) :
+		ProductEditApi(ParentId, IsExclusiveForUser, Name, Description, SectionId, CategoryId);
 

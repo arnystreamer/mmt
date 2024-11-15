@@ -7,5 +7,6 @@ namespace Jimx.MMT.API.Context
 		public int Id { get; set; }
 		public string CountryCode { get; set; }
 		public string LocationCode { get; set; }
+		public string? Name { get; set; }
 	}
 }
