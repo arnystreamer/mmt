@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
 
 @Component({
   selector: 'mmt-generic-inline-form',
@@ -11,7 +11,7 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 })
 export class GenericInlineFormComponent {
   @Input() entityName: string = '';
-  @Output() createEvent = new EventEmitter<ItemWithDescription>();
+  @Output() createEvent = new EventEmitter<ItemWithDescriptionEdit>();
 
   public form!: FormGroup;
   public isFormView: boolean = false;

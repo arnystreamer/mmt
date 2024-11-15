@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
 import { environment } from 'src/environments/environment';
 import { Wallet } from '../models/wallet.model';
+import { WalletEdit } from '../models/wallet-edit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +34,9 @@ export class WalletsService {
     return this.httpClient.get<Wallet>(`${this.walletsUrl}/${id}`);
   }
 
-  post(item: Wallet) : Observable<Wallet>
+  post(item: WalletEdit) : Observable<Wallet>
   {
     return this.httpClient.post<Wallet>(this.walletsUrl, item);
-  }
-
-  put(item: Wallet) : Observable<Wallet>
-  {
-    return this.httpClient.put<Wallet>(this.walletsUrl, item);
   }
 
   delete(id: number) : Observable<boolean>

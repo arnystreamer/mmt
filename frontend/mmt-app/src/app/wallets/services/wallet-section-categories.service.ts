@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
 import { environment } from 'src/environments/environment';
 import { SectionCategory } from '../../models/sections/section-category.model';
+import { SectionCategoryEdit } from 'src/app/models/sections/section-category-edit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,14 +33,9 @@ export class WalletSectionCategoriesService {
     return this.httpClient.get<SectionCategory>(`${this.walletSectionCategoryUrlResolver(walletId, sectionId)}/${id}`);
   }
 
-  post(walletId: number, sectionId: number, item: SectionCategory) : Observable<SectionCategory>
+  post(walletId: number, sectionId: number, item: SectionCategoryEdit) : Observable<SectionCategory>
   {
     return this.httpClient.post<SectionCategory>(this.walletSectionCategoryUrlResolver(walletId, sectionId), item);
-  }
-
-  put(walletId: number, sectionId: number, item: SectionCategory) : Observable<SectionCategory>
-  {
-    return this.httpClient.put<SectionCategory>(this.walletSectionCategoryUrlResolver(walletId, sectionId), item);
   }
 
   delete(walletId: number, sectionId: number, id: number) : Observable<boolean>

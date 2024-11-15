@@ -37,7 +37,7 @@ namespace Jimx.MMT.API.Controllers
 						new Claim(ClaimTypes.NameIdentifier, model.Login),
 						new Claim(ClaimTypes.Name, model.Login),
 					},
-					expires: DateTime.Now.AddMinutes(30),
+					expires: DateTime.Now.AddMinutes(240),
 					signingCredentials: loginCredentials
 				);
 				var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);

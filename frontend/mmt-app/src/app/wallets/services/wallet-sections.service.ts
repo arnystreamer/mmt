@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
 import { environment } from 'src/environments/environment';
-import { WalletSection } from '../models/wallet-section.model';
+import { WalletSection, WalletSectionEdit } from '../models/wallet-section.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,14 +32,9 @@ export class WalletSectionsService {
     return this.httpClient.get<WalletSection>(`${this.walletSectionUrlResolver(walletId)}/${id}`);
   }
 
-  post(walletId: number, item: WalletSection) : Observable<WalletSection>
+  post(walletId: number, item: WalletSectionEdit) : Observable<WalletSection>
   {
     return this.httpClient.post<WalletSection>(this.walletSectionUrlResolver(walletId), item);
-  }
-
-  put(walletId: number, item: WalletSection) : Observable<WalletSection>
-  {
-    return this.httpClient.put<WalletSection>(this.walletSectionUrlResolver(walletId), item);
   }
 
   delete(walletId: number, id: number) : Observable<boolean>

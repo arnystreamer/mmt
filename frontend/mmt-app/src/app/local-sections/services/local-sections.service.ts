@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { LocalSectionEdit } from '../models/local-section-edit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,14 +33,9 @@ export class LocalSectionsService {
     return this.httpClient.get<LocalSection>(`${this.localSectionUrl}/${id}`);
   }
 
-  post(item: LocalSection) : Observable<LocalSection>
+  post(item: LocalSectionEdit) : Observable<LocalSection>
   {
     return this.httpClient.post<LocalSection>(this.localSectionUrl, item);
-  }
-
-  put(item: LocalSection) : Observable<LocalSection>
-  {
-    return this.httpClient.put<LocalSection>(this.localSectionUrl, item);
   }
 
   delete(id: number) : Observable<boolean>

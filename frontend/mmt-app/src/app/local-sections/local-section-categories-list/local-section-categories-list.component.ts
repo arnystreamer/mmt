@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ItemIdentity } from 'src/app/models/item-identity';
 import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
+import { SectionCategoryEdit } from 'src/app/models/sections/section-category-edit.model';
 import { SectionCategory } from 'src/app/models/sections/section-category.model';
 
 @Component({
@@ -9,16 +12,16 @@ import { SectionCategory } from 'src/app/models/sections/section-category.model'
 })
 export class LocalSectionCategoriesListComponent {
   @Input() categories!: SectionCategory[];
-  @Output() createCategoryItemEvent = new EventEmitter<SectionCategory>();
-  @Output() removeCategoryItemEvent = new EventEmitter<SectionCategory>();
+  @Output() createCategoryItemEvent = new EventEmitter<SectionCategoryEdit>();
+  @Output() removeCategoryItemEvent = new EventEmitter<ItemIdentity>();
 
-  submitLocalSectionCategory(addData: ItemWithDescription)
+  submitLocalSectionCategory(addData: ItemWithDescriptionEdit)
   {
-    this.createCategoryItemEvent.emit({ sectionId: undefined, ...addData })
+    this.createCategoryItemEvent.emit({ ...addData })
   }
 
-  removeLocalSectionCategory(removeData: ItemWithDescription)
+  removeLocalSectionCategory(removeData: ItemIdentity)
   {
-    this.removeCategoryItemEvent.emit({ sectionId: undefined, ...removeData })
+    this.removeCategoryItemEvent.emit({ ...removeData })
   }
 }

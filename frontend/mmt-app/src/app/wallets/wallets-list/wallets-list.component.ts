@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Wallet } from '../models/wallet.model';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { WalletEdit } from '../models/wallet-edit.model';
+import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
+import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
   selector: 'mmt-wallets-list',
@@ -9,16 +11,16 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 })
 export class WalletsListComponent {
   @Input() wallets!: Wallet[];
-  @Output() createWalletItemEvent = new EventEmitter<Wallet>();
-  @Output() removeWalletItemEvent = new EventEmitter<Wallet>();
+  @Output() createWalletItemEvent = new EventEmitter<WalletEdit>();
+  @Output() removeWalletItemEvent = new EventEmitter<ItemIdentity>();
 
-  submitWallet(addData: ItemWithDescription)
+  submitWallet(addData: ItemWithDescriptionEdit)
   {
-    this.createWalletItemEvent.emit({ userId: undefined, ...addData })
+    this.createWalletItemEvent.emit({ ...addData })
   }
 
-  removeWallet(removeData: ItemWithDescription)
+  removeWallet(removeData: ItemIdentity)
   {
-    this.removeWalletItemEvent.emit({ userId: undefined, ...removeData })
+    this.removeWalletItemEvent.emit({ ...removeData })
   }
 }

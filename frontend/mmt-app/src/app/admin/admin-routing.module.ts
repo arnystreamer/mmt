@@ -9,8 +9,8 @@ const routes: Routes = [
     component: AdminMenuPageComponent
   },
   {
-    path: 'static-data',
-    loadChildren: () => import('./static-data/static-data.module').then(m => m.StaticDataModule)
+    path: 'global-sections',
+    loadChildren: () => import('./global-sections/global-sections.module').then(m => m.GlobalSectionsModule)
   },
   {
     path: 'users',

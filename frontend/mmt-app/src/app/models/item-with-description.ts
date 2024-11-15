@@ -1,5 +1,8 @@
-export interface ItemWithDescription {
-    id: number;
-    name: string;
-    description?: string
+import { ItemWithDescriptionEdit } from "./item-with-description-edit";
+import { ItemIdentity } from "./item-identity";
+
+export interface ItemWithDescription extends ItemWithDescriptionEdit, ItemIdentity {
+
 }
+
+

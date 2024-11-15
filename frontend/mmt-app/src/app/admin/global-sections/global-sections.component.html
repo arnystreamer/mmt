@@ -1,0 +1,22 @@
+<div>
+  <caption>
+    <h2>Global sections</h2>
+  </caption>
+
+  <div class="actions-panel">
+    <button color="accent" mat-flat-button [routerLink]="['..']" data-cy="action-back">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+
+    <button color="primary" mat-flat-button (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      New
+    </button>
+  </div>
+
+  <mmt-global-sections-list
+    [sections]="items"
+    (removeSectionEvent)="removeSection($event)"
+  />
+</div>

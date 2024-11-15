@@ -1,4 +1,7 @@
-import { ItemWithDescription } from "src/app/models/item-with-description";
+import { ItemIdentity } from "src/app/models/item-identity";
+import { LocalSectionEdit } from "./local-section-edit.model";
 
-export interface LocalSection extends ItemWithDescription {
+export interface LocalSection extends LocalSectionEdit, ItemIdentity {
 }
+
+
