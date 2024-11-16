@@ -1,11 +1,21 @@
 ﻿using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.DbWrapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jimx.MMT.API.Models.Receipt;
 
-public class ProductModelMapper : IModelMapper<ProductApi, ProductEditApi, Product>
+public class ProductModelMapper : IModelMapper<ProductApi, ProductEditApi, Product>,
+	ICustomDbSetConvertationProvider<Product, ProductApi>
 {
+	public IQueryable<Product> DbSetToQueryable(DbSet<Product> dbSet)
+	{
+		return dbSet
+			.Include(p => p.Section)
+			.Include(p => p.Category).ThenInclude(c => c.Section)
+			.Include(p => p.CreateUser);
+	}
+
 	public ProductApi MapToApi(Product entity)
 	{
 		return new ProductApi(entity.Id, entity.ParentId, 

@@ -2,13 +2,23 @@
 
   <section class="clickable" (click)="detailsClick()" data-cy="to-info">
     <dl class="wide-field">
-      <dt>Product</dt>
-      <dd>{{ item?.product?.name }}</dd>
+      <dt>Name</dt>
+      <dd>{{ item?.name }}</dd>
+    </dl>
+
+    <dl class="wide-field">
+      <dt>Description</dt>
+        <dd>{{ item?.description }}</dd>
     </dl>
 
     <dl>
-      <dt>Sum</dt>
-        <dd>{{ (item?.quantity || 1) * (item?.price || 0) }}</dd>
+      <dt>Section</dt>
+        <dd>{{ item?.section?.name }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Category</dt>
+        <dd>{{ item?.category?.name }}</dd>
     </dl>
 
   </section>

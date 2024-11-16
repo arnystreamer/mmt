@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReceiptEntry } from '../models/receipt-entry.model';
+import { ItemGuid } from 'src/app/models/item-guid';
+import { ReceiptEntryEdit } from '../models/receipt-entry-edit.model';
 
 @Component({
   selector: 'mmt-receipt-entries-list',
@@ -6,5 +9,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./receipt-entries-list.component.scss']
 })
 export class ReceiptEntriesListComponent {
+  @Input() items!: ReceiptEntry[];
+  @Output() createReceiptEntryItemEvent = new EventEmitter<ReceiptEntryEdit>();
+  @Output() removeReceiptEntryItemEvent = new EventEmitter<ItemGuid>();
 
+  submitReceiptEntry(addData: ReceiptEntryEdit)
+  {
+    this.createReceiptEntryItemEvent.emit({ ...addData })
+  }
+
+  removeReceiptEntry(removeData: ItemGuid)
+  {
+    this.removeReceiptEntryItemEvent.emit({ ...removeData })
+  }
 }

@@ -1,1 +1,39 @@
-<p>receipt-entry-details works!</p>
+<div>
+  <caption>
+    <h2>Receipt entry details {{receiptEntry?.id}}</h2>
+  </caption>
+
+  <div class="actions-panel">
+    <button color="accent" mat-flat-button [routerLink]="['../..']" data-cy="action-back">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <div class="details-form" *ngIf="receiptEntry">
+    <section>
+
+      <dl class="wide-field">
+        <dt>Product</dt>
+        <dd>{{ receiptEntry.product.name }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Quantity and price</dt>
+        <dd>{{ receiptEntry.quantity }} x {{ receiptEntry.price }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Sum</dt>
+        <dd>{{ receiptEntry.quantity*receiptEntry.price }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Created</dt>
+        <dd>at <strong>{{ receiptEntry.createTime | date: 'dd MMM yyyy HH:mm' }}</strong> by <strong>{{ receiptEntry.createUser.name }}</strong></dd>
+      </dl>
+
+    </section>
+  </div>
+
+</div>

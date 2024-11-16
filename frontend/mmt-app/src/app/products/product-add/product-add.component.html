@@ -1,22 +1,14 @@
 <div class="form-inline-container" *ngIf="isFormView">
   <form [formGroup]="form">
 
-    <mat-form-field class="field wide-field">
-      <mat-label>Product</mat-label>
-      <mat-select name="producstId" formControlName="productId">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let product of products" [value]="product.id">{{product.name}}</mat-option>
-      </mat-select>
+    <mat-form-field class="field">
+      <mat-label>Name</mat-label>
+      <input matInput name="name" formControlName="name">
     </mat-form-field>
 
     <mat-form-field class="field">
-      <mat-label>Quantity</mat-label>
-      <input matInput name="quantity" formControlName="quantity">
-    </mat-form-field>
-
-    <mat-form-field class="field">
-      <mat-label>Price</mat-label>
-      <input matInput name="price" formControlName="price">
+      <mat-label>Description</mat-label>
+      <input matInput name="description" formControlName="description">
     </mat-form-field>
 
     <div class="actions">
@@ -42,7 +34,7 @@
     <div class="field-value">
       <button color="primary" mat-flat-button (click)="showForm()">
         <mat-icon>add</mat-icon>
-        Add receipt entry
+        Add product
       </button>
     </div>
   </div>

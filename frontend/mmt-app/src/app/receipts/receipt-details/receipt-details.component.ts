@@ -16,7 +16,7 @@ import { ReceiptEntriesService } from '../services/receipt-entries.service';
 })
 export class ReceiptDetailsComponent implements OnInit {
   public receipt?: Receipt;
-  public sections: ReceiptEntry[] = [];
+  public receiptEntries: ReceiptEntry[] = [];
 
   constructor(private route: ActivatedRoute, private receiptEntriesService: ReceiptEntriesService)
   {
@@ -25,18 +25,18 @@ export class ReceiptDetailsComponent implements OnInit {
 
   ngOnInit(): void {
      this.route.data.subscribe(({ item }) => this.receipt = item);
-     this.route.data.subscribe(({ itemsApi }) => this.sections.push(...itemsApi.items));
+     this.route.data.subscribe(({ itemsApi }) => this.receiptEntries.push(...itemsApi.items));
   }
 
-  createWalletSection(item: ReceiptEntryEdit)
+  createReceiptEntries(item: ReceiptEntryEdit)
   {
     if (!this.receipt || !item)
       return;
 
-    this.receiptEntriesService.post(this.receipt.id, item).subscribe({next: v => this.sections.push(v) });
+    this.receiptEntriesService.post(this.receipt.id, item).subscribe({next: v => this.receiptEntries.push(v) });
   }
 
-  removeWalletSection(item: ItemGuid)
+  removeReceiptEntries(item: ItemGuid)
   {
     if (!this.receipt || !item)
       return;
@@ -45,8 +45,8 @@ export class ReceiptDetailsComponent implements OnInit {
       if (v === false)
         return;
 
-      const index = this.sections.findIndex(i => i.id === item.id);
-      this.sections.splice(index, 1);
+      const index = this.receiptEntries.findIndex(i => i.id === item.id);
+      this.receiptEntries.splice(index, 1);
     }})
   }
 }

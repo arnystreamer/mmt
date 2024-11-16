@@ -1,1 +1,16 @@
-<p>receipt-entries-list works!</p>
+<div>
+
+  <caption>
+    <h3>Entries</h3>
+  </caption>
+
+  <div *ngFor="let item of items">
+    <mmt-receipt-entry-list-item [item]="item" (removeEvent)="removeReceiptEntry($event)" />
+  </div>
+
+  <div *ngIf="!items || items.length === 0">
+    <i>No receipt entries</i>
+  </div>
+
+  <mmt-receipt-entry-add (createEvent)="submitReceiptEntry($event)"></mmt-receipt-entry-add>
+</div>

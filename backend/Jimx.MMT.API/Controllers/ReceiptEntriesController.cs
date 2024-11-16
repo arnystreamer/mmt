@@ -75,18 +75,18 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var currency = _wrapper.Get(re => re.ReceiptId == receiptId && re.Id == id, ExpressionIsEntriesReceiptBelongsUser(currentUser.Id));
+			var receiptEntry = _wrapper.Get(re => re.ReceiptId == receiptId && re.Id == id, ExpressionIsEntriesReceiptBelongsUser(currentUser.Id));
 
-			if (currency == null)
+			if (receiptEntry == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(id), typeof(GuidItem));
 			}
 
-			return currency;
+			return receiptEntry;
 		}
 
 		[HttpPost]
-		public ReceiptEntryApi Post(Guid receiptId, ReceiptEntryEditApi userApi)
+		public ReceiptEntryApi Post(Guid receiptId, ReceiptEntryEditApi receiptEntryApi)
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
@@ -95,13 +95,14 @@ namespace Jimx.MMT.API.Controllers
 				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(receiptId), typeof(GuidItem));
 			}
 
-			if (_productWrapper.Get(p => p.Id == userApi.ProductId && !p.IsDeleted, ExpressionIsProductBelongsUser(currentUser.Id)) == null)
+			if (_productWrapper.Get(p => p.Id == receiptEntryApi.ProductId && !p.IsDeleted, ExpressionIsProductBelongsUser(currentUser.Id)) == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.BadRequest, new GuidItem(userApi.ProductId), typeof(GuidItem));
+				throw new StatusCodeException(HttpStatusCode.BadRequest, new GuidItem(receiptEntryApi.ProductId), typeof(GuidItem));
 			}
 
-			return _wrapper.Add(userApi, (ref ReceiptEntry re) =>
+			return _wrapper.Add(receiptEntryApi, (ref ReceiptEntry re) =>
 			{
+				re.ReceiptId = receiptId;
 				re.CreateTime = DateTime.Now.ToUniversalTime();
 				re.CreateUserId = currentUser.Id;
 			});
