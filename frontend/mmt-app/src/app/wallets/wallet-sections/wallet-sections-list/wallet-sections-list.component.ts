@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WalletSection } from '../../models/wallet-section.model';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
+import { ItemIdentity } from 'src/app/models/item-identity';
+import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
+import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 
 @Component({
   selector: 'mmt-wallet-sections-list',
@@ -9,16 +11,16 @@ import { ItemWithDescription } from 'src/app/models/item-with-description';
 })
 export class WalletSectionsListComponent {
   @Input() sections!: WalletSection[];
-  @Output() createSectionItemEvent = new EventEmitter<WalletSection>();
-  @Output() removeSectionItemEvent = new EventEmitter<WalletSection>();
+  @Output() createSectionItemEvent = new EventEmitter<SectionEdit>();
+  @Output() removeSectionItemEvent = new EventEmitter<ItemIdentity>();
 
-  submitWalletSection(addData: ItemWithDescription)
+  submitWalletSection(addData: ItemWithDescriptionEdit)
   {
-    this.createSectionItemEvent.emit({ walletId: undefined, ...addData })
+    this.createSectionItemEvent.emit({ ...addData })
   }
 
-  removeWalletSection(removeData: ItemWithDescription)
+  removeWalletSection(removeData: ItemIdentity)
   {
-    this.removeSectionItemEvent.emit({ walletId: undefined, ...removeData })
+    this.removeSectionItemEvent.emit({ ...removeData })
   }
 }

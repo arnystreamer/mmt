@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Wallet } from './models/wallet.model';
 import { WalletsService } from './services/wallets.service';
 import { ActivatedRoute } from '@angular/router';
+import { ItemIdentity } from '../models/item-identity';
+import { Wallet } from '../models/static-data/wallet.model';
+import { WalletEdit } from '../models/static-data/wallet-edit.model';
 
 @Component({
   selector: 'mmt-wallets',
@@ -21,12 +23,12 @@ export class WalletsComponent implements OnInit {
     this.route.data.subscribe(({ itemsApi }) => this.items.push(...itemsApi.items));
   }
 
-  createWallet(item: Wallet)
+  createWallet(item: WalletEdit)
   {
     this.walletsService.post(item).subscribe({next: v => this.items.push(v) });
   }
 
-  removeWallet(item: Wallet)
+  removeWallet(item: ItemIdentity)
   {
     this.walletsService.delete(item.id).subscribe({ next: v => {
         if (v === false)

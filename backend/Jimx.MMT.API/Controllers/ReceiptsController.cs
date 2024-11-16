@@ -60,7 +60,7 @@ namespace Jimx.MMT.API.Controllers
 			return _wrapper.Add(receiptApi, (ref Receipt r) =>
 			{
 				r.UserId = currentUser.Id;
-				r.CreateTime = DateTime.Now;
+				r.CreateTime = DateTime.Now.ToUniversalTime();
 				r.CreateUserId = currentUser.Id;
 			});
 		}

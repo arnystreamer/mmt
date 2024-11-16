@@ -1,0 +1,67 @@
+<div class="form-container">
+
+  <caption>
+    <h2>Add receipt</h2>
+  </caption>
+
+  <form [formGroup]="form">
+
+    <mat-form-field>
+      <mat-label>Date of purchase</mat-label>
+      <input matInput [matDatepicker]="date" name="date" formControlName="date" [value]="this.form.value.date">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
+      <mat-datepicker #date></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Wallet</mat-label>
+      <mat-select name="walletId" formControlName="walletId">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let wallet of wallets" [value]="wallet.id">{{wallet.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field hidden">
+      <mat-label>Shared Account</mat-label>
+      <mat-select name="sharedAccountId" formControlName="sharedAccountId">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let sharedAccount of sharedAccounts" [value]="sharedAccount.id">{{sharedAccount.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Location</mat-label>
+      <mat-select name="locationId" formControlName="locationId">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let location of locations" [value]="location.id">{{location.countryCode}}-{{location.locationCode}} {{location.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Currency</mat-label>
+      <mat-select name="currencyId" formControlName="currencyId">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let currency of currencies" [value]="currency.id">{{currency.code}} {{currency.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Comment</mat-label>
+      <input matInput name="comment" formControlName="comment">
+    </mat-form-field>
+
+    <div class="field">
+      <div class="actions">
+        <button color="primary" mat-flat-button (click)="submitEntity()" [disabled]="isFormBusy">
+          Create
+        </button>
+
+        <button mat-flat-button (click)="goBack()" [disabled]="isFormBusy">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+

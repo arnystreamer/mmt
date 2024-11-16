@@ -25,8 +25,20 @@ const routes: Routes = [
                 component: StartPageComponent
               },
               {
+                path: 'receipts',
+                loadChildren: () => import('./receipts/receipts.module').then(m => m.ReceiptsModule)
+              },
+              {
+                path: 'analysis',
+                loadChildren: () => import('./analysis/analysis.module').then(m => m.AnalysisModule)
+              },
+              {
                 path: 'admin',
                 loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+              },
+              {
+                path: 'products',
+                loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
               },
               {
                 path: 'wallets',

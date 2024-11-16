@@ -1,0 +1,10 @@
+<div>
+  <div *ngFor="let receipt of receipts">
+    <mmt-receipt-list-item [item]="receipt" (removeEvent)="removeReceipt($event)" />
+  </div>
+
+  <div *ngIf="!receipts || receipts.length === 0">
+    <i>No receipts</i>
+  </div>
+</div>
+

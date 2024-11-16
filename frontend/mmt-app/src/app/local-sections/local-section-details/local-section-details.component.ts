@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalSectionCategoriesService } from '../services/local-section-categories.service';
 import { ActivatedRoute } from '@angular/router';
-import { LocalSection } from '../models/local-section.model';
 import { SectionCategory } from 'src/app/models/sections/section-category.model';
+import { SectionCategoryEdit } from 'src/app/models/sections/section-category-edit.model';
+import { ItemIdentity } from 'src/app/models/item-identity';
+import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
   selector: 'mmt-local-section-details',
@@ -14,7 +16,7 @@ import { SectionCategory } from 'src/app/models/sections/section-category.model'
 })
 export class LocalSectionDetailsComponent implements OnInit {
 
-  public section?: LocalSection;
+  public section?: Section;
   public categories: SectionCategory[] = [];
 
   constructor(private route: ActivatedRoute, private localSectionCategoriesService: LocalSectionCategoriesService)
@@ -27,7 +29,7 @@ export class LocalSectionDetailsComponent implements OnInit {
     this.route.data.subscribe(({ itemsApi }) => this.categories.push(...itemsApi.items));
   }
 
-  createWalletSectionCategory(item: SectionCategory)
+  createWalletSectionCategory(item: SectionCategoryEdit)
   {
     if (!this.section || !item)
       return;
@@ -35,7 +37,7 @@ export class LocalSectionDetailsComponent implements OnInit {
     this.localSectionCategoriesService.post(this.section.id, item).subscribe({next: v => this.categories.push(v) });
   }
 
-  removeWalletSectionCategory(item: SectionCategory)
+  removeWalletSectionCategory(item: ItemIdentity)
   {
     if (!this.section || !item)
       return;

@@ -1,0 +1,30 @@
+<div class="list-item">
+
+  <section class="clickable" (click)="detailsClick()" data-cy="to-info">
+    <dl class="wide-field">
+      <dt>Name</dt>
+      <dd>{{ item?.name }}</dd>
+    </dl>
+
+    <dl class="wide-field">
+      <dt>Description</dt>
+        <dd>{{ item?.description }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Section</dt>
+        <dd>{{ item?.section?.name }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Category</dt>
+        <dd>{{ item?.category?.name }}</dd>
+    </dl>
+
+  </section>
+
+  <aside>
+    <div class="action-item material-symbols-outlined" (click)="deleteClick()" data-cy="action-delete">delete</div>
+  </aside>
+
+</div>

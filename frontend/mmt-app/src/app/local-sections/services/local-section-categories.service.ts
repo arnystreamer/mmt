@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
+import { SectionCategoryEdit } from 'src/app/models/sections/section-category-edit.model';
 import { SectionCategory } from 'src/app/models/sections/section-category.model';
 import { environment } from 'src/environments/environment';
 
@@ -32,14 +33,9 @@ export class LocalSectionCategoriesService {
     return this.httpClient.get<SectionCategory>(`${this.localSectionCategoryUrlResolver(sectionId)}/${id}`);
   }
 
-  post(sectionId: number, item: SectionCategory) : Observable<SectionCategory>
+  post(sectionId: number, item: SectionCategoryEdit) : Observable<SectionCategory>
   {
     return this.httpClient.post<SectionCategory>(this.localSectionCategoryUrlResolver(sectionId), item);
-  }
-
-  put(sectionId: number, item: SectionCategory) : Observable<SectionCategory>
-  {
-    return this.httpClient.put<SectionCategory>(this.localSectionCategoryUrlResolver(sectionId), item);
   }
 
   delete(sectionId: number, id: number) : Observable<boolean>

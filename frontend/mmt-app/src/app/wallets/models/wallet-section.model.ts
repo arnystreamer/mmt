@@ -1,5 +1,6 @@
-import { ItemWithDescription } from "../../models/item-with-description";
+import { Section } from "src/app/models/static-data/section.model";
 
-export interface WalletSection extends ItemWithDescription {
-  walletId: number | undefined;
+export interface WalletSection extends Section {
+  walletId: number;
 }
+

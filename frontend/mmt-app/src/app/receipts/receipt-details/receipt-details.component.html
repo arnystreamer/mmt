@@ -1,0 +1,53 @@
+<div>
+  <caption>
+    <h2>Receipt details {{receipt?.id}}</h2>
+  </caption>
+
+  <div class="actions-panel">
+    <button color="accent" mat-flat-button [routerLink]="['..']" data-cy="action-back">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <div class="details-form" *ngIf="receipt">
+    <section>
+      <dl>
+        <dt>Date</dt>
+        <dd>{{ receipt.date | date: 'dd-MM-yyyy' }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Wallet</dt>
+        <dd>{{ receipt.wallet?.name || 'None' }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Location</dt>
+        <dd>{{ receipt.location.name }} {{ receipt.location.countryCode }}-{{ receipt.location.locationCode }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Currency</dt>
+        <dd>{{ receipt.currency.code  }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Comment</dt>
+        <dd>{{ receipt.comment }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Created</dt>
+        <dd>at <strong>{{ receipt.createTime | date: 'dd MMM yyyy HH:mm' }}</strong> by <strong>{{ receipt.createUser.name }}</strong></dd>
+      </dl>
+
+    </section>
+  </div>
+
+  <mmt-receipt-entries-list [items]="receiptEntries"
+    (createReceiptEntryItemEvent)="createReceiptEntries($event)"
+    (removeReceiptEntryItemEvent)="removeReceiptEntries($event)">
+  </mmt-receipt-entries-list>
+
+</div>

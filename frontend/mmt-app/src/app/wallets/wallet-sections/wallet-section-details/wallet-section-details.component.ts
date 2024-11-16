@@ -3,6 +3,8 @@ import { WalletSection } from '../../models/wallet-section.model';
 import { ActivatedRoute } from '@angular/router';
 import { WalletSectionCategoriesService } from '../../services/wallet-section-categories.service';
 import { SectionCategory } from '../../../models/sections/section-category.model';
+import { SectionCategoryEdit } from 'src/app/models/sections/section-category-edit.model';
+import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
   selector: 'mmt-wallet-section-details',
@@ -28,7 +30,7 @@ export class WalletSectionDetailsComponent {
     this.route.data.subscribe(({ itemsApi }) => this.categories.push(...itemsApi.items));
   }
 
-  createWalletSectionCategory(item: SectionCategory)
+  createWalletSectionCategory(item: SectionCategoryEdit)
   {
     if (!this.wallet || !this.section || !item)
       return;
@@ -36,7 +38,7 @@ export class WalletSectionDetailsComponent {
     this.walletSectionCategoriesService.post(this.wallet.id, this.section.id, item).subscribe({next: v => this.categories.push(v) });
   }
 
-  removeWalletSectionCategory(item: SectionCategory)
+  removeWalletSectionCategory(item: ItemIdentity)
   {
     if (!this.wallet || !this.section || !item)
       return;

@@ -7,13 +7,14 @@ public class LocationModelMapper : IModelMapper<LocationApi, LocationEditApi, Lo
 {
 	public LocationApi MapToApi(Location entity)
 	{
-		return new LocationApi(entity.Id, entity.CountryCode, entity.LocationCode);
+		return new LocationApi(entity.Id, entity.CountryCode, entity.LocationCode, entity.Name);
 	}
 
 	public void MapToEntity(LocationEditApi editApi, ref Location entity, AdditionalAssignmentsAction<Location>? additionalAssignments = null)
 	{
 		entity.CountryCode = editApi.CountryCode;
 		entity.LocationCode = editApi.LocationCode;
+		entity.Name = editApi.Name;
 
 		additionalAssignments?.Invoke(ref entity);
 	}

@@ -1,0 +1,49 @@
+<div class="form-inline-container" *ngIf="isFormView">
+  <form [formGroup]="form">
+
+    <mat-form-field class="field wide-field">
+      <mat-label>Product</mat-label>
+      <mat-select name="producstId" formControlName="productId">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let product of products" [value]="product.id">{{product.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Quantity</mat-label>
+      <input matInput name="quantity" formControlName="quantity">
+    </mat-form-field>
+
+    <mat-form-field class="field">
+      <mat-label>Price</mat-label>
+      <input matInput name="price" formControlName="price">
+    </mat-form-field>
+
+    <div class="actions">
+      <div class="action-item material-symbols-outlined icons-toggled yes" (click)="submitEntity()">add</div>
+      <div class="action-item material-symbols-outlined icons-toggled no" (click)="hideForm()">close</div>
+
+      <button class="action-item buttons-toggled yes" color="primary" mat-flat-button (click)="submitEntity()">
+        <mat-icon>add</mat-icon>
+        Append receipt entry
+      </button>
+
+      <button class="action-item buttons-toggled no" color="secondary" mat-flat-button (click)="hideForm()">
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<div class="list-item" *ngIf="!isFormView">
+  <div class="field">
+    <div class="field-value">
+      <button color="primary" mat-flat-button (click)="showForm()">
+        <mat-icon>add</mat-icon>
+        Add receipt entry
+      </button>
+    </div>
+  </div>
+</div>

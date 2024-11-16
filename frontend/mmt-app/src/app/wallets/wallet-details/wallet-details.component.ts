@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { Wallet } from '../models/wallet.model';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WalletSection } from '../models/wallet-section.model';
 import { WalletSectionsService } from '../services/wallet-sections.service';
+import { ItemIdentity } from 'src/app/models/item-identity';
+import { Wallet } from 'src/app/models/static-data/wallet.model';
+import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 
 @Component({
   selector: 'mmt-wallet-details',
@@ -12,7 +14,7 @@ import { WalletSectionsService } from '../services/wallet-sections.service';
     '../../list-item-details.scss'
   ]
 })
-export class WalletDetailsComponent {
+export class WalletDetailsComponent implements OnInit {
   public wallet?: Wallet;
   public sections: WalletSection[] = [];
 
@@ -26,7 +28,7 @@ export class WalletDetailsComponent {
      this.route.data.subscribe(({ itemsApi }) => this.sections.push(...itemsApi.items));
   }
 
-  createWalletSection(item: WalletSection)
+  createWalletSection(item: SectionEdit)
   {
     if (!this.wallet || !item)
       return;
@@ -34,7 +36,7 @@ export class WalletDetailsComponent {
     this.walletSectionsService.post(this.wallet.id, item).subscribe({next: v => this.sections.push(v) });
   }
 
-  removeWalletSection(item: WalletSection)
+  removeWalletSection(item: ItemIdentity)
   {
     if (!this.wallet || !item)
       return;

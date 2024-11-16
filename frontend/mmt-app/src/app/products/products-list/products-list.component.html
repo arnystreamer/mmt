@@ -1,0 +1,11 @@
+<div>
+  <div *ngFor="let item of items">
+    <mmt-products-list-item [item]="item" (removeEvent)="removeProduct($event)"></mmt-products-list-item>
+  </div>
+
+  <div *ngIf="!items || items.length === 0">
+    <i>No receipts</i>
+  </div>
+
+  <mmt-product-add (createEvent)="submitProduct($event)"></mmt-product-add>
+</div>

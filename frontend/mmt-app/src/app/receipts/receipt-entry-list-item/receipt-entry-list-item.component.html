@@ -1,0 +1,20 @@
+<div class="list-item">
+
+  <section class="clickable" (click)="detailsClick()" data-cy="to-info">
+    <dl class="wide-field">
+      <dt>Product</dt>
+      <dd>{{ item?.product?.name }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Sum</dt>
+        <dd>{{ (item?.quantity || 1) * (item?.price || 0) }}</dd>
+    </dl>
+
+  </section>
+
+  <aside>
+    <div class="action-item material-symbols-outlined" (click)="deleteClick()" data-cy="action-delete">delete</div>
+  </aside>
+
+</div>

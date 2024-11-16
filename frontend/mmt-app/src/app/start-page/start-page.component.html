@@ -3,15 +3,47 @@
     <h2>Start page</h2>
   </div>
 
-  <p>
-    <i>No items</i>
-  </p>
+  <div class="menu-items">
+    <mat-card class="menu-card" routerLink="receipts" data-cy="to-receipts">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">receipt</div><div>Receipts</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+            Receipts store expenses data
+          </p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="menu-card" routerLink="analysis" data-cy="to-analysis">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">query_stats</div><div>Expenses analysis</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+            Make analysis here
+          </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
 
   <div>
     <h2>Static data</h2>
   </div>
 
   <div class="menu-items">
+
+    <mat-card class="menu-card" routerLink="products" data-cy="to-products">
+      <mat-card-header>
+          <mat-card-title><div class="material-symbols-outlined">inventory</div><div>Products</div></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <p>
+            Products is for populate expenses faster
+          </p>
+      </mat-card-content>
+    </mat-card>
 
     <mat-card class="menu-card" routerLink="wallets" data-cy="to-wallets">
       <mat-card-header>
