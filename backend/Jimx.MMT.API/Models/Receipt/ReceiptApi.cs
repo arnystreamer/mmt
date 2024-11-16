@@ -9,5 +9,5 @@ public record ReceiptApi(Guid Id, DateTime Date,
     int CurrencyId, CurrencyApi? Currency, 
     string? Comment,
     DateTime CreateTime, Guid CreateUserId, UserApi? CreateUser) :
-        ReceiptEditApi(Date, WalletId, SharedAccountId, LocationId, CurrencyId, Comment);
+        ReceiptEditApi(Date, WalletId, SharedAccountId, LocationId, CurrencyId, Comment, CreateTime);
 

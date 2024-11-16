@@ -93,7 +93,7 @@ namespace Jimx.MMT.API.Controllers
 
 			return _wrapper.Add(productApi, (ref Product p) =>
 			{
-				p.CreateTime = DateTime.Now;
+				p.CreateTime = DateTime.Now.ToUniversalTime();
 				p.CreateUserId = currentUser.Id;
 				p.UserId = productApi.IsExclusiveForCurrentUser ? currentUser.Id : null;
 			});

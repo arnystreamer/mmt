@@ -13,7 +13,7 @@ describe('Visit and Login Test', () => {
   beforeEach(() =>
   {
     sharedTest.visitAndLogin().then(() => {
-      cy.get('mat-card[data-cy="to-static-data"]').click();
+      cy.get('mat-card[data-cy="to-admin"]').click().then(() => cy.get('mat-card[data-cy="to-global-sections"]').click());
       //intercept and wait here
     });
   })
@@ -36,7 +36,7 @@ describe('Visit and Login Test', () => {
         const sectionName = sections[i].name;
         const sectionDescription = sections[i].description;
 
-        cy.get('div.actions-panel > button').click();
+        cy.get('div.actions-panel > button[data-cy="action-new"]').click();
 
         cy.get('input[name="name"]').type(sectionName);
         cy.get('input[name="description"]').type(sectionDescription);
@@ -47,7 +47,7 @@ describe('Visit and Login Test', () => {
           .as("lastListItem")
           .within($el => {
             cy.wrap($el).should('contain.text', sectionName).and('contain.text', sectionDescription);
-            cy.get('div.actions > div.action-item[data-cy="to-info"]').click();
+            cy.get('section[data-cy="to-info"]').click();
             //intercept and wait here
             cy.contains('Global section details');
           });

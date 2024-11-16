@@ -10,17 +10,20 @@ namespace Jimx.MMT.API.Services.DbWrapper
 		private readonly DbSet<TEntity> _entities;
 		private readonly IRepository<TEntity> _repository;
 		private readonly bool _noSaveRequest;
+		private readonly Func<DbSet<TEntity>, IQueryable<TEntity>>? _converterFunc;
 
 		internal RepositoryRequest(
-			Expression<Func<TEntity, bool>>?[] selectors, 
+			Expression<Func<TEntity, bool>>?[] selectors,
 			DbSet<TEntity> entities,
 			IRepository<TEntity> repository,
-			bool noSaveRequest) 
+			bool noSaveRequest,
+			Func<DbSet<TEntity>, IQueryable<TEntity>>? converterFunc)
 		{
 			_whereSelectors = selectors.Where(s => s != null).Select(s => s!);
 			_entities = entities;
 			_repository = repository;
 			_noSaveRequest = noSaveRequest;
+			_converterFunc = converterFunc;
 		}
 
 		public TEntity Add(TEntity entity)
@@ -63,7 +66,7 @@ namespace Jimx.MMT.API.Services.DbWrapper
 
 		public IQueryable<TEntity> GetAll()
 		{
-			IQueryable<TEntity> entities = _entities;
+			IQueryable<TEntity> entities = _converterFunc != null ? _converterFunc.Invoke(_entities) : _entities;
 
 			foreach (var whereSelector in _whereSelectors)
 			{

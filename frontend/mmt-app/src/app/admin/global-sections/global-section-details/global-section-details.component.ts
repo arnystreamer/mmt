@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalSection } from '../models/global-section.model';
+import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
   selector: 'mmt-global-section-details',
@@ -12,7 +12,7 @@ import { GlobalSection } from '../models/global-section.model';
 })
 export class GlobalSectionDetailsComponent implements OnInit {
 
-  public section?: GlobalSection;
+  public section?: Section;
 
   constructor(private route: ActivatedRoute)
   {

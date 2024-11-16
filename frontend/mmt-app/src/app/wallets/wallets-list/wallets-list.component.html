@@ -1,6 +1,6 @@
 <div>
   <div *ngFor="let wallet of wallets">
-    <mmt-generic-list-item [item]="wallet" [navigateRoute]="['/wallets', this.wallet.id]" [entityName]="'wallet'"
+    <mmt-generic-list-item [item]="wallet" [navigateRoute]="['/wallets', wallet.id]" [entityName]="'wallet'"
       (removeEvent)="removeWallet($event)" />
   </div>
   <mmt-generic-inline-form [entityName]="'wallet'" (createEvent)="submitWallet($event)" />

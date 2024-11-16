@@ -10,12 +10,18 @@ namespace Jimx.MMT.API.Services.DbWrapper
 		private readonly ApiDbContext _context;
 		private readonly Func<ApiDbContext, DbSet<TEntity>> _entities;
 		private Expression<Func<TEntity, bool>> _whereSelector;
+		private Func<DbSet<TEntity>, IQueryable<TEntity>>? _converterFunc = null;
 
 		public ProxyRepository(ApiDbContext context, Func<ApiDbContext, DbSet<TEntity>> entities)
 		{
 			_context = context;
 			_entities = entities;
 			_whereSelector = x => true;
+		}
+
+		public void SetCustomConverterFunction(Func<DbSet<TEntity>, IQueryable<TEntity>> converterFunc)
+		{
+			_converterFunc = converterFunc;
 		}
 
 		public void SaveChanges()
@@ -25,7 +31,7 @@ namespace Jimx.MMT.API.Services.DbWrapper
 
 		public IRepositoryRequest<TEntity> StartRequest(bool noSaveRequest, params Expression<Func<TEntity, bool>>?[] selectors)
 		{
-			return new RepositoryRequest<TEntity>(selectors, _entities(_context), this, noSaveRequest);
+			return new RepositoryRequest<TEntity>(selectors, _entities(_context), this, noSaveRequest, _converterFunc);
 		}
 	}
 }

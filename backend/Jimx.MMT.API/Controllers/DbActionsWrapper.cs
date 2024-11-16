@@ -1,5 +1,6 @@
 ﻿using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Services.DbWrapper;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Jimx.MMT.API.Controllers
@@ -21,6 +22,11 @@ namespace Jimx.MMT.API.Controllers
 			Repository = repository;
 			GetModelMapper = getModelMapper;
 			EditEntityMapper = editEntityMapper;
+
+			if (getModelMapper is ICustomDbSetConvertationProvider<TEntity, TApi> customDbSetConvertationProvider)
+			{
+				Repository.SetCustomConverterFunction(customDbSetConvertationProvider.DbSetToQueryable);
+			}
 		}
 
 		public void SetGlobalCondition(Expression<Func<TEntity, bool>> selector)

@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
+import { WalletEdit } from 'src/app/models/static-data/wallet-edit.model';
+import { Wallet } from 'src/app/models/static-data/wallet.model';
 import { environment } from 'src/environments/environment';
-import { Wallet } from '../models/wallet.model';
-import { WalletEdit } from '../models/wallet-edit.model';
 
 @Injectable({
   providedIn: 'root'

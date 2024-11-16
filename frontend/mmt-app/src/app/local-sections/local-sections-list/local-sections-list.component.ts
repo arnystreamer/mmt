@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ItemWithDescription } from 'src/app/models/item-with-description';
-import { LocalSection } from '../models/local-section.model';
 import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
 import { ItemIdentity } from 'src/app/models/item-identity';
-import { LocalSectionEdit } from '../models/local-section-edit.model';
+import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
+import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
   selector: 'mmt-local-sections-list',
@@ -11,8 +10,8 @@ import { LocalSectionEdit } from '../models/local-section-edit.model';
   styleUrls: ['./local-sections-list.component.scss']
 })
 export class LocalSectionsListComponent {
-  @Input() sections!: LocalSection[];
-  @Output() createSectionItemEvent = new EventEmitter<LocalSectionEdit>();
+  @Input() sections!: Section[];
+  @Output() createSectionItemEvent = new EventEmitter<SectionEdit>();
   @Output() removeSectionItemEvent = new EventEmitter<ItemIdentity>();
 
   submitLocalSection(addData: ItemWithDescriptionEdit)

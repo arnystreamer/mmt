@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GlobalSection } from '../models/global-section.model';
+import { ItemIdentity } from 'src/app/models/item-identity';
+import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
   selector: 'mmt-global-sections-list',
@@ -7,6 +8,6 @@ import { GlobalSection } from '../models/global-section.model';
   styleUrls: ['./global-sections-list.component.scss']
 })
 export class GlobalSectionsListComponent {
-  @Input() sections!: GlobalSection[];
-  @Output() removeSectionEvent = new EventEmitter<GlobalSection>();
+  @Input() sections!: Section[];
+  @Output() removeSectionEvent = new EventEmitter<ItemIdentity>();
 }

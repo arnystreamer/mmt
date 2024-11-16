@@ -1,0 +1,25 @@
+<div class="list-item">
+
+  <section class="clickable" (click)="detailsClick()" data-cy="to-info">
+    <dl>
+      <dt>Date</dt>
+      <dd>{{ item.date | date: 'dd-MM-yyyy' }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Location</dt>
+      <dd>{{ item.location.countryCode }}-{{ item.location.locationCode }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Currency</dt>
+      <dd>{{ item.currency.code }}</dd>
+    </dl>
+
+  </section>
+
+  <aside>
+    <div class="action-item material-symbols-outlined" (click)="deleteClick()" data-cy="action-delete">delete</div>
+  </aside>
+
+</div>

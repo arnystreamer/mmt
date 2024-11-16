@@ -1,9 +1,9 @@
 import { ResolveFn } from '@angular/router';
-import { LocalSection } from '../models/local-section.model';
 import { LocalSectionsService } from './local-sections.service';
 import { inject } from '@angular/core';
+import { Section } from 'src/app/models/static-data/section.model';
 
-export const localSectionItemResolver: ResolveFn<LocalSection | undefined> = (route, state) => {
+export const localSectionItemResolver: ResolveFn<Section | undefined> = (route, state) => {
   const localSectionsService = inject(LocalSectionsService);
 
   var sectionId = route.paramMap.get('id');

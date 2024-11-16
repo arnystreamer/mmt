@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalSection } from './models/local-section.model';
 import { LocalSectionsService } from './services/local-sections.service';
 import { ActivatedRoute } from '@angular/router';
-import { LocalSectionEdit } from './models/local-section-edit.model';
 import { ItemIdentity } from '../models/item-identity';
+import { Section } from '../models/static-data/section.model';
+import { SectionEdit } from '../models/static-data/section-edit.model';
 
 @Component({
   selector: 'mmt-local-sections',
@@ -12,7 +12,7 @@ import { ItemIdentity } from '../models/item-identity';
 })
 export class LocalSectionsComponent implements OnInit {
 
-  public items: LocalSection[] = [];
+  public items: Section[] = [];
 
   constructor(private route: ActivatedRoute,
     private localSectionService: LocalSectionsService) {
@@ -23,7 +23,7 @@ export class LocalSectionsComponent implements OnInit {
     this.route.data.subscribe(({ itemsApi }) => this.items.push(...itemsApi.items));
   }
 
-  createSection(item: LocalSectionEdit)
+  createSection(item: SectionEdit)
   {
     this.localSectionService.post(item).subscribe({next: v => this.items.push(v) })
   }

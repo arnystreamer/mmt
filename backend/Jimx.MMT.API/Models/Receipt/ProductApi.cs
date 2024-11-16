@@ -7,5 +7,5 @@ public record ProductApi(Guid Id, Guid? ParentId, bool IsExclusiveForUser, strin
 	int? CategoryId, CategoryApi? Category, 
 	DateTime CreateTime, 
 	Guid CreateUserId, UserApi? CreateUser) :
-		ProductEditApi(ParentId, IsExclusiveForUser, Name, Description, SectionId, CategoryId);
+		ProductEditApi(ParentId, IsExclusiveForUser, Name, Description, SectionId, CategoryId, CreateTime);
 

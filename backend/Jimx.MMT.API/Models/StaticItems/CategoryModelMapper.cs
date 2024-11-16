@@ -7,7 +7,13 @@ public class CategoryModelMapper : IModelMapper<CategoryApi, CategoryEditApi, Ca
 {
 	public CategoryApi MapToApi(Category entity)
 	{
-		return new CategoryApi(entity.Id, entity.SectionId, entity.Name, entity.Description);
+		return new CategoryApi(entity.Id, 
+			entity.SectionId,
+			entity.Section != null 
+				? new SectionApi(entity.Section.Id, SectionType.Unknown, entity.Section.Name, entity.Section.Description) 
+				: null,
+			entity.Name, 
+			entity.Description);
 	}
 
 	public void MapToEntity(CategoryEditApi editApi, ref Category entity, AdditionalAssignmentsAction<Category>? additionalAssignments = null)

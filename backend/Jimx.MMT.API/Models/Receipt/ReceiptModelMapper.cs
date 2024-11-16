@@ -1,10 +1,17 @@
 ﻿using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.DbWrapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jimx.MMT.API.Models.Receipt;
 
-public class ReceiptModelMapper : IModelMapper<ReceiptApi, ReceiptEditApi, Context.Receipt>
+public class ReceiptModelMapper : IModelMapper<ReceiptApi, ReceiptEditApi, Context.Receipt>,
+	ICustomDbSetConvertationProvider<Context.Receipt, ReceiptApi>
 {
+	public IQueryable<Context.Receipt> DbSetToQueryable(DbSet<Context.Receipt> dbSet)
+	{
+		return dbSet.Include(r => r.Location).Include(r => r.Currency).Include(r => r.Wallet);
+	}
+
 	public ReceiptApi MapToApi(Context.Receipt entity)
 	{
 		return new ReceiptApi(entity.Id, entity.Date,
@@ -13,7 +20,7 @@ public class ReceiptModelMapper : IModelMapper<ReceiptApi, ReceiptEditApi, Conte
 			entity.SharedAccountId,
 			entity.SharedAccount != null ? new SharedAccountApi(entity.SharedAccount.Id, entity.SharedAccount.Name, entity.SharedAccount.Description) : null,
 			entity.LocationId,
-			entity.Location != null ? new LocationApi(entity.Location.Id, entity.Location.CountryCode, entity.Location.LocationCode) : null,
+			entity.Location != null ? new LocationApi(entity.Location.Id, entity.Location.CountryCode, entity.Location.LocationCode, entity.Location.Name) : null,
 			entity.CurrencyId,
 			entity.Currency != null ? new CurrencyApi(entity.Currency.Id, entity.Currency.Code, entity.Currency.Name) : null,
 			entity.Comment, 
@@ -24,7 +31,7 @@ public class ReceiptModelMapper : IModelMapper<ReceiptApi, ReceiptEditApi, Conte
 
 	public void MapToEntity(ReceiptEditApi editApi, ref Context.Receipt entity, AdditionalAssignmentsAction<Context.Receipt>? additionalAssignments = null)
 	{
-		entity.Date = editApi.Date;
+		entity.Date = editApi.Date.AddHours(12).ToUniversalTime().Date;
 		entity.WalletId = editApi.WalletId;
 		entity.SharedAccountId = editApi.SharedAccountId;
 		entity.LocationId = editApi.LocationId;

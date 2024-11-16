@@ -8,6 +8,14 @@
       <mat-icon>arrow_back</mat-icon>
       Back
     </button>
+
+    <button color="primary" mat-flat-button [routerLink]="['add']" data-cy="action-new">
+      <mat-icon>add</mat-icon>
+      New
+    </button>
   </div>
+
+  <mmt-receipts-list [receipts]="items"
+    (removeReceiptItemEvent)="removeReceipt($event)"></mmt-receipts-list>
 
 </div>

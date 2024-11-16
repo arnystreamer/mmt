@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Wallet } from '../models/wallet.model';
-import { WalletEdit } from '../models/wallet-edit.model';
 import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
 import { ItemIdentity } from 'src/app/models/item-identity';
+import { Wallet } from 'src/app/models/static-data/wallet.model';
+import { WalletEdit } from 'src/app/models/static-data/wallet-edit.model';
 
 @Component({
   selector: 'mmt-wallets-list',

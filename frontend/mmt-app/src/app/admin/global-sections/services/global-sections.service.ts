@@ -2,8 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { CollectionApi } from 'src/app/models/collection-api';
+import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
+import { Section } from 'src/app/models/static-data/section.model';
 import { environment } from 'src/environments/environment';
-import { GlobalSection } from '../models/global-section.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class GlobalSectionsService {
   constructor(
     private httpClient: HttpClient) { }
 
-  getAll(skip?: number, take?: number): Observable<CollectionApi<GlobalSection>>
+  getAll(skip?: number, take?: number): Observable<CollectionApi<Section>>
   {
     let params = new HttpParams();
     if (skip)
@@ -25,22 +26,17 @@ export class GlobalSectionsService {
     if (take)
       params = params.set("take", take);
 
-    return this.httpClient.get<CollectionApi<GlobalSection>>(this.globalSectionsUrl, { params: params });
+    return this.httpClient.get<CollectionApi<Section>>(this.globalSectionsUrl, { params: params });
   }
 
-  get(id: number) : Observable<GlobalSection>
+  get(id: number) : Observable<Section>
   {
-    return this.httpClient.get<GlobalSection>(`${this.globalSectionsUrl}/${id}`);
+    return this.httpClient.get<Section>(`${this.globalSectionsUrl}/${id}`);
   }
 
-  post(item: GlobalSection) : Observable<GlobalSection>
+  post(item: SectionEdit) : Observable<Section>
   {
-    return this.httpClient.post<GlobalSection>(this.globalSectionsUrl, item);
-  }
-
-  put(item: GlobalSection) : Observable<GlobalSection>
-  {
-    return this.httpClient.put<GlobalSection>(this.globalSectionsUrl, item);
+    return this.httpClient.post<Section>(this.globalSectionsUrl, item);
   }
 
   delete(id: number) : Observable<boolean>

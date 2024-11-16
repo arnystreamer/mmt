@@ -14,7 +14,14 @@ public class ProductModelMapper : IModelMapper<ProductApi, ProductEditApi, Produ
 			entity.SectionId,
 			entity.Section != null ? new SectionApi(entity.Section.Id, SectionType.Unknown, entity.Section.Name, entity.Section.Description) : null,
 			entity.CategoryId,
-			entity.Category != null ? new CategoryApi(entity.Category.Id, entity.Category.SectionId, entity.Category.Name, entity.Category.Description) : null,
+			entity.Category != null 
+			? new CategoryApi(
+				entity.Category.Id, 
+				entity.Category.SectionId,  
+				entity.Category.Section != null ? new SectionApi(entity.Category.Section.Id, SectionType.Unknown, entity.Category.Section.Name, entity.Category.Section.Description) : null,
+				entity.Category.Name, 
+				entity.Category.Description) 
+			: null,
 			entity.CreateTime,
 			entity.CreateUserId,
 			entity.CreateUser != null ? new UserApi(entity.CreateUser.Id, entity.CreateUser.Login, entity.CreateUser.Name) : null);

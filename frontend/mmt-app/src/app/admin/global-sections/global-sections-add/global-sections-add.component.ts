@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GlobalSectionCreator, GlobalSectionDialogData } from '../models/global-section-dialog-data';
-import { GlobalSection } from '../models/global-section.model';
+import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 
 @Component({
   selector: 'mmt-global-sections-add',
@@ -34,7 +34,7 @@ export class GlobalSectionsAddComponent implements OnInit {
 
   create()
   {
-    const itemToCreate: GlobalSection = { ...this.form.value };
+    const itemToCreate: SectionEdit = { ...this.form.value };
 
     if (this.creator)
     {

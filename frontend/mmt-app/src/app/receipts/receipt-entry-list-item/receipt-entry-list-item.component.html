@@ -1,0 +1,14 @@
+<div class="list-item">
+
+  <section class="clickable" (click)="detailsClick()" data-cy="to-info">
+    <dl>
+      <dt>Name</dt>
+      <dd>{{ item?.id }}</dd>
+    </dl>
+  </section>
+
+  <aside>
+    <div class="action-item material-symbols-outlined" (click)="deleteClick()" data-cy="action-delete">delete</div>
+  </aside>
+
+</div>

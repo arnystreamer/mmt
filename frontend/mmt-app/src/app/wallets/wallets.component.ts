@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Wallet } from './models/wallet.model';
 import { WalletsService } from './services/wallets.service';
 import { ActivatedRoute } from '@angular/router';
-import { WalletEdit } from './models/wallet-edit.model';
 import { ItemIdentity } from '../models/item-identity';
+import { Wallet } from '../models/static-data/wallet.model';
+import { WalletEdit } from '../models/static-data/wallet-edit.model';
 
 @Component({
   selector: 'mmt-wallets',

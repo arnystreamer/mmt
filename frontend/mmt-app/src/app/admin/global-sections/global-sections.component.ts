@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalSectionsService } from './services/global-sections.service';
-import { GlobalSection } from './models/global-section.model';
 import { GlobalSectionsAddComponent } from './global-sections-add/global-sections-add.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Section } from 'src/app/models/static-data/section.model';
+import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
   selector: 'app-global-sections',
@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GlobalSectionsComponent implements OnInit {
 
-  public items: GlobalSection[] = [];
+  public items: Section[] = [];
 
   constructor(private route: ActivatedRoute,
     private globalSectionsService : GlobalSectionsService,
@@ -30,7 +30,7 @@ export class GlobalSectionsComponent implements OnInit {
       height: '400pt',
       width: '600pt',
       data: {
-        creator: (item: GlobalSection) => this.globalSectionsService.post(item),
+        creator: (item: Section) => this.globalSectionsService.post(item),
         name: '' }
     });
 
@@ -42,16 +42,7 @@ export class GlobalSectionsComponent implements OnInit {
     });
   }
 
-  editSection(section: GlobalSection)
-  {
-    this.globalSectionsService.put(section).subscribe(i => {
-      const index = this.items.findIndex(ix => ix.id == i.id);
-      this.items[index].name = section.name;
-      this.items[index].description = section.description;
-    })
-  }
-
-  removeSection(section: GlobalSection)
+  removeSection(section: ItemIdentity)
   {
     this.globalSectionsService.delete(section.id).subscribe(i => {
       if (i === false)
