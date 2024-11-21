@@ -1,11 +1,31 @@
 <div>
-  <div *ngFor="let item of items">
-    <mmt-products-list-item [item]="item" (removeEvent)="removeProduct($event)"></mmt-products-list-item>
+  <div *ngFor="let item of getDirectChildItems()" class="tree-level tree-content">
+
+    <div class="head-item">
+      <div class="pointer">
+        <div></div>
+      </div>
+      <div class="content">
+        <mmt-products-list-item [item]="item" (removeEvent)="removeProduct($event)"></mmt-products-list-item>
+      </div>
+    </div>
+
+    <div>
+    <mmt-products-list
+      [items]="items"
+      [parent]="item"
+      (createProductEvent)="submitProduct($event)"
+      (removeProductEvent)="removeProduct($event)"></mmt-products-list>
+    </div>
+
   </div>
 
-  <div *ngIf="!items || items.length === 0">
-    <i>No receipts</i>
+  <div class="tree-level tree-add">
+    <div class="pointer">
+      <div></div>
+    </div>
+    <div>
+      <mmt-product-add [parent]="parent" (createEvent)="submitProduct($event)"></mmt-product-add>
+    </div>
   </div>
-
-  <mmt-product-add (createEvent)="submitProduct($event)"></mmt-product-add>
 </div>

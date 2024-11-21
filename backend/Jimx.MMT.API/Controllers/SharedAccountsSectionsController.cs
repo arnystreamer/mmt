@@ -80,7 +80,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var section = _wrapper.Edit(c => c.Id == id, sectionEditApi, ExpressionIsSectionSharedAccount(accountId, currentUser.Id));
+			var section = _wrapper.Edit(c => c.Id == id, sectionEditApi, null, ExpressionIsSectionSharedAccount(accountId, currentUser.Id));
 
 			if (section == null)
 			{

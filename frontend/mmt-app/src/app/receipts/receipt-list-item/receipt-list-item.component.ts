@@ -35,4 +35,9 @@ export class ReceiptListItemComponent {
 
     this.removeEvent.emit(this.item);
   }
+
+  getItemSum(receipt: Receipt) : number
+  {
+    return receipt.entries.map(e => e.quantity * e.price).reduce((sum, currency) => sum + currency, 0.0);
+  }
 }

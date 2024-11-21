@@ -9,9 +9,15 @@ import { Product } from 'src/app/models/static-data/product.model';
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent {
+  @Input() parent?: Product;
   @Input() items!: Product[];
   @Output() createProductEvent = new EventEmitter<ProductEdit>();
   @Output() removeProductEvent = new EventEmitter<ItemGuid>();
+
+  getDirectChildItems(): Product[]
+  {
+    return this.items.filter(v => v.parentId === (this.parent?.id || null))
+  }
 
   submitProduct(addData: ProductEdit)
   {

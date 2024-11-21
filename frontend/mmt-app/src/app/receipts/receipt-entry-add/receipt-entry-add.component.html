@@ -1,9 +1,9 @@
 <div class="form-inline-container" *ngIf="isFormView">
   <form [formGroup]="form">
 
-    <mat-form-field class="field wide-field">
+    <mat-form-field class="field wide">
       <mat-label>Product</mat-label>
-      <mat-select name="producstId" formControlName="productId">
+      <mat-select name="productId" formControlName="productId">
         <mat-option>None</mat-option>
         <mat-option *ngFor="let product of products" [value]="product.id">{{product.name}}</mat-option>
       </mat-select>

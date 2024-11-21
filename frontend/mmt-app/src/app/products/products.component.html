@@ -10,7 +10,10 @@
     </button>
   </div>
 
-  <mmt-products-list [items]="items"
+  <mmt-products-list
+    [items]="items"
+    [parent]="undefined"
+    (createProductEvent)="createProduct($event)"
     (removeProductEvent)="removeProduct($event)"></mmt-products-list>
 
 </div>

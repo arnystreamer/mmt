@@ -6,5 +6,5 @@ import { Section } from "./section.model";
 export interface Product extends ProductEdit, ItemGuid
 {
   section: Section;
-  category: Category
+  category?: Category
 }

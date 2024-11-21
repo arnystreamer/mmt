@@ -76,7 +76,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var section = _wrapper.Edit(c => c.Id == id, sectionApi, ExpressionIsSectionWallet(walletId, currentUser.Id));
+			var section = _wrapper.Edit(c => c.Id == id, sectionApi, null, ExpressionIsSectionWallet(walletId, currentUser.Id));
 
 			if (section == null)
 			{

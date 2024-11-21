@@ -7,5 +7,5 @@ import { inject } from '@angular/core';
 export const productsResolver: ResolveFn<CollectionApi<Product> | undefined> = (route, state) => {
   const productsService = inject(ProductsService);
 
-  return productsService.getAll();
+  return productsService.getAll(0, 1000);
 };

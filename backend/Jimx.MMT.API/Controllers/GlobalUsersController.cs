@@ -50,7 +50,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpPut("{id}")]
 		public UserApi Put(Guid id, UserEditApi userApi)
 		{
-			var user = _wrapper.Edit(u => u.Id == id, new UserEditApi(userApi.Login.ToLowerInvariant(), userApi.Name));
+			var user = _wrapper.Edit(u => u.Id == id, new UserEditApi(userApi.Login.ToLowerInvariant(), userApi.Name), null);
 			if (user == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new GuidItem(id), typeof(GuidItem));

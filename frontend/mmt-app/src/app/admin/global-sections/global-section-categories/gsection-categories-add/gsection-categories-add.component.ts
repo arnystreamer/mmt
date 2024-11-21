@@ -35,6 +35,7 @@ export class GsectionCategoriesAddComponent implements OnInit {
     if (this.form.valid)
     {
       this.createEvent.emit({...this.form.value});
+      this.form.reset();
     }
   }
 
@@ -45,6 +46,7 @@ export class GsectionCategoriesAddComponent implements OnInit {
 
   cancelClick()
   {
+    this.form.reset();
     this.isFormView = false;
   }
 }

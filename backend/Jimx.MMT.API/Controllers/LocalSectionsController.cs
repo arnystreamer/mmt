@@ -68,7 +68,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var section = _wrapper.Edit(c => c.Id == id, sectionApi, ExpressionIsSectionUserLocal(currentUser.Id));
+			var section = _wrapper.Edit(c => c.Id == id, sectionApi, null, ExpressionIsSectionUserLocal(currentUser.Id));
 
 			if (section == null)
 			{

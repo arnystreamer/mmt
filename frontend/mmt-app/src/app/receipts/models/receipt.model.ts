@@ -5,6 +5,7 @@ import { User } from "src/app/models/static-data/user.model";
 import { Wallet } from "src/app/models/static-data/wallet.model";
 import { ReceiptEdit } from "./receipt-edit.model";
 import { ItemGuid } from "src/app/models/item-guid";
+import { ReceiptEntry } from "./receipt-entry.model";
 
 export interface Receipt extends ReceiptEdit, ItemGuid {
   wallet? : Wallet;
@@ -14,6 +15,5 @@ export interface Receipt extends ReceiptEdit, ItemGuid {
   createTime: Date;
   createUserId: string;
   createUser: User;
-
-
+  entries: ReceiptEntry[];
 }

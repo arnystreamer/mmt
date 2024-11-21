@@ -85,7 +85,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var category = _wrapper.Edit(c => c.Id == id, categoryApi, ExpressionIsSectionCategoryBelongsWallet(sectionId, walletId));
+			var category = _wrapper.Edit(c => c.Id == id, categoryApi, null, ExpressionIsSectionCategoryBelongsWallet(sectionId, walletId));
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));

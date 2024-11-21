@@ -67,7 +67,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			return _wrapper.GetAll(requestApi, ExpressionIsEntriesReceiptBelongsUser(currentUser.Id));
+			return _wrapper.GetAll(requestApi, ExpressionIsEntriesReceiptBelongsUser(currentUser.Id), re => re.ReceiptId == receiptId);
 		}
 
 		[HttpGet("{id}")]

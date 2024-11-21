@@ -5,5 +5,5 @@ import { Section } from "./section.model";
 
 export interface Category extends CategoryEdit, ItemIdentity {
   sectionId: number;
-  section: Section;
+  section?: Section;
 }

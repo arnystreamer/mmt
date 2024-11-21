@@ -12,5 +12,5 @@
     <i>No receipt entries</i>
   </div>
 
-  <mmt-receipt-entry-add (createEvent)="submitReceiptEntry($event)"></mmt-receipt-entry-add>
+  <mmt-receipt-entry-add [parentReceipt]="parentReceipt" (createEvent)="submitReceiptEntry($event)"></mmt-receipt-entry-add>
 </div>

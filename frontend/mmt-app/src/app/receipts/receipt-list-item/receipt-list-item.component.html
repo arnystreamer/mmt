@@ -3,17 +3,22 @@
   <section class="clickable" (click)="detailsClick()" data-cy="to-info">
     <dl>
       <dt>Date</dt>
-      <dd>{{ item.date | date: 'dd-MM-yyyy' }}</dd>
+      <dd>{{ item.date | date: 'dd MMM yyyy' }}</dd>
     </dl>
 
     <dl>
       <dt>Location</dt>
-      <dd>{{ item.location.countryCode }}-{{ item.location.locationCode }}</dd>
+      <dd>{{ item.location.name }}</dd>
     </dl>
 
     <dl>
-      <dt>Currency</dt>
-      <dd>{{ item.currency.code }}</dd>
+      <dt>Sum</dt>
+      <dd>{{ getItemSum(item) | number:'1.2-2' }} {{ item.currency.code }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Comment</dt>
+      <dd>{{ item.comment }}</dd>
     </dl>
 
   </section>

@@ -70,7 +70,7 @@ namespace Jimx.MMT.API.Controllers
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
 			}
 
-			var category = _wrapper.Edit(c => c.Id == id, categoryApi, ExpressionIsSectionCategoryGlobal(sectionId));
+			var category = _wrapper.Edit(c => c.Id == id, categoryApi, null, ExpressionIsSectionCategoryGlobal(sectionId));
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));

@@ -13,7 +13,7 @@ namespace Jimx.MMT.API.Controllers
 		protected readonly IRepository<TEntity> Repository;
 		protected readonly IGetModelMapper<TEntity, TApi> GetModelMapper;
 		protected readonly IEditEntityMapper<TEntity, TEditApi> EditEntityMapper;
-		protected Expression<Func<TEntity, bool>> GlobalSelector { get; private set; } = x => true;
+		protected List<Expression<Func<TEntity, bool>>> GlobalSelectors { get; private set; } = new List<Expression<Func<TEntity, bool>>>();
 
 		public DbActionsWrapper(IRepository<TEntity> repository, 
 			IGetModelMapper<TEntity, TApi> getModelMapper,
@@ -29,22 +29,24 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public void SetGlobalCondition(Expression<Func<TEntity, bool>> selector)
+		public void AddGlobalCondition(Expression<Func<TEntity, bool>> selector)
 		{
-			GlobalSelector = selector;
+			GlobalSelectors.Add(selector);
 		}
 
-		public virtual int Count(Expression<Func<TEntity, bool>>? selector = null)
+		public virtual int Count(params Expression<Func<TEntity, bool>>[] selectors)
 		{
-			using (var request = Repository.StartRequest(true, GlobalSelector, selector))
+			var allSelectors = selectors.Union(GlobalSelectors).ToArray();
+			using (var request = Repository.StartRequest(true, allSelectors))
 			{
 				return request.GetAll().Count();
 			}
 		}
 
-		public virtual CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, Expression<Func<TEntity, bool>>? selector = null)
+		public virtual CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, params Expression<Func<TEntity, bool>>[] selectors)
 		{
-			using (var request = Repository.StartRequest(true, GlobalSelector, selector))
+			var allSelectors = selectors.Union(GlobalSelectors).ToArray();
+			using (var request = Repository.StartRequest(true, allSelectors))
 			{
 				var count = request.GetAll().Count();
 
@@ -62,9 +64,10 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public virtual TApi? Get(Expression<Func<TEntity, bool>> itemSelector, Expression<Func<TEntity, bool>>? selector = null)
+		public virtual TApi? Get(Expression<Func<TEntity, bool>> itemSelector, params Expression<Func<TEntity, bool>>[] selectors)
 		{
-			using (var request = Repository.StartRequest(true, GlobalSelector, selector))
+			var allSelectors = selectors.Union(GlobalSelectors).ToArray();
+			using (var request = Repository.StartRequest(true, allSelectors))
 			{
 				var entity = request.Get(itemSelector);
 
@@ -79,7 +82,7 @@ namespace Jimx.MMT.API.Controllers
 
 		public virtual TApi Add(TEditApi apiModel, AdditionalAssignmentsAction<TEntity>? additionalAssignments = null)
 		{
-			using (var request = Repository.StartRequest(false, GlobalSelector))
+			using (var request = Repository.StartRequest(false, GlobalSelectors.ToArray()))
 			{
 				var entity = new TEntity();
 				EditEntityMapper.MapToEntity(apiModel, ref entity, additionalAssignments);
@@ -89,9 +92,12 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public virtual TApi? Edit(Expression<Func<TEntity, bool>> itemSelector, TEditApi apiModel, Expression<Func<TEntity, bool>>? selector = null, AdditionalAssignmentsAction<TEntity>? additionalAssignments = null)
+		public virtual TApi? Edit(Expression<Func<TEntity, bool>> itemSelector, TEditApi apiModel, 
+			AdditionalAssignmentsAction<TEntity>? additionalAssignments,
+			params Expression<Func<TEntity, bool>>[] selectors)
 		{
-			using (var request = Repository.StartRequest(false, GlobalSelector))
+			var allSelectors = selectors.Union(GlobalSelectors).ToArray();
+			using (var request = Repository.StartRequest(false, allSelectors))
 			{
 				var entity = request.Get(itemSelector);
 
@@ -106,9 +112,10 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public virtual bool Delete(Expression<Func<TEntity, bool>> itemSelector, Expression<Func<TEntity, bool>>? selector = null)
+		public virtual bool Delete(Expression<Func<TEntity, bool>> itemSelector, params Expression<Func<TEntity, bool>>[] selectors)
 		{
-			using (var request = Repository.StartRequest(false, GlobalSelector, selector))
+			var allSelectors = selectors.Union(GlobalSelectors).ToArray();
+			using (var request = Repository.StartRequest(false, allSelectors))
 			{
 				var entity = request.Get(itemSelector);
 

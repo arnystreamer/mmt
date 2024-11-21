@@ -19,6 +19,11 @@ public class ReceiptEntryModelMapper : IModelMapper<ReceiptEntryApi, ReceiptEntr
 
 	public ReceiptEntryApi MapToApi(ReceiptEntry entity)
 	{
+		return MapFromReceiptEntryToApi(entity);
+	}
+
+	public static ReceiptEntryApi MapFromReceiptEntryToApi(ReceiptEntry entity)
+	{
 		return new ReceiptEntryApi(entity.Id, entity.ProductId,
 			entity.Product != null 
 			? new ProductApi(entity.Product.Id, entity.Product.ParentId,

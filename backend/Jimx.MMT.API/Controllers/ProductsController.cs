@@ -91,12 +91,15 @@ namespace Jimx.MMT.API.Controllers
 					typeof(StringItem));
 			}
 
-			return _wrapper.Add(productApi, (ref Product p) =>
+			var result = _wrapper.Add(productApi, (ref Product p) =>
 			{
 				p.CreateTime = DateTime.Now.ToUniversalTime();
 				p.CreateUserId = currentUser.Id;
 				p.UserId = productApi.IsExclusiveForCurrentUser ? currentUser.Id : null;
 			});
+
+			return _wrapper.Get(p => p.Id == result.Id, ExpressionIsProductBelongsUser(currentUser.Id)) 
+				?? throw new InvalidOperationException($"Added item expected to have id = {result.Id} but not found");
 		}
 
 		[HttpDelete("{id}")]
