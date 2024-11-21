@@ -1,6 +1,6 @@
 
 export interface ProductEdit {
-  parentId: string;
+  parentId: string | null;
   isExclusiveForCurrentUser: boolean;
   name: string;
   description?: string;

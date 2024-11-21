@@ -6,7 +6,7 @@ namespace Jimx.MMT.API.Services.DbWrapper
 	public interface IRepository<TEntity>
 		where TEntity : class, new()
 	{
-		IRepositoryRequest<TEntity> StartRequest(bool noSaveRequest, params Expression<Func<TEntity, bool>>?[] selectors);
+		IRepositoryRequest<TEntity> StartRequest(bool noSaveRequest, params Expression<Func<TEntity, bool>>[] selectors);
 		void SetCustomConverterFunction(Func<DbSet<TEntity>, IQueryable<TEntity>> converterFunc);
 		void SaveChanges();
 	}

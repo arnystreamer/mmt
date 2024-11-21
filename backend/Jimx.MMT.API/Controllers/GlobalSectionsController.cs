@@ -25,7 +25,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			_logger = logger;
 			_wrapper = wrapper;
-			wrapper.SetGlobalCondition(ExpressionIsSectionCategoryGlobal);
+			wrapper.AddGlobalCondition(ExpressionIsSectionCategoryGlobal);
 		}
 
 		[HttpGet("{id}")]
@@ -59,7 +59,7 @@ namespace Jimx.MMT.API.Controllers
 		[HttpPut("{id}")]
 		public GlobalSectionApi Put(int id, SectionEditApi sectionApi)
 		{
-			var section = _wrapper.Edit(s => s.Id == id, sectionApi);
+			var section = _wrapper.Edit(s => s.Id == id, sectionApi, null);
 			if (section == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));

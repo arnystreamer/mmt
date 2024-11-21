@@ -46,6 +46,7 @@
   </div>
 
   <mmt-receipt-entries-list [items]="receiptEntries"
+    [parentReceipt]="receipt"
     (createReceiptEntryItemEvent)="createReceiptEntries($event)"
     (removeReceiptEntryItemEvent)="removeReceiptEntries($event)">
   </mmt-receipt-entries-list>

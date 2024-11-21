@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ReceiptEntry } from '../models/receipt-entry.model';
 import { ReceiptEntryEdit } from '../models/receipt-entry-edit.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from 'src/app/products/services/products.service';
 import { Product } from 'src/app/models/static-data/product.model';
+import { Receipt } from '../models/receipt.model';
 
 @Component({
   selector: 'mmt-receipt-entry-add',
@@ -16,6 +16,8 @@ import { Product } from 'src/app/models/static-data/product.model';
 })
 export class ReceiptEntryAddComponent implements OnInit {
   @Output() createEvent = new EventEmitter<ReceiptEntryEdit>();
+
+  @Input() parentReceipt?: Receipt;
 
   public form!: FormGroup;
   public isFormView: boolean = false;
@@ -31,12 +33,29 @@ export class ReceiptEntryAddComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.productsService.getAll(0, 10000).subscribe({next: p => this.products.push(...p.items) });
+    this.productsService.getAll(0, 10000).subscribe({next: p =>
+    {
+      const walletId: number | undefined = this.parentReceipt?.walletId;
+      const sharedAccountId: number | undefined = this.parentReceipt?.sharedAccountId;
+
+      this.processIncomingProducts(null, 0, p.items);
+    }});
 
     this.form = this.fromBuilder.group({
       productId: [undefined, Validators.required],
-      quantity: [0.0, Validators.min(0.00001)],
+      quantity: [1.0, Validators.min(0.00001)],
       price: [0.0, Validators.min(0.00001)]
+    });
+  }
+
+  processIncomingProducts(parentId: string | null, level: number, products: Product[])
+  {
+    products.filter(v => v.parentId === parentId).forEach((v) =>
+    {
+      const product = v;
+      product.name = '>'.repeat(level) + ' ' + product.name;
+      this.products.push(product);
+      this.processIncomingProducts(product.id, level + 1, products);
     });
   }
 

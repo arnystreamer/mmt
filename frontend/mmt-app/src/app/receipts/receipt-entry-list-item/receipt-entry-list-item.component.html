@@ -1,9 +1,14 @@
 <div class="list-item">
 
   <section class="clickable" (click)="detailsClick()" data-cy="to-info">
-    <dl class="wide-field">
+    <dl>
       <dt>Product</dt>
       <dd>{{ item?.product?.name }}</dd>
+    </dl>
+
+    <dl>
+      <dt>Section/Category</dt>
+      <dd>{{ item?.product?.section?.name }} {{ item?.product?.category?.name }} </dd>
     </dl>
 
     <dl>

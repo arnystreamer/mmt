@@ -73,7 +73,7 @@ namespace Jimx.MMT.API.Controllers
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			var sharedAccount = _wrapper.Edit(c => c.Id == id, sharedAccountApi, ExpressionIsSharedAccountBelongsUser(currentUser.Id));
+			var sharedAccount = _wrapper.Edit(c => c.Id == id, sharedAccountApi, null, ExpressionIsSharedAccountBelongsUser(currentUser.Id));
 			if (sharedAccount == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));

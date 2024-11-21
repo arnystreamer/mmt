@@ -84,7 +84,7 @@ namespace Jimx.MMT.API.Controllers
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
 			}
 
-			var category = _wrapper.Edit(c => c.Id == id, categoryApi, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
+			var category = _wrapper.Edit(c => c.Id == id, categoryApi, null, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
 			if (category == null)
 			{
 				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));

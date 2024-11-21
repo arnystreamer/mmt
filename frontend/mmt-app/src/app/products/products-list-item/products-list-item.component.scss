@@ -1,0 +1,17 @@
+dd
+{
+  @media (max-width: 599px)
+  {
+    max-width: 190px;
+  }
+
+  @media (min-width: 599px)
+  {
+    width: 290px;
+  }
+
+  display: block;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}

@@ -13,9 +13,14 @@
   <div class="details-form" *ngIf="receiptEntry">
     <section>
 
-      <dl class="wide-field">
+      <dl>
         <dt>Product</dt>
         <dd>{{ receiptEntry.product.name }}</dd>
+      </dl>
+
+      <dl>
+        <dt>Section/Category</dt>
+        <dd>{{ receiptEntry.product.section.name }} {{ receiptEntry.product.category?.name }} </dd>
       </dl>
 
       <dl>

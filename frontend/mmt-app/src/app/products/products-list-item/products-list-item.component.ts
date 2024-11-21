@@ -6,7 +6,9 @@ import { Product } from 'src/app/models/static-data/product.model';
 @Component({
   selector: 'mmt-products-list-item',
   templateUrl: './products-list-item.component.html',
-  styleUrls: ['./products-list-item.component.scss', '../../list-item-details.scss']
+  styleUrls: [
+    './products-list-item.component.scss',
+    '../../list-item-details.scss']
 })
 export class ProductsListItemComponent {
   @Input() item?: Product;

@@ -1,0 +1,60 @@
+.tree-level
+{
+  margin-left: 10px;
+  border-left: 1px solid #000;
+
+  .head-item
+  {
+    display: flex;
+
+    .pointer
+    {
+      width: 10px;
+
+      div
+      {
+        height: 50%;
+
+        border-bottom: 1px solid #000;
+      }
+    }
+
+    .content
+    {
+      width: 100%;
+    }
+  }
+}
+
+.tree-level:last-child
+{
+  border-left: none;
+
+  .head-item
+  {
+    .pointer
+    {
+      div
+      {
+        border-left: 1px solid #000;
+      }
+    }
+  }
+}
+
+.tree-add
+{
+  display: flex;
+
+  .pointer
+  {
+    width: 10px;
+
+    div
+    {
+      height: 50%;
+      border-left: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+  }
+}
