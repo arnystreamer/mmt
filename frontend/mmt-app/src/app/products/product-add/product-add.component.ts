@@ -17,12 +17,12 @@ import { SectionsService } from 'src/app/services/sections.service';
 })
 export class ProductAddComponent {
   @Input() parent?: Product;
+  @Input() sections: Section[] = [];
   @Output() createEvent = new EventEmitter<ProductEdit>();
 
   public form!: FormGroup;
   public isFormView: boolean = false;
 
-  public sections: Section[] = [];
   public categories: Category[] = [];
 
   constructor(private fromBuilder: FormBuilder,
@@ -34,7 +34,6 @@ export class ProductAddComponent {
 
   ngOnInit(): void {
 
-    this.sectionsService.getAll(0, 10000).subscribe({ next: v => this.sections = v.items });
     this.form = this.fromBuilder.group({
       name: ['', Validators.required],
       description: [''],
