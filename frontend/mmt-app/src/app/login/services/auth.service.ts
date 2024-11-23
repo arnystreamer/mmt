@@ -50,7 +50,7 @@ export class AuthService {
 
     return this.httpClient.post<Token>(loginUrl, loginData)
       .pipe(tap(v => {
-        const tokenObj: TimedToken = { ...v, expiredAtMs: Date.now() + 1800000 };
+        const tokenObj: TimedToken = { ...v, expiredAtMs: Date.now() + 7200000 };
         this.#token = tokenObj;
         localStorage.setItem(storageKey, JSON.stringify(tokenObj));
       } ));

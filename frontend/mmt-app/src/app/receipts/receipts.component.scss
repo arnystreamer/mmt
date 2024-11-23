@@ -1,0 +1,52 @@
+.filters-panel
+{
+  .filter-form.collapsed
+  {
+    display: none;
+  }
+
+  .filter-form
+  {
+    @media (max-width: 599px)
+    {
+      flex-direction: column;
+      width: 100%;
+
+      > .field, .form-group {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 600px)
+    {
+
+
+      > .field, .form-group {
+        max-width: 290px;
+      }
+    }
+
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+
+    .form-group
+    {
+      display: flex;
+      gap: 0px;
+    }
+
+
+    .actions
+    {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
+}
+
+
+
+
+

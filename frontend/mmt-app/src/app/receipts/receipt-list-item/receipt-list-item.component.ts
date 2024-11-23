@@ -40,4 +40,31 @@ export class ReceiptListItemComponent {
   {
     return receipt.entries.map(e => e.quantity * e.price).reduce((sum, currency) => sum + currency, 0.0);
   }
+
+  getMajorSections(receipt: Receipt): string
+  {
+    var sectionsByAmount: any = [];
+
+    for(var i = 0; i < receipt.entries.length; i++)
+    {
+      const entry = receipt.entries[i];
+      const key = entry.product.section.name;
+      const amount = entry.price * entry.quantity;
+      if (sectionsByAmount[key])
+      {
+        sectionsByAmount[key] += amount;
+      }
+      else
+      {
+        sectionsByAmount[key] = amount;
+      }
+    }
+
+    const result = Object.keys(sectionsByAmount)
+      .map(k => [k, sectionsByAmount[k]]);
+
+    result.sort((a, b) => b[1] - a[1]);
+
+    return result.map(k => k[0]).slice(0, 2).join(', ') + (result.length > 2 ? ' , etc.': '');
+  }
 }

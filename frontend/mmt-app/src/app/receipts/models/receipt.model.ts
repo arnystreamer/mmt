@@ -17,3 +17,5 @@ export interface Receipt extends ReceiptEdit, ItemGuid {
   createUser: User;
   entries: ReceiptEntry[];
 }
+
+

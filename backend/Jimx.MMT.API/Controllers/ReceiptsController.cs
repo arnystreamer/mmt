@@ -31,11 +31,19 @@ namespace Jimx.MMT.API.Controllers
 		}
 
 		[HttpGet]
-		public CollectionApi<ReceiptApi> GetAll([FromQuery] CollectionRequestApi requestApi)
+		public CollectionApi<ReceiptApi> GetAll([FromQuery] CollectionRequestApi requestApi, [FromQuery] ReceiptRequestApi receiptRequestApi)
 		{
 			var currentUser = _usersWrapper.GetCurrentUserFromContext(User);
 
-			return _wrapper.GetAll(requestApi, ExpressionIsReceiptBelongsUser(currentUser.Id));
+			return _wrapper.GetAll(requestApi, e => e.Date, 
+				ExpressionIsReceiptBelongsUser(currentUser.Id),
+				r => !receiptRequestApi.DateFrom.HasValue || r.Date >= receiptRequestApi.DateFrom.Value,
+				r => !receiptRequestApi.DateTo.HasValue || r.Date <= receiptRequestApi.DateTo.Value,
+				r => !receiptRequestApi.LocationId.HasValue || r.LocationId == receiptRequestApi.LocationId,
+				r => !receiptRequestApi.CurrencyId.HasValue || r.CurrencyId == receiptRequestApi.CurrencyId,
+				r => !receiptRequestApi.SumFrom.HasValue || r.ReceiptEntries.Sum(re => re.Quantity * re.Price) >= receiptRequestApi.SumFrom.Value,
+				r => !receiptRequestApi.SumTo.HasValue || r.ReceiptEntries.Sum(re => re.Quantity * re.Price) <= receiptRequestApi.SumTo.Value,
+				r => receiptRequestApi.Comment == null || (r.Comment != null && r.Comment.ToLower().Contains(receiptRequestApi.Comment.ToLower())));
 		}
 
 		[HttpGet("{id}")]

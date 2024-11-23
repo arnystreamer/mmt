@@ -76,6 +76,8 @@ export class ReceiptEntryAddComponent implements OnInit {
   hideForm()
   {
     this.form.reset();
+    this.form.controls['quantity'].setValue(1.0);
+    this.form.controls['price'].setValue(0.0);
     this.isFormView = false;
   }
 }

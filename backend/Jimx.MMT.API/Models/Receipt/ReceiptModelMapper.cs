@@ -9,8 +9,11 @@ public class ReceiptModelMapper : IModelMapper<ReceiptApi, ReceiptEditApi, Conte
 {
 	public IQueryable<Context.Receipt> DbSetToQueryable(DbSet<Context.Receipt> dbSet)
 	{
-		return dbSet.Include(r => r.Location).Include(r => r.Currency).Include(r => r.Wallet)
-			.Include(r => r.ReceiptEntries);
+		return dbSet
+			.Include(r => r.Location)
+			.Include(r => r.Currency)
+			.Include(r => r.Wallet)
+			.Include(r => r.ReceiptEntries).ThenInclude(re => re.Product).ThenInclude(p => p.Section);
 	}
 
 	public ReceiptApi MapToApi(Context.Receipt entity)

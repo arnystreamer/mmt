@@ -15,6 +15,74 @@
     </button>
   </div>
 
+  <div class="filters-panel">
+    <div>
+      <button *ngIf="filtersPanelExpanded" (click)="filtersPanelExpanded = false"
+        class="sub-accent-btn" color="accent" mat-stroked-button>&lt;</button>
+      <button *ngIf="!filtersPanelExpanded" (click)="filtersPanelExpanded = true"
+        class="sub-accent-btn" color="accent" mat-stroked-button >Expand filters</button>
+    </div>
+
+    <form class="filter-form" [formGroup]="filterForm" [class.collapsed]="!filtersPanelExpanded">
+
+      <div class="form-group">
+
+        <mat-form-field class="field">
+          <mat-label>Date from</mat-label>
+          <input matInput [matDatepicker]="dateFrom" name="dateFrom" formControlName="dateFrom" [value]="this.filterForm.value.dateFrom">
+          <mat-datepicker-toggle matIconSuffix [for]="dateFrom"></mat-datepicker-toggle>
+          <mat-datepicker #dateFrom></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="field">
+          <mat-label>Date to</mat-label>
+          <input matInput [matDatepicker]="dateTo" name="dateTo" formControlName="dateTo" [value]="this.filterForm.value.dateTo">
+          <mat-datepicker-toggle matIconSuffix [for]="dateTo"></mat-datepicker-toggle>
+          <mat-datepicker #dateTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="field">
+        <mat-label>Location</mat-label>
+        <mat-select name="locationId" formControlName="locationId">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let location of locations" [value]="location.id">{{location.countryCode}}-{{location.locationCode}} {{location.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field">
+        <mat-label>Currency</mat-label>
+        <mat-select name="currencyId" formControlName="currencyId">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let currency of currencies" [value]="currency.id">{{currency.code}} {{currency.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="form-group">
+        <mat-form-field class="field">
+          <mat-label>Sum min</mat-label>
+          <input matInput [type]="'number'" name="sumFrom" formControlName="sumFrom">
+        </mat-form-field>
+
+        <mat-form-field class="field">
+          <mat-label>Sum max</mat-label>
+          <input matInput [type]="'number'" name="sumTo" formControlName="sumTo">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="field">
+        <mat-label>Comment contains</mat-label>
+        <input matInput name="comment" formControlName="comment">
+      </mat-form-field>
+
+      <div class="actions">
+        <button class="sub-accent-btn" color="accent" mat-stroked-button (click)="resetFilters()">Reset</button>
+        <button color="primary" mat-flat-button (click)="applyFilters()">Apply</button>
+      </div>
+
+    </form>
+  </div>
+
   <mmt-receipts-list [receipts]="items"
     (removeReceiptItemEvent)="removeReceipt($event)"></mmt-receipts-list>
 
