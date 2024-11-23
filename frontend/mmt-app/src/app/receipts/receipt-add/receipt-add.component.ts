@@ -34,7 +34,7 @@ export class ReceiptAddComponent implements OnInit {
   public currencies: Currency[] = [];
 
 
-  constructor(private fromBuilder: FormBuilder, private router: Router,
+  constructor(private formBuilder: FormBuilder, private router: Router,
     private route: ActivatedRoute,
     private receiptsService : ReceiptsService,
     private walletsService: WalletsService,
@@ -53,7 +53,7 @@ export class ReceiptAddComponent implements OnInit {
     const receiptDefaultValuesJson = localStorage.getItem('ReceiptDefaultValues');
     const receiptDefaultValues: ReceiptDefaultValues | undefined = receiptDefaultValuesJson ? JSON.parse(receiptDefaultValuesJson) : undefined;
 
-    this.form = this.fromBuilder.group({
+    this.form = this.formBuilder.group({
       date: [receiptDefaultValues?.date || new Date(), Validators.required],
       walletId: [receiptDefaultValues?.walletId || undefined],
       sharedAccountId: [receiptDefaultValues?.sharedAccountId || undefined],

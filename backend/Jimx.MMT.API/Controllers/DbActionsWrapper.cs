@@ -43,7 +43,7 @@ namespace Jimx.MMT.API.Controllers
 			}
 		}
 
-		public virtual CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, params Expression<Func<TEntity, bool>>[] selectors)
+		public virtual CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, Expression<Func<TEntity, object>>? keySelector, params Expression<Func<TEntity, bool>>[] selectors)
 		{
 			var allSelectors = selectors.Union(GlobalSelectors).ToArray();
 			using (var request = Repository.StartRequest(true, allSelectors))
@@ -52,7 +52,15 @@ namespace Jimx.MMT.API.Controllers
 
 				int skip = requestApi.Skip ?? 0;
 				int take = requestApi.Take ?? 10;
-				var dbItems = request.GetAll().Skip(skip).Take(take).ToList();
+
+				var allQueryable = request.GetAll();
+
+				if (keySelector != null)
+				{
+					allQueryable = allQueryable.OrderBy(keySelector);
+				}
+
+				var dbItems = allQueryable.Skip(skip).Take(take).ToList();
 
 				IList<TApi> result = new List<TApi>();
 				foreach (var dbItem in dbItems)
@@ -62,6 +70,11 @@ namespace Jimx.MMT.API.Controllers
 
 				return new CollectionApi<TApi>(count, skip, take, result.Count, result.ToArray());
 			}
+		}
+
+		public virtual CollectionApi<TApi> GetAll(CollectionRequestApi requestApi, params Expression<Func<TEntity, bool>>[] selectors)
+		{
+			return GetAll(requestApi, null, selectors.ToArray());
 		}
 
 		public virtual TApi? Get(Expression<Func<TEntity, bool>> itemSelector, params Expression<Func<TEntity, bool>>[] selectors)

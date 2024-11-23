@@ -39,9 +39,9 @@ caption
   width: 100%;
 }
 
-.actions-panel
+.actions-panel, .filters-panel
 {
-  padding: 12pt 0;
+  padding: 0 0 12px 0;
   margin-bottom: 12pt;
   border-bottom: 1pt solid #888;
 

@@ -13,5 +13,5 @@ export const receiptEntriesResolver: ResolveFn<CollectionApi<ReceiptEntry> | und
     return undefined;
   }
 
-  return receiptEntriesService.getAll(receiptId);
+  return receiptEntriesService.getAll(receiptId, 0, 100);
 };
