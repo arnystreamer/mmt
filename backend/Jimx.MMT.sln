@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jimx.MMT.API", "Jimx.MMT.AP
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A6714DD4-0228-41E1-A429-72C105C4FA4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jimx.MMT.API.Tests", "..\Jimx.MMT.API.Tests\Jimx.MMT.API.Tests.csproj", "{EBC9EF03-7C46-4253-A625-EB4C50713417}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jimx.MMT.API.Tests", "Jimx.MMT.API.Tests\Jimx.MMT.API.Tests.csproj", "{EBC9EF03-7C46-4253-A625-EB4C50713417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
