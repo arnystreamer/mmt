@@ -2,12 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SectionCategory } from 'src/app/models/sections/section-category.model';
 
 @Component({
-  selector: 'mmt-gsection-categories-list-item',
-  templateUrl: './gsection-categories-list-item.component.html',
-  styleUrls: [
-    './gsection-categories-list-item.component.scss',
-    '../../../../list-item-details.scss'
-  ]
+    selector: 'mmt-gsection-categories-list-item',
+    templateUrl: './gsection-categories-list-item.component.html',
+    styleUrls: [
+        './gsection-categories-list-item.component.scss',
+        '../../../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class GsectionCategoriesListItemComponent {
   @Input() category?: SectionCategory;

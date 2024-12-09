@@ -5,9 +5,10 @@ import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
-  selector: 'mmt-local-sections-list',
-  templateUrl: './local-sections-list.component.html',
-  styleUrls: ['./local-sections-list.component.scss']
+    selector: 'mmt-local-sections-list',
+    templateUrl: './local-sections-list.component.html',
+    styleUrls: ['./local-sections-list.component.scss'],
+    standalone: false
 })
 export class LocalSectionsListComponent {
   @Input() sections!: Section[];

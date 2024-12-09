@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
-  selector: 'mmt-global-section-details',
-  templateUrl: './global-section-details.component.html',
-  styleUrls: [
-    './global-section-details.component.scss',
-    '../../../list-item-details.scss'
-  ]
+    selector: 'mmt-global-section-details',
+    templateUrl: './global-section-details.component.html',
+    styleUrls: [
+        './global-section-details.component.scss',
+        '../../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class GlobalSectionDetailsComponent implements OnInit {
 

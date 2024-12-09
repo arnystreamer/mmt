@@ -3,12 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ItemWithDescription } from 'src/app/models/item-with-description';
 
 @Component({
-  selector: 'mmt-generic-list-item',
-  templateUrl: './generic-list-item.component.html',
-  styleUrls: [
-    './generic-list-item.component.scss',
-    '../../list-item-details.scss'
-  ]
+    selector: 'mmt-generic-list-item',
+    templateUrl: './generic-list-item.component.html',
+    styleUrls: [
+        './generic-list-item.component.scss',
+        '../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class GenericListItemComponent {
   @Input() item?: ItemWithDescription;

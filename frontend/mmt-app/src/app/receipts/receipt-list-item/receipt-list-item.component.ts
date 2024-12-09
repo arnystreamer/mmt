@@ -4,12 +4,13 @@ import { ItemGuid } from 'src/app/models/item-guid';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'mmt-receipt-list-item',
-  templateUrl: './receipt-list-item.component.html',
-  styleUrls: [
-    './receipt-list-item.component.scss',
-    '../../list-item-details.scss'
-  ]
+    selector: 'mmt-receipt-list-item',
+    templateUrl: './receipt-list-item.component.html',
+    styleUrls: [
+        './receipt-list-item.component.scss',
+        '../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class ReceiptListItemComponent {
   @Input() item!: Receipt;

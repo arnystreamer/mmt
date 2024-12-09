@@ -6,9 +6,10 @@ import { SectionCategoryEdit } from 'src/app/models/sections/section-category-ed
 import { SectionCategory } from 'src/app/models/sections/section-category.model';
 
 @Component({
-  selector: 'mmt-local-section-categories-list',
-  templateUrl: './local-section-categories-list.component.html',
-  styleUrls: ['./local-section-categories-list.component.scss']
+    selector: 'mmt-local-section-categories-list',
+    templateUrl: './local-section-categories-list.component.html',
+    styleUrls: ['./local-section-categories-list.component.scss'],
+    standalone: false
 })
 export class LocalSectionCategoriesListComponent {
   @Input() categories!: SectionCategory[];

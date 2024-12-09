@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'mmt-login',
-  templateUrl: './login.component.html',
-  styleUrls: [
-    './login.component.scss',
-    '../forms.scss'
-  ]
+    selector: 'mmt-login',
+    templateUrl: './login.component.html',
+    styleUrls: [
+        './login.component.scss',
+        '../forms.scss'
+    ],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 

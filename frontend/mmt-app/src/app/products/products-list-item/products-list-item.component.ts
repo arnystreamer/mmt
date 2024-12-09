@@ -4,11 +4,13 @@ import { ItemGuid } from 'src/app/models/item-guid';
 import { Product } from 'src/app/models/static-data/product.model';
 
 @Component({
-  selector: 'mmt-products-list-item',
-  templateUrl: './products-list-item.component.html',
-  styleUrls: [
-    './products-list-item.component.scss',
-    '../../list-item-details.scss']
+    selector: 'mmt-products-list-item',
+    templateUrl: './products-list-item.component.html',
+    styleUrls: [
+        './products-list-item.component.scss',
+        '../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class ProductsListItemComponent {
   @Input() item?: Product;

@@ -4,7 +4,7 @@
     <h3>Sections</h3>
   </caption>
   <div *ngFor="let section of sections">
-    <mmt-generic-list-item [item]="section" [navigateRoute]="['sections/', this.section.id]" [entityName]="'wallet section'"
+    <mmt-generic-list-item [item]="section" [navigateRoute]="['sections/', section.id]" [entityName]="'wallet section'"
       (removeEvent)="removeWalletSection($event)" />
   </div>
   <div *ngIf="!sections || sections.length === 0">

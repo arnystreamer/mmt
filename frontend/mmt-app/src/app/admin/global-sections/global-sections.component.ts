@@ -7,9 +7,10 @@ import { Section } from 'src/app/models/static-data/section.model';
 import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
-  selector: 'app-global-sections',
-  templateUrl: './global-sections.component.html',
-  styleUrls: ['./global-sections.component.scss']
+    selector: 'app-global-sections',
+    templateUrl: './global-sections.component.html',
+    styleUrls: ['./global-sections.component.scss'],
+    standalone: false
 })
 export class GlobalSectionsComponent implements OnInit {
 

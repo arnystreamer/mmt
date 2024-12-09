@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-edit';
 
 @Component({
-  selector: 'mmt-generic-inline-form',
-  templateUrl: './generic-inline-form.component.html',
-  styleUrls: ['./generic-inline-form.component.scss',
-    '../../list-item-details.scss',
-    '../../forms.scss']
+    selector: 'mmt-generic-inline-form',
+    templateUrl: './generic-inline-form.component.html',
+    styleUrls: ['./generic-inline-form.component.scss',
+        '../../list-item-details.scss',
+        '../../forms.scss'],
+    standalone: false
 })
 export class GenericInlineFormComponent {
   @Input() entityName: string = '';

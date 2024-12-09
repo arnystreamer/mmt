@@ -7,12 +7,13 @@ import { SectionCategoryEdit } from 'src/app/models/sections/section-category-ed
 import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
-  selector: 'mmt-wallet-section-details',
-  templateUrl: './wallet-section-details.component.html',
-  styleUrls: [
-    './wallet-section-details.component.scss',
-    '../../../list-item-details.scss'
-  ]
+    selector: 'mmt-wallet-section-details',
+    templateUrl: './wallet-section-details.component.html',
+    styleUrls: [
+        './wallet-section-details.component.scss',
+        '../../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class WalletSectionDetailsComponent {
   public wallet?: WalletSection;

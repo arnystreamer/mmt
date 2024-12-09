@@ -6,9 +6,10 @@ import { Wallet } from '../models/static-data/wallet.model';
 import { WalletEdit } from '../models/static-data/wallet-edit.model';
 
 @Component({
-  selector: 'mmt-wallets',
-  templateUrl: './wallets.component.html',
-  styleUrls: ['./wallets.component.scss']
+    selector: 'mmt-wallets',
+    templateUrl: './wallets.component.html',
+    styleUrls: ['./wallets.component.scss'],
+    standalone: false
 })
 export class WalletsComponent implements OnInit {
 
