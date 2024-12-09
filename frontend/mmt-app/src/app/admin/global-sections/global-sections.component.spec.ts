@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 import { GlobalSectionsComponent } from './global-sections.component';
 import { GlobalSectionsListComponent } from './global-sections-list/global-sections-list.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 
 
@@ -23,20 +24,18 @@ describe('GlobalSectionsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         GlobalSectionsComponent,
         GlobalSectionsListComponent
-      ],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        MatIconModule
-      ],
-      providers: [
-        { provide: MatDialog, useFactory: matDialogCreator }
-      ]
-
-    });
+    ],
+    imports: [RouterTestingModule,
+        MatIconModule],
+    providers: [
+        { provide: MatDialog, useFactory: matDialogCreator },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     fixture = TestBed.createComponent(GlobalSectionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
