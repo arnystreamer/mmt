@@ -11,9 +11,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReceiptRequestParams } from './models/receipt-request-params.model';
 
 @Component({
-  selector: 'mmt-receipts',
-  templateUrl: './receipts.component.html',
-  styleUrls: ['./receipts.component.scss']
+    selector: 'mmt-receipts',
+    templateUrl: './receipts.component.html',
+    styleUrls: ['./receipts.component.scss'],
+    standalone: false
 })
 export class ReceiptsComponent implements OnInit {
 

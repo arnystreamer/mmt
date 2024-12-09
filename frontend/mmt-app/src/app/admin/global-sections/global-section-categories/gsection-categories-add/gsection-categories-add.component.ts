@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SectionCategoryEdit } from 'src/app/models/sections/section-category-edit.model';
 
 @Component({
-  selector: 'mmt-gsection-categories-add',
-  templateUrl: './gsection-categories-add.component.html',
-  styleUrls: [
-    './gsection-categories-add.component.scss',
-    '../../../../list-item-details.scss',
-    '../../../../forms.scss'
-  ]
+    selector: 'mmt-gsection-categories-add',
+    templateUrl: './gsection-categories-add.component.html',
+    styleUrls: [
+        './gsection-categories-add.component.scss',
+        '../../../../list-item-details.scss',
+        '../../../../forms.scss'
+    ],
+    standalone: false
 })
 export class GsectionCategoriesAddComponent implements OnInit {
 

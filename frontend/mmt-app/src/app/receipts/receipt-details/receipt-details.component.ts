@@ -7,12 +7,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ReceiptEntriesService } from '../services/receipt-entries.service';
 
 @Component({
-  selector: 'mmt-receipt-details',
-  templateUrl: './receipt-details.component.html',
-  styleUrls: [
-    './receipt-details.component.scss',
-    '../../list-item-details.scss'
-  ]
+    selector: 'mmt-receipt-details',
+    templateUrl: './receipt-details.component.html',
+    styleUrls: [
+        './receipt-details.component.scss',
+        '../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class ReceiptDetailsComponent implements OnInit {
   public receipt?: Receipt;

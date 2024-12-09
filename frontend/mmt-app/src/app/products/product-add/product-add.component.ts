@@ -8,12 +8,13 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { SectionsService } from 'src/app/services/sections.service';
 
 @Component({
-  selector: 'mmt-product-add',
-  templateUrl: './product-add.component.html',
-  styleUrls: ['./product-add.component.scss',
-    '../../list-item-details.scss',
-    '../../forms.scss'
-  ]
+    selector: 'mmt-product-add',
+    templateUrl: './product-add.component.html',
+    styleUrls: ['./product-add.component.scss',
+        '../../list-item-details.scss',
+        '../../forms.scss'
+    ],
+    standalone: false
 })
 export class ProductAddComponent {
   @Input() parent?: Product;

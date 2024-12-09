@@ -5,9 +5,10 @@ import { Product } from 'src/app/models/static-data/product.model';
 import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
-  selector: 'mmt-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+    selector: 'mmt-products-list',
+    templateUrl: './products-list.component.html',
+    styleUrls: ['./products-list.component.scss'],
+    standalone: false
 })
 export class ProductsListComponent {
   @Input() parent?: Product;

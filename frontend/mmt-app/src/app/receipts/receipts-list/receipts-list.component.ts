@@ -4,9 +4,10 @@ import { ReceiptEdit } from '../models/receipt-edit.model';
 import { ItemGuid } from 'src/app/models/item-guid';
 
 @Component({
-  selector: 'mmt-receipts-list',
-  templateUrl: './receipts-list.component.html',
-  styleUrls: ['./receipts-list.component.scss']
+    selector: 'mmt-receipts-list',
+    templateUrl: './receipts-list.component.html',
+    styleUrls: ['./receipts-list.component.scss'],
+    standalone: false
 })
 export class ReceiptsListComponent {
   @Input() receipts!: Receipt[];

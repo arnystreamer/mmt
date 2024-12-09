@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { HealthCheckService } from 'src/app/services/health-check.service';
 
 @Component({
-  selector: 'mmt-service-functions',
-  templateUrl: './service-functions.component.html',
-  styleUrls: ['./service-functions.component.scss']
+    selector: 'mmt-service-functions',
+    templateUrl: './service-functions.component.html',
+    styleUrls: ['./service-functions.component.scss'],
+    standalone: false
 })
 export class ServiceFunctionsComponent {
   isLoading: boolean = false;

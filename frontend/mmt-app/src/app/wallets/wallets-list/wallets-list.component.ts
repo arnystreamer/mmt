@@ -5,9 +5,10 @@ import { Wallet } from 'src/app/models/static-data/wallet.model';
 import { WalletEdit } from 'src/app/models/static-data/wallet-edit.model';
 
 @Component({
-  selector: 'mmt-wallets-list',
-  templateUrl: './wallets-list.component.html',
-  styleUrls: ['./wallets-list.component.scss']
+    selector: 'mmt-wallets-list',
+    templateUrl: './wallets-list.component.html',
+    styleUrls: ['./wallets-list.component.scss'],
+    standalone: false
 })
 export class WalletsListComponent {
   @Input() wallets!: Wallet[];

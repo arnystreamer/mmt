@@ -5,9 +5,10 @@ import { ItemWithDescriptionEdit } from 'src/app/models/item-with-description-ed
 import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 
 @Component({
-  selector: 'mmt-wallet-sections-list',
-  templateUrl: './wallet-sections-list.component.html',
-  styleUrls: ['./wallet-sections-list.component.scss']
+    selector: 'mmt-wallet-sections-list',
+    templateUrl: './wallet-sections-list.component.html',
+    styleUrls: ['./wallet-sections-list.component.scss'],
+    standalone: false
 })
 export class WalletSectionsListComponent {
   @Input() sections!: WalletSection[];

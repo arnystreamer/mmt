@@ -6,9 +6,10 @@ import { Section } from '../models/static-data/section.model';
 import { SectionEdit } from '../models/static-data/section-edit.model';
 
 @Component({
-  selector: 'mmt-local-sections',
-  templateUrl: './local-sections.component.html',
-  styleUrls: ['./local-sections.component.scss']
+    selector: 'mmt-local-sections',
+    templateUrl: './local-sections.component.html',
+    styleUrls: ['./local-sections.component.scss'],
+    standalone: false
 })
 export class LocalSectionsComponent implements OnInit {
 

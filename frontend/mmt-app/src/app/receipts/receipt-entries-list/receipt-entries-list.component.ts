@@ -5,9 +5,10 @@ import { ReceiptEntryEdit } from '../models/receipt-entry-edit.model';
 import { Receipt } from '../models/receipt.model';
 
 @Component({
-  selector: 'mmt-receipt-entries-list',
-  templateUrl: './receipt-entries-list.component.html',
-  styleUrls: ['./receipt-entries-list.component.scss']
+    selector: 'mmt-receipt-entries-list',
+    templateUrl: './receipt-entries-list.component.html',
+    styleUrls: ['./receipt-entries-list.component.scss'],
+    standalone: false
 })
 export class ReceiptEntriesListComponent {
   @Input() parentReceipt?: Receipt;

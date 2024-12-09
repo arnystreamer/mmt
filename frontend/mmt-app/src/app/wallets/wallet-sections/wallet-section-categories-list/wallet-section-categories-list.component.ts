@@ -6,9 +6,10 @@ import { SectionCategoryEdit } from 'src/app/models/sections/section-category-ed
 import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
-  selector: 'mmt-wallet-section-categories-list',
-  templateUrl: './wallet-section-categories-list.component.html',
-  styleUrls: ['./wallet-section-categories-list.component.scss']
+    selector: 'mmt-wallet-section-categories-list',
+    templateUrl: './wallet-section-categories-list.component.html',
+    styleUrls: ['./wallet-section-categories-list.component.scss'],
+    standalone: false
 })
 export class WalletSectionCategoriesListComponent {
   @Input() categories!: SectionCategory[];

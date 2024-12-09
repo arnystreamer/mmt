@@ -5,11 +5,11 @@ import { GlobalSectionCreator, GlobalSectionDialogData } from '../models/global-
 import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 
 @Component({
-  selector: 'mmt-global-sections-add',
-  templateUrl: './global-sections-add.component.html',
-  styleUrls:
-   ['./global-sections-add.component.scss',
-    '../../../forms.scss']
+    selector: 'mmt-global-sections-add',
+    templateUrl: './global-sections-add.component.html',
+    styleUrls: ['./global-sections-add.component.scss',
+        '../../../forms.scss'],
+    standalone: false
 })
 export class GlobalSectionsAddComponent implements OnInit {
 

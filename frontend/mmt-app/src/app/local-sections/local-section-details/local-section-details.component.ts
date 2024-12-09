@@ -7,12 +7,13 @@ import { ItemIdentity } from 'src/app/models/item-identity';
 import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
-  selector: 'mmt-local-section-details',
-  templateUrl: './local-section-details.component.html',
-  styleUrls: [
-    './local-section-details.component.scss',
-    '../../list-item-details.scss'
-  ]
+    selector: 'mmt-local-section-details',
+    templateUrl: './local-section-details.component.html',
+    styleUrls: [
+        './local-section-details.component.scss',
+        '../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class LocalSectionDetailsComponent implements OnInit {
 

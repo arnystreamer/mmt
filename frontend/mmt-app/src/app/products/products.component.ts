@@ -8,9 +8,10 @@ import { SectionsService } from '../services/sections.service';
 import { Section } from '../models/static-data/section.model';
 
 @Component({
-  selector: 'mmt-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+    selector: 'mmt-products',
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.scss'],
+    standalone: false
 })
 export class ProductsComponent implements OnInit {
 

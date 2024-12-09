@@ -13,12 +13,13 @@ import { ReceiptsService } from '../services/receipts.service';
 import { ReceiptDefaultValues } from '../models/receipt-default-values.model';
 
 @Component({
-  selector: 'mmt-receipt-add',
-  templateUrl: './receipt-add.component.html',
-  styleUrls: [
-    './receipt-add.component.scss',
-    '../../forms.scss'
-  ]
+    selector: 'mmt-receipt-add',
+    templateUrl: './receipt-add.component.html',
+    styleUrls: [
+        './receipt-add.component.scss',
+        '../../forms.scss'
+    ],
+    standalone: false
 })
 export class ReceiptAddComponent implements OnInit {
   @Output() createEvent = new EventEmitter<ReceiptEdit>();

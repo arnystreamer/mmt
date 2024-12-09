@@ -4,12 +4,13 @@ import { ItemIdentity } from 'src/app/models/item-identity';
 import { Section } from 'src/app/models/static-data/section.model';
 
 @Component({
-  selector: 'mmt-global-sections-list-item',
-  templateUrl: './global-sections-list-item.component.html',
-  styleUrls: [
-    './global-sections-list-item.component.scss',
-    '../../../list-item-details.scss'
-  ]
+    selector: 'mmt-global-sections-list-item',
+    templateUrl: './global-sections-list-item.component.html',
+    styleUrls: [
+        './global-sections-list-item.component.scss',
+        '../../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class GlobalSectionsListItemComponent {
   @Input() section?: Section;

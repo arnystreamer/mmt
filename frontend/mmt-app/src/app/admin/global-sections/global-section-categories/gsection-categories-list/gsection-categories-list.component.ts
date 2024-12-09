@@ -6,9 +6,10 @@ import { SectionCategoryEdit } from 'src/app/models/sections/section-category-ed
 import { ItemIdentity } from 'src/app/models/item-identity';
 
 @Component({
-  selector: 'mmt-gsection-categories-list',
-  templateUrl: './gsection-categories-list.component.html',
-  styleUrls: ['./gsection-categories-list.component.scss']
+    selector: 'mmt-gsection-categories-list',
+    templateUrl: './gsection-categories-list.component.html',
+    styleUrls: ['./gsection-categories-list.component.scss'],
+    standalone: false
 })
 export class GsectionCategoriesListComponent implements OnInit {
   @Input() sectionId?: number;

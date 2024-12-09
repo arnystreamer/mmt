@@ -7,12 +7,13 @@ import { Wallet } from 'src/app/models/static-data/wallet.model';
 import { SectionEdit } from 'src/app/models/static-data/section-edit.model';
 
 @Component({
-  selector: 'mmt-wallet-details',
-  templateUrl: './wallet-details.component.html',
-  styleUrls: [
-    './wallet-details.component.scss',
-    '../../list-item-details.scss'
-  ]
+    selector: 'mmt-wallet-details',
+    templateUrl: './wallet-details.component.html',
+    styleUrls: [
+        './wallet-details.component.scss',
+        '../../list-item-details.scss'
+    ],
+    standalone: false
 })
 export class WalletDetailsComponent implements OnInit {
   public wallet?: Wallet;

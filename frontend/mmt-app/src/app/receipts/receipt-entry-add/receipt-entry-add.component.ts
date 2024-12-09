@@ -6,13 +6,14 @@ import { Product } from 'src/app/models/static-data/product.model';
 import { Receipt } from '../models/receipt.model';
 
 @Component({
-  selector: 'mmt-receipt-entry-add',
-  templateUrl: './receipt-entry-add.component.html',
-  styleUrls: [
-    './receipt-entry-add.component.scss',
-    '../../list-item-details.scss',
-    '../../forms.scss'
-  ]
+    selector: 'mmt-receipt-entry-add',
+    templateUrl: './receipt-entry-add.component.html',
+    styleUrls: [
+        './receipt-entry-add.component.scss',
+        '../../list-item-details.scss',
+        '../../forms.scss'
+    ],
+    standalone: false
 })
 export class ReceiptEntryAddComponent implements OnInit {
   @Output() createEvent = new EventEmitter<ReceiptEntryEdit>();
