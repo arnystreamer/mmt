@@ -3,6 +3,7 @@ using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
 using Jimx.MMT.API.Models.Options;
 using Jimx.MMT.API.Services;
+using Jimx.MMT.API.Services.Finance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ builder.Services.Configure<GeneralOptions>(
 
 builder.Services.RegisterAllDbActionsWrappers();
 
+builder.Services.AddSingleton<CrossCurrencyService>();
 builder.Services.AddSingleton<SettingsProvider>();
 builder.Services.AddSingleton<KeysProvider>();
 

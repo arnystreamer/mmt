@@ -12,10 +12,10 @@
 
 Save:
 `docker save -o mmt-api.1_1.tar jimx.mmt.api:1.1`
-`tar -czf mmt-ui.1_1.tar -C .\frontend\mmt-app\dist\mmt-app .` 
+`tar -czf mmt-ui.1_2.tar -C .\frontend\mmt-app\dist\mmt-app\browser .` 
 
 Transfer:
-`scp mmt-api.1_1.tar mmt-ui.1_1.tar root@server:/root`
+`scp mmt-api.1_2.tar mmt-ui.1_2.tar root@server:/root`
 
 Cleanup:
 `docker stop Jimx.MMT.API`
@@ -27,7 +27,7 @@ Cleanup:
 
 Load:
 `docker load -i mmt-api.1_1.tar`
-`tar -xf mmt-ui.1_1.tar -C /var/www/mmt-ui`
+`tar -xf mmt-ui.1_2.tar -C /var/www/mmt-ui`
 
 ## Running
 

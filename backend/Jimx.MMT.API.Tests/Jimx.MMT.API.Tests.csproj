@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\Jimx.MMT.API\Jimx.MMT.API.csproj" />
+    <ProjectReference Include="..\Jimx.MMT.API\Jimx.MMT.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,36 @@
+<caption>
+  <h2>Report by location</h2>
+</caption>
+
+<div class="actions-panel">
+  <button color="accent" mat-flat-button [routerLink]="['..']" data-cy="action-back">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </button>
+</div>
+
+<div id="chart" *ngIf="chartOptions">
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [dataLabels]="chartOptions.dataLabels"
+    [plotOptions]="chartOptions.plotOptions"
+    [xaxis]="chartOptions.xaxis"
+  ></apx-chart>
+</div>
+
+<div *ngFor="let item of report.items">
+  <div class="list-item">
+    <section>
+      <dl>
+        <dt>Location</dt>
+        <dd> {{ item.countryCode }} </dd>
+      </dl>
+
+      <dl>
+        <dt>Amount</dt>
+        <dd>{{ item.amount | number: '1.0-0' }} EUR</dd>
+      </dl>
+    </section>
+  </div>
+</div>

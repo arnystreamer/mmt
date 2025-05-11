@@ -1,1 +1,29 @@
-<p>analysis works!</p>
+<div>
+  <caption>
+    <h2>Analysis</h2>
+  </caption>
+
+  <div class="actions-panel">
+
+    <button color="accent" mat-flat-button [routerLink]="['by-month']">
+      <mat-icon>date_range</mat-icon>
+      By month
+    </button>
+
+    <button color="accent" mat-flat-button [routerLink]="['by-location']">
+      <mat-icon>explore</mat-icon>
+      By location
+    </button>
+
+    <button color="accent" mat-flat-button [routerLink]="['by-section']">
+      <mat-icon>splitscreen</mat-icon>
+      By section
+    </button>
+
+    <button color="accent" mat-flat-button [routerLink]="['by-section-and-category']">
+      <mat-icon>vertical_split</mat-icon>
+      By section and category
+    </button>
+
+  </div>
+</div>
