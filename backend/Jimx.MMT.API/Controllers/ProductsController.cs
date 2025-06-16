@@ -1,6 +1,5 @@
 ﻿using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
-using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.Receipt;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
@@ -9,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using System.Net;
+using Jimx.Common.Models;
+using Jimx.Common.WebApi.Models;
 
 namespace Jimx.MMT.API.Controllers
 {
@@ -81,14 +82,14 @@ namespace Jimx.MMT.API.Controllers
 
 			if (section == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(productApi.SectionId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.BadRequest, new NumberItem(productApi.SectionId), typeof(NumberItem));
 			}
 
 			if (!productApi.IsExclusiveForCurrentUser && (section.Type == SectionType.Local || section.Type == SectionType.Wallet))
 			{
 				throw new StatusCodeException(HttpStatusCode.BadRequest, 
-					new StringItem($"Section {section.Type} is more private than Product, set IsExclusiveForCurrentUser to true"), 
-					typeof(StringItem));
+					new ErrorApi($"Section {section.Type} is more private than Product, set IsExclusiveForCurrentUser to true"), 
+					typeof(ErrorApi));
 			}
 
 			var result = _wrapper.Add(productApi, (ref Product p) =>

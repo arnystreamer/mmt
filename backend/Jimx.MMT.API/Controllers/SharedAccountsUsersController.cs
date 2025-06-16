@@ -1,6 +1,5 @@
 ﻿using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
-using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
 using Jimx.MMT.API.Services.DbWrapper;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using System.Net;
+using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Controllers
 {
@@ -49,7 +49,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (!sharedAccountsWithUsers.Any())
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(accountId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(accountId), typeof(NumberItem));
 			}
 
 			var saUsers = sharedAccountsWithUsers.Single();
@@ -69,12 +69,12 @@ namespace Jimx.MMT.API.Controllers
 
 			if (sharedAccount == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(accountId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(accountId), typeof(NumberItem));
 			}
 
 			if (_context.SharedAccountToUsers.Any(satu => satu.SharedAccountId == accountId && satu.UserId == currentUser.Id))
 			{
-				throw new StatusCodeException(HttpStatusCode.BadRequest, new IdItem(accountId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.BadRequest, new NumberItem(accountId), typeof(NumberItem));
 			}
 
 			var entity = _context.SharedAccountToUsers.Add(new SharedAccountToUser()

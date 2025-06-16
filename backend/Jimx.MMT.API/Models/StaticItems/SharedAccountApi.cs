@@ -1,5 +1,6 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record SharedAccountApi(int Id, string Name, string? Description) : DictionaryItemWithDescription(Id, Name, Description);
+public class SharedAccountApi(int id, string name, string? description)
+    : DictionaryItemWithDescription(id, name, description);

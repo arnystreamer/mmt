@@ -1,5 +1,8 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record SectionApi(int Id, SectionType Type, string Name, string? Description) : DictionaryItemWithDescription(Id, Name, Description);
+public class SectionApi(int id, SectionType type, string name, string? description) : DictionaryItemWithDescription(id, name, description)
+{
+    public SectionType Type { get; init; } = type;
+}

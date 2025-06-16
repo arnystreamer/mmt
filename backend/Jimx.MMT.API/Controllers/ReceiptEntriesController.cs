@@ -1,6 +1,5 @@
 ﻿using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
-using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.Receipt;
 using Jimx.MMT.API.Services.Auth;
 using Jimx.MMT.API.Services.DbWrapper;
@@ -8,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using System.Net;
+using Jimx.Common.Models;
+using Jimx.Common.WebApi.Models;
 
 namespace Jimx.MMT.API.Controllers
 {

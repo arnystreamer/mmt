@@ -1,4 +1,4 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models.Abstractions;
 
 namespace Jimx.MMT.API.Context
 {

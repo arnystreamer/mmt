@@ -12,7 +12,7 @@ import { SectionCategoryEdit } from 'src/app/models/sections/section-category-ed
     ],
     standalone: false
 })
-export class GsectionCategoriesAddComponent implements OnInit {
+export class GsectionCategoriesAddComponent  {
 
   @Output() createEvent = new EventEmitter<SectionCategoryEdit>();
 

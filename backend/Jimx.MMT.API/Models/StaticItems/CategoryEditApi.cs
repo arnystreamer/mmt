@@ -1,5 +1,5 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record CategoryEditApi(string Name, string Description) : DictionaryItemWithDescriptionEdit(Name, Description);
+public class CategoryEditApi(string name, string description) : DictionaryItemWithDescriptionEdit(name, description);

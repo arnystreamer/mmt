@@ -1,6 +1,7 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record GlobalSectionApi(int Id, string Name, string? Description) : DictionaryItemWithDescription(Id, Name, Description);
+public class GlobalSectionApi(int id, string name, string? description)
+    : DictionaryItemWithDescription(id, name, description);
 

@@ -1,10 +1,11 @@
 ﻿using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
-using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Jimx.Common.Models;
+using Jimx.Common.WebApi.Models;
 
 namespace Jimx.MMT.API.Controllers
 {
@@ -34,7 +35,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (currency == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return currency;
@@ -55,7 +56,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (!result)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 		}
 	}

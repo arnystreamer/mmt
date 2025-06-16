@@ -1,5 +1,8 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record LocalSectionApi(int Id, Guid UserId, string Name, string? Description) : DictionaryItemWithDescription(Id, Name, Description);
+public class LocalSectionApi(int id, Guid userId, string name, string? description) : DictionaryItemWithDescription(id, name, description)
+{
+    public Guid UserId { get; init; } = userId;
+}

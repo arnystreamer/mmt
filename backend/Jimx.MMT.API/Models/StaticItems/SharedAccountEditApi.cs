@@ -1,5 +1,6 @@
-﻿using Jimx.MMT.API.Models.Common;
+﻿using Jimx.Common.Models;
 
 namespace Jimx.MMT.API.Models.StaticItems;
 
-public record SharedAccountEditApi(string Name, string? Description) : DictionaryItemWithDescriptionEdit(Name, Description);
+public class SharedAccountEditApi(string name, string? description)
+    : DictionaryItemWithDescriptionEdit(name, description);

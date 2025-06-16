@@ -1,7 +1,6 @@
-﻿using Jimx.MMT.API.Models.Common;
-using Jimx.MMT.API.Services.DbWrapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Jimx.MMT.API.Services.DbWrapper;
 using System.Linq.Expressions;
+using Jimx.Common.WebApi.Models;
 
 namespace Jimx.MMT.API.Controllers
 {

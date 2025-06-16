@@ -1,6 +1,5 @@
 ﻿using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
-using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
 using Jimx.MMT.API.Services.DbWrapper;
@@ -8,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using System.Net;
+using Jimx.Common.Models;
+using Jimx.Common.WebApi.Models;
 
 namespace Jimx.MMT.API.Controllers
 {
@@ -43,7 +44,7 @@ namespace Jimx.MMT.API.Controllers
 			var section = _wrapper.Get(c => c.Id == id, ExpressionIsSectionWallet(walletId, currentUser.Id));
 			if (section == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return section;
@@ -65,7 +66,7 @@ namespace Jimx.MMT.API.Controllers
 			var sharedAccount = _walletWrapper.Get(sa => sa.Id == walletId, w => w.UserId == currentUser.Id);
 			if (sharedAccount == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(walletId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(walletId), typeof(NumberItem));
 			}
 
 			return _wrapper.Add(sectionApi, (ref Section s) => { s.WalletId = walletId; });
@@ -80,7 +81,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (section == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return section;
@@ -95,7 +96,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (!result)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return NoContent();

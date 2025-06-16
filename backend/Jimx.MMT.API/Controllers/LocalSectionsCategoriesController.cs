@@ -1,6 +1,5 @@
 ﻿using Jimx.MMT.API.App;
 using Jimx.MMT.API.Context;
-using Jimx.MMT.API.Models.Common;
 using Jimx.MMT.API.Models.StaticItems;
 using Jimx.MMT.API.Services.Auth;
 using Jimx.MMT.API.Services.DbWrapper;
@@ -8,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using System.Net;
+using Jimx.Common.Models;
+using Jimx.Common.WebApi.Models;
 
 namespace Jimx.MMT.API.Controllers
 {
@@ -47,7 +48,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (category == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return category;
@@ -68,7 +69,7 @@ namespace Jimx.MMT.API.Controllers
 
 			if (_sectionsWrapper.Count(ExpressionIsSectionBelongsToUser(sectionId, currentUser.Id)) == 0)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(sectionId), typeof(NumberItem));
 			}
 
 			return _wrapper.Add(categoryApi, (ref Category c) => { c.SectionId = sectionId; });
@@ -81,13 +82,13 @@ namespace Jimx.MMT.API.Controllers
 
 			if (_sectionsWrapper.Count(ExpressionIsSectionBelongsToUser(sectionId, currentUser.Id)) == 0)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(sectionId), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(sectionId), typeof(NumberItem));
 			}
 
 			var category = _wrapper.Edit(c => c.Id == id, categoryApi, null, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
 			if (category == null)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return category;
@@ -101,7 +102,7 @@ namespace Jimx.MMT.API.Controllers
 			var result = _wrapper.Delete(c => c.Id == id, ExpressionIsSectionCategoryUserLocal(sectionId, currentUser.Id));
 			if (!result)
 			{
-				throw new StatusCodeException(HttpStatusCode.NotFound, new IdItem(id), typeof(IdItem));
+				throw new StatusCodeException(HttpStatusCode.NotFound, new NumberItem(id), typeof(NumberItem));
 			}
 
 			return NoContent();
